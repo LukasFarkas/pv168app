@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: cz.muni.fi.pv168.pv168project.app.StudentManagerTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 3, Skipped: 0, Time elapsed: 0.095 sec <<< FAILURE!
-deleteStudent(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0.017 sec  <<< ERROR!
+Tests run: 4, Failures: 1, Errors: 3, Skipped: 0, Time elapsed: 0.093 sec <<< FAILURE!
+deleteStudent(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0.015 sec  <<< ERROR!
 java.lang.NullPointerException
 	at cz.muni.fi.pv168.pv168project.app.StudentManagerTest.deleteStudent(StudentManagerTest.java:53)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -37,7 +37,7 @@ java.lang.NullPointerException
 	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
 	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
-createStudent(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0.001 sec  <<< ERROR!
+createStudent(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0 sec  <<< ERROR!
 java.lang.NullPointerException
 	at cz.muni.fi.pv168.pv168project.app.StudentManagerTest.createStudent(StudentManagerTest.java:40)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -72,7 +72,7 @@ java.lang.NullPointerException
 	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
 	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
-deleteStudentWithNonExistingId(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0.006 sec  <<< FAILURE!
+deleteStudentWithNonExistingId(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0 sec  <<< FAILURE!
 java.lang.AssertionError: 
 Expected: an instance of cz.muni.fi.pv168.pv168project.app.EntityNotFoundException
      but: <java.lang.NullPointerException> is a java.lang.NullPointerException
@@ -139,7 +139,7 @@ Stacktrace was: java.lang.NullPointerException
 	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)
 	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)
-createStudentWithNull(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0.001 sec  <<< ERROR!
+createStudentWithNull(cz.muni.fi.pv168.pv168project.app.StudentManagerTest)  Time elapsed: 0 sec  <<< ERROR!
 java.lang.Exception: Unexpected exception, expected<java.lang.IllegalArgumentException> but was<java.lang.NullPointerException>
 	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:28)
 	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)

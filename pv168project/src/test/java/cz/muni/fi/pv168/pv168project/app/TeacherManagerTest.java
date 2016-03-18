@@ -21,6 +21,7 @@ import static org.junit.Assert.*;
  * @author L
  */
 public class TeacherManagerTest {
+    /*
     private TeacherManager manager;
 
     @Rule
@@ -85,5 +86,5 @@ public class TeacherManagerTest {
         teacher.setTeacherId(teacherId);
         return teacher;
     }
-    
+    */
 }

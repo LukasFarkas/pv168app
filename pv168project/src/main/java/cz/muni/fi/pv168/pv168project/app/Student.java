@@ -34,7 +34,7 @@ public class Student {
         return level;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

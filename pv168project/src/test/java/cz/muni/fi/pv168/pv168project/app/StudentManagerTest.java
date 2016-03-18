@@ -39,7 +39,7 @@ public class StudentManagerTest {
         Student student = newStudent("Mr Peepants", "", 4, 5);
         manager.createStudent(student);
 
-        Long studentId = student.getStudentId();
+        Long studentId = student.getId();
         assertNotNull(studentId);
         Student result = manager.getStudent(studentId);
         assertEquals(student, result);
@@ -53,13 +53,13 @@ public class StudentManagerTest {
         manager.createStudent(t1);
         manager.createStudent(t2);
 
-        assertNotNull(manager.getStudent(t1.getStudentId()));
-        assertNotNull(manager.getStudent(t2.getStudentId()));
+        assertNotNull(manager.getStudent(t1.getId()));
+        assertNotNull(manager.getStudent(t2.getId()));
 
-        manager.deleteStudent(t1.studentId);
+        manager.deleteStudent(manager.getStudent(t1.getId()));
 
-        assertNull(manager.getStudent(t1.getStudentId()));
-        assertNotNull(manager.getStudent(t2.getStudentId()));
+        assertNull(manager.getStudent(t1.getId()));
+        assertNotNull(manager.getStudent(t2.getId()));
 
     }
     
@@ -72,9 +72,9 @@ public class StudentManagerTest {
     @Test
     public void deleteStudentWithNonExistingId() {
         Student student = newStudent("","",2,10);
-        student.setStudentId(1L);
+        student.setId(1L);
         expectedException.expect(EntityNotFoundException.class);
-        manager.deleteStudent(student.getStudentId());
+        manager.deleteStudent(student);
     }
 
     private static Student newStudent(String fullName, String details, int level, long studentId) {
@@ -82,7 +82,7 @@ public class StudentManagerTest {
         student.setFullName(fullName);
         student.setDetails(details);
         student.setLevel(level);
-        student.setStudentId(studentId);
+        student.setId(studentId);
         return student;
     }
 
