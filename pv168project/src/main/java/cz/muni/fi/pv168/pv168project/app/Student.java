@@ -6,16 +6,17 @@
 package cz.muni.fi.pv168.pv168project.app;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
  * @author L
  */
 public class Student {
-    public String fullName;
-    public String details;
-    public int level;
-    public long studentId;
+    private String fullName;
+    private String details;
+    private int level;
+    private Long id;
     
     public List<Lesson> listAllLessons() {
         return null;
@@ -33,8 +34,8 @@ public class Student {
         return level;
     }
 
-    public long getStudentId() {
-        return studentId;
+    public long getId() {
+        return id;
     }
 
     public void setFullName(String fullName) {
@@ -49,7 +50,34 @@ public class Student {
         this.level = level;
     }
 
-    public void setStudentId(long studentId) {
-        this.studentId = studentId;
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    @Override
+    public String toString() {
+        return "Student{" + "id=" + id + '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (this.id == null && this != obj) {
+            // this is a special case - two entities without id assigned yet
+            // should be evaluated as non equal
+            return false;
+        }
+        final Student other = (Student) obj;
+        return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
