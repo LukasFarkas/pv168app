@@ -22,12 +22,6 @@ public class TeacherManager {
     
     private final DataSource dataSource;
     
-    /*
-    public StudentManager () {
-        this.dataSource = null;
-    }
-    */
-    
     public TeacherManager (DataSource dataSource) {
         this.dataSource = dataSource;
     }

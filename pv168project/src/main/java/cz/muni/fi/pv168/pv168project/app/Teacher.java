@@ -34,7 +34,7 @@ public class Teacher {
         return level;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
     
@@ -50,7 +50,7 @@ public class Teacher {
         this.level = level;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     

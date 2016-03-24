@@ -22,11 +22,6 @@ public class StudentManager {
     
     private final DataSource dataSource;
     
-    /*
-    public StudentManager () {
-        this.dataSource = null;
-    }
-    */
     
     public StudentManager (DataSource dataSource) {
         this.dataSource = dataSource;

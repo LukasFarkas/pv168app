@@ -50,7 +50,7 @@ public class Student {
         this.level = level;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     
