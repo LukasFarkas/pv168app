@@ -77,19 +77,19 @@ public class StudentManager {
         if (keyRS.next()) {
             if (keyRS.getMetaData().getColumnCount() != 1) {
                 throw new ServiceFailureException("Internal Error: Generated key"
-                        + "retriving failed when trying to insert grave " + student
+                        + "retriving failed when trying to insert student " + student
                         + " - wrong key fields count: " + keyRS.getMetaData().getColumnCount());
             }
             Long result = keyRS.getLong(1);
             if (keyRS.next()) {
                 throw new ServiceFailureException("Internal Error: Generated key"
-                        + "retriving failed when trying to insert grave " + student
+                        + "retriving failed when trying to insert student " + student
                         + " - more keys found");
             }
             return result;
         } else {
             throw new ServiceFailureException("Internal Error: Generated key"
-                    + "retriving failed when trying to insert grave " + student
+                    + "retriving failed when trying to insert student " + student
                     + " - no key found");
         }
     }
@@ -145,6 +145,7 @@ public class StudentManager {
             st.setString(1, student.getFullName());
             st.setInt(2, student.getLevel());
             st.setString(3, student.getDetails());
+                // param should be = 4 ???
             st.setLong(5, student.getId());
 
             int count = st.executeUpdate();

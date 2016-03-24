@@ -7,6 +7,7 @@ package cz.muni.fi.pv168.pv168project.app;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  *
@@ -14,12 +15,21 @@ import java.time.LocalDateTime;
  */
 public class Lesson {
     
-    public LocalDateTime start;
-    public int duration;
-    public BigDecimal price;
-    public String notes;
-    public Teacher teacher;
-    public Student student;
+    private LocalDateTime start;
+    private int duration;
+    private BigDecimal price;
+    private String notes;
+    private Teacher teacher;
+    private Student student;
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDateTime getStart() {
         return start;
@@ -67,6 +77,34 @@ public class Lesson {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+    
+    @Override
+    public String toString() {
+        return "Lesson{" + "id=" + id + '}' + "teacher-student" + getTeacher() + "-" + getStudent();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        // should comapre IDs or teacher-student 
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (this.id == null && this != obj) {
+            // this is a special case - two entities without id assigned yet
+            // should be evaluated as non equal
+            return false;
+        }
+        final Lesson other = (Lesson) obj;
+        return Objects.equals(this.id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     
