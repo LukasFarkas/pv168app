@@ -7,7 +7,10 @@ package cz.muni.fi.pv168.pv168project.app;
 
 
 import cz.muni.fi.pv168.common.DBUtils;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.*;
+import static java.time.Month.*;
 import javax.sql.DataSource;
 import org.apache.derby.jdbc.EmbeddedDataSource;
 import org.junit.*;
@@ -22,6 +25,9 @@ public class LessonManagerTest {
 
     private LessonManager manager;
     private DataSource ds;
+    
+    private final static ZonedDateTime NOW
+            = LocalDateTime.of(2016, MAY, 29, 14, 00).atZone(ZoneId.of("UTC"));
 
     // ExpectedException is one possible mechanisms for testing if expected
     // exception is thrown. See createGraveWithExistingId() for usage example.
@@ -42,108 +48,90 @@ public class LessonManagerTest {
         return ds;
     }
 
+    private static Clock prepareClockMock(ZonedDateTime now) {
+        // We don't need to use Mockito, because java already contais
+        // implementation of Clock which returns fixed time.
+        return Clock.fixed(now.toInstant(), now.getZone());
+    }
+        
     @Before
     public void setUp() throws SQLException {
         ds = prepareDataSource();
-        DBUtils.executeSqlScript(ds,AgencyManager.class.getResource("createTables.sql"));
-        manager = new GraveManagerImpl();
+        DBUtils.executeSqlScript(ds,LessonManager.class.getResource("createTables.sql"));
+        manager = new LessonManager(prepareClockMock(NOW));
         manager.setDataSource(ds);
     }
 
     @After
     public void tearDown() throws SQLException {
         // Drop tables after each test
-        DBUtils.executeSqlScript(ds,GraveManager.class.getResource("dropTables.sql"));
+        DBUtils.executeSqlScript(ds,LessonManager.class.getResource("dropTables.sql"));
     }
 
-    //--------------------------------------------------------------------------
-    // Preparing test data
-    //--------------------------------------------------------------------------
-
-    // We will need to create some Grave instances for testing purposes. We
-    // could create constructor or helper method for initializing all fields,
-    // but this is not well readable, especially for cases with multiple
-    // parameters of the same type:
-    //
-    // Grave grave = new Grave(12,13,1,"Small Grave"); // constructoor
-    // Grave grave = newGrave(12,13,1,"Small Grave");  // helper method
-    //
-    // To understand this code, you need to know or look, what is the order and
-    // meaning of parameters. And it will be difficult to maintain the code when
-    // some new attributes are introduced. Another option is to use set methods:
-    //
-    // Grave grave = new Grave();
-    // grave.setColumn(12);
-    // grave.setRow(13);
-    // grave.setCapacity(1);
-    // grave.setNote("Small Grave");
-    //
-    // This is better understandable, but it needs too much code to construct
-    // the object. Alternative solution is to use Builder pattern:
-    //
-    // Grave grave = new GraveBuilder().column(12).row(13).note("Small Grave").build();
-    //
-    // Advantage of builder pattern is compact syntax based on fluent API,
-    // clear assigment of values to attribute names and flexibility allowing to
-    // set only arbitrary subset of attributes (and keeping default values for
-    // others). Disadvantage of builder pattern is the need to create and
-    // maintain builder class. See Item 2 in Effective Java from Joshua Bloch
-    // for more details.
-    //
-    // To make creation of test objects even easier, we can prepare some
-    // pre-configured builders with some reasonable default attribute values
-    // (see sampleSmallGraveBuilder() and sampleBigGraveBuilder() bellow).
-    // These values can be changed by subsequent calls of appropriate builder
-    // method if needed.
-    //
-    // Grave graveWithExistingId = sampleSmallGraveBuilder().id(12L).build();
-    //
-    // This mechanism allows us to focus only to attributes important for given
-    // test and use some universal reasonable value for other attribute. For
-    // example, we don't need to use some specific attribute values for
-    // createGrave() test, this test works well with any valid values.
-
-    private GraveBuilder sampleSmallGraveBuilder() {
-        return new GraveBuilder()
-                .id(null)
-                .column(12)
-                .row(13)
-                .capacity(1)
-                .note("Small Grave");
+   
+    
+    // creating lesson entities for testing
+    
+    /**
+     * Creates sample lesson with sample data.
+     * @return 
+     */
+    private Lesson newLesson(){
+        return newLesson(LocalDateTime.from(NOW), 2, BigDecimal.valueOf(250), 
+                "First lesson ever", 1L, 1L, Long.MAX_VALUE);
     }
-
-    private GraveBuilder sampleBigGraveBuilder() {
-        return new GraveBuilder()
-                .id(null)
-                .column(22)
-                .row(27)
-                .capacity(6)
-                .note("Big Grave");
+    /**
+     * Creates new lesson with givin prameters.
+     * @param start
+     * @param duration
+     * @param price
+     * @param notes
+     * @param teacherId
+     * @param studentId
+     * @param id
+     * @return 
+     */
+    private Lesson newLesson(LocalDateTime start, int duration, BigDecimal price,
+                String notes, Long teacherId, Long studentId, Long id) {
+        Lesson newLesson = new Lesson();
+        newLesson.setDuration(duration);
+        newLesson.setId(id);
+        newLesson.setNotes(notes);
+        newLesson.setPrice(price);
+        newLesson.setStart(start);
+        newLesson.setStudentId(studentId);
+        newLesson.setTeacherId(teacherId);
+        return newLesson;
     }
+    
+    
+    
+    //Simple tests:
+
 
     //--------------------------------------------------------------------------
     // Tests for operations for creating and fetching graves
     //--------------------------------------------------------------------------
 
     @Test
-    public void createGrave() {
-        Grave grave = sampleSmallGraveBuilder().build();
-        manager.createGrave(grave);
+    public void createLesson() {
+        Lesson lesson = newLesson();
+        manager.createLesson(lesson);
 
-        Long graveId = grave.getId();
-        assertThat(graveId).isNotNull();
+        Long lessonId = lesson.getId();
+        assertThat(lessonId).isNotNull();
 
-        assertThat(manager.getGrave(graveId))
-                .isNotSameAs(grave)
-                .isEqualToComparingFieldByField(grave);
+        assertThat(manager.getLesson(lessonId))
+                .isNotSameAs(lesson)
+                .isEqualToComparingFieldByField(lesson);
     }
 
     @Test
-    public void findAllGraves() {
+    public void findAllLessons() {
 
-        assertThat(manager.findAllGraves()).isEmpty();
+        assertThat(manager.findAllLessons()).isEmpty();
 
-        Grave g1 = sampleSmallGraveBuilder().build();
+        Grave g1 = newLesson().build();
         Grave g2 = sampleBigGraveBuilder().build();
 
         manager.createGrave(g1);
@@ -165,7 +153,7 @@ public class LessonManagerTest {
     // Test exception with ExpectedException @Rule
     @Test
     public void createGraveWithExistingId() {
-        Grave grave = sampleSmallGraveBuilder().id(1L).build();
+        Grave grave = newLesson().id(1L).build();
         expectedException.expect(IllegalEntityException.class);
         manager.createGrave(grave);
     }
@@ -174,35 +162,35 @@ public class LessonManagerTest {
     // this requires Java 8 due to using lambda expression
     @Test
     public void createGraveWithNegativeColumn() {
-        Grave grave = sampleSmallGraveBuilder().column(-1).build();
+        Grave grave = newLesson().column(-1).build();
         assertThatThrownBy(() -> manager.createGrave(grave))
                 .isInstanceOf(ValidationException.class);
     }
 
     @Test
     public void createGraveWithNegativeRow() {
-        Grave grave = sampleSmallGraveBuilder().row(-1).build();
+        Grave grave = newLesson().row(-1).build();
         expectedException.expect(ValidationException.class);
         manager.createGrave(grave);
     }
 
     @Test
     public void createGraveWithNegativeCapacity() {
-        Grave grave = sampleSmallGraveBuilder().capacity(-1).build();
+        Grave grave = newLesson().capacity(-1).build();
         expectedException.expect(ValidationException.class);
         manager.createGrave(grave);
     }
 
     @Test
     public void createGraveWithZeroCapacity() {
-        Grave grave = sampleSmallGraveBuilder().capacity(0).build();
+        Grave grave = newLesson().capacity(0).build();
         expectedException.expect(ValidationException.class);
         manager.createGrave(grave);
     }
 
     @Test
     public void createGraveWithZeroColumn() {
-        Grave grave = sampleSmallGraveBuilder().column(0).build();
+        Grave grave = newLesson().column(0).build();
         manager.createGrave(grave);
 
         assertThat(manager.getGrave(grave.getId()))
@@ -212,7 +200,7 @@ public class LessonManagerTest {
 
     @Test
     public void createGraveWithZeroRow() {
-        Grave grave = sampleSmallGraveBuilder().row(0).build();
+        Grave grave = newLesson().row(0).build();
         manager.createGrave(grave);
 
         assertThat(manager.getGrave(grave.getId()))
@@ -222,7 +210,7 @@ public class LessonManagerTest {
 
     @Test
     public void createGraveWithNullNote() {
-        Grave grave = sampleSmallGraveBuilder().note(null).build();
+        Grave grave = newLesson().note(null).build();
         manager.createGrave(grave);
 
         assertThat(manager.getGrave(grave.getId()))
@@ -239,7 +227,7 @@ public class LessonManagerTest {
         // Let us create two graves, one will be used for testing the update
         // and another one will be used for verification that other objects are
         // not affected by update operation
-        Grave graveForUpdate = sampleSmallGraveBuilder().build();
+        Grave graveForUpdate = newLesson().build();
         Grave anotherGrave = sampleBigGraveBuilder().build();
         manager.createGrave(graveForUpdate);
         manager.createGrave(anotherGrave);
@@ -280,7 +268,7 @@ public class LessonManagerTest {
     // The method is almost the same as updateGraveColumn(), the only difference
     // is the line with calling given updateOperation.
     private void testUpdateGrave(Operation<Grave> updateOperation) {
-        Grave sourceGrave = sampleSmallGraveBuilder().build();
+        Grave sourceGrave = newLesson().build();
         Grave anotherGrave = sampleBigGraveBuilder().build();
         manager.createGrave(sourceGrave);
         manager.createGrave(anotherGrave);
@@ -328,21 +316,21 @@ public class LessonManagerTest {
 
     @Test
     public void updateGraveWithNullId() {
-        Grave grave = sampleSmallGraveBuilder().id(null).build();
+        Grave grave = newLesson().id(null).build();
         expectedException.expect(IllegalEntityException.class);
         manager.updateGrave(grave);
     }
 
     @Test
     public void updateGraveWithNonExistingId() {
-        Grave grave = sampleSmallGraveBuilder().id(1L).build();
+        Grave grave = newLesson().id(1L).build();
         expectedException.expect(IllegalEntityException.class);
         manager.updateGrave(grave);
     }
 
     @Test
     public void updateGraveWithNegativeColumn() {
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
         manager.createGrave(grave);
         grave.setColumn(-1);
         expectedException.expect(ValidationException.class);
@@ -351,7 +339,7 @@ public class LessonManagerTest {
 
     @Test
     public void updateGraveWithNegativeRow() {
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
         manager.createGrave(grave);
         grave.setRow(-1);
         expectedException.expect(ValidationException.class);
@@ -360,7 +348,7 @@ public class LessonManagerTest {
 
     @Test
     public void updateGraveWithZeroCapacity() {
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
         manager.createGrave(grave);
         grave.setCapacity(0);
         expectedException.expect(ValidationException.class);
@@ -369,7 +357,7 @@ public class LessonManagerTest {
 
     @Test
     public void updateGraveWithNegativeCapacity() {
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
         manager.createGrave(grave);
         grave.setCapacity(-1);
         expectedException.expect(ValidationException.class);
@@ -383,7 +371,7 @@ public class LessonManagerTest {
     @Test
     public void deleteGrave() {
 
-        Grave g1 = sampleSmallGraveBuilder().build();
+        Grave g1 = newLesson().build();
         Grave g2 = sampleBigGraveBuilder().build();
         manager.createGrave(g1);
         manager.createGrave(g2);
@@ -408,14 +396,14 @@ public class LessonManagerTest {
 
     @Test
     public void deleteGraveWithNullId() {
-        Grave grave = sampleSmallGraveBuilder().id(null).build();
+        Grave grave = newLesson().id(null).build();
         expectedException.expect(IllegalEntityException.class);
         manager.deleteGrave(grave);
     }
 
     @Test
     public void deleteGraveWithNonExistingId() {
-        Grave grave = sampleSmallGraveBuilder().id(1L).build();
+        Grave grave = newLesson().id(1L).build();
         expectedException.expect(IllegalEntityException.class);
         manager.deleteGrave(grave);
     }
@@ -439,7 +427,7 @@ public class LessonManagerTest {
         manager.setDataSource(failingDataSource);
 
         // Create Grave instance for our test
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
 
         // Try to call Manager.createGrave(Grave) method and expect that
         // exception will be thrown
@@ -466,21 +454,21 @@ public class LessonManagerTest {
 
     @Test
     public void updateGraveWithSqlExceptionThrown() throws SQLException {
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
         manager.createGrave(grave);
         testExpectedServiceFailureException((graveManager) -> graveManager.updateGrave(grave));
     }
 
     @Test
     public void getGraveWithSqlExceptionThrown() throws SQLException {
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
         manager.createGrave(grave);
         testExpectedServiceFailureException((graveManager) -> graveManager.getGrave(grave.getId()));
     }
 
     @Test
     public void deleteGraveWithSqlExceptionThrown() throws SQLException {
-        Grave grave = sampleSmallGraveBuilder().build();
+        Grave grave = newLesson().build();
         manager.createGrave(grave);
         testExpectedServiceFailureException((graveManager) -> graveManager.deleteGrave(grave));
     }
