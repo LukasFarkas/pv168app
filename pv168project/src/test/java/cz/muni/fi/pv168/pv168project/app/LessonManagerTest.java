@@ -57,7 +57,7 @@ public class LessonManagerTest {
     @Before
     public void setUp() throws SQLException {
         ds = prepareDataSource();
-        DBUtils.executeSqlScript(ds,LessonManager.class.getResource("createTables.sql"));
+        DBUtils.executeSqlScript(ds,AgencyManager.class.getResource("createTables.sql"));
         manager = new LessonManager(prepareClockMock(NOW));
         manager.setDataSource(ds);
     }
@@ -131,15 +131,16 @@ public class LessonManagerTest {
 
         assertThat(manager.findAllLessons()).isEmpty();
 
-        Grave g1 = newLesson().build();
-        Grave g2 = sampleBigGraveBuilder().build();
+        Lesson l1 = newLesson();
+        Lesson l2 = newLesson(LocalDateTime.MAX, 3, BigDecimal.valueOf(200), 
+                "Second lesson ever", 2L, 2L, Long.MAX_VALUE-1); //should with some different values
 
-        manager.createGrave(g1);
-        manager.createGrave(g2);
+        manager.createLesson(l1);
+        manager.createLesson(l2);
 
-        assertThat(manager.findAllGraves())
+        assertThat(manager.findAllLessons())
                 .usingFieldByFieldElementComparator()
-                .containsOnly(g1,g2);
+                .containsOnly(l1,l2);
     }
 
     // Test exception with expected parameter of @Test annotation
@@ -147,9 +148,9 @@ public class LessonManagerTest {
     // is expected, therefor it is suitable only for simple single line tests
     @Test(expected = IllegalArgumentException.class)
     public void createNullGrave() {
-        manager.createGrave(null);
+        manager.createLesson(null);
     }
-
+/*
     // Test exception with ExpectedException @Rule
     @Test
     public void createGraveWithExistingId() {
@@ -477,5 +478,5 @@ public class LessonManagerTest {
     public void findAllGravesWithSqlExceptionThrown() throws SQLException {
         testExpectedServiceFailureException((graveManager) -> graveManager.findAllGraves());
     }
-
+*/
 }
