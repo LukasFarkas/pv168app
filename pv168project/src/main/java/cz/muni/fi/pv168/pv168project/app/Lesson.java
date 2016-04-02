@@ -19,8 +19,8 @@ public class Lesson {
     private int duration;
     private BigDecimal price;
     private String notes;
-    private Teacher teacher;
-    private Student student;
+    private Long teacherId;
+    private Long studentId;
     private Long id;
 
     public Long getId() {
@@ -47,12 +47,12 @@ public class Lesson {
         return notes;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Long getTeacherId() {
+        return teacherId;
     }
 
-    public Student getStudent() {
-        return student;
+    public Long getStudentId() {
+        return studentId;
     }
 
     public void setStart(LocalDateTime start) {
@@ -71,17 +71,19 @@ public class Lesson {
         this.notes = notes;
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
     }
+
+    
     
     @Override
     public String toString() {
-        return "Lesson{" + "id=" + id + '}' + "teacher-student" + getTeacher() + "-" + getStudent();
+        return "Lesson{" + "id=" + id + '}' + "teacher-student" + getTeacherId() + "-" + getStudentId();
     }
 
     @Override
