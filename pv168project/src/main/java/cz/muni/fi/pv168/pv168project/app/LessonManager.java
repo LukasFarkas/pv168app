@@ -7,13 +7,12 @@ package cz.muni.fi.pv168.pv168project.app;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +24,17 @@ import javax.sql.DataSource;
  */
 public class LessonManager {
     
-    private final DataSource dataSource;
-        // need to make managers static or just initialize them first in main method ???
-    private TeacherManager tm = null;
-    private StudentManager sm = null;
+    private DataSource dataSource;
     
-    public LessonManager (DataSource datasource) {
-        this.dataSource = datasource;
+    private final Clock clock;
+
+    public LessonManager(Clock clock) {
+        this.clock = clock;
+    }
+
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
     
     private void validate(Lesson lesson) throws IllegalArgumentException {
@@ -47,10 +50,10 @@ public class LessonManager {
         if (lesson.getPrice().doubleValue() < 0 ) {
             throw new IllegalArgumentException ("price is negative.");
         }
-        if (lesson.getTeacher() == null) {
+        if (lesson.getTeacherId() == null) {
             throw new IllegalArgumentException("Teacher is null.");
         }
-        if (lesson.getStudent() == null) {
+        if (lesson.getStudentId() == null) {
             throw new IllegalArgumentException("Student is null.");
         }
     }
@@ -70,8 +73,8 @@ public class LessonManager {
             st.setInt(2, lesson.getDuration());
             st.setString(3, lesson.getPrice().toPlainString());
             st.setString(4, lesson.getNotes());
-            st.setLong (5, lesson.getTeacher().getId());
-            st.setLong (6, lesson.getStudent().getId());
+            st.setLong (5, lesson.getTeacherId());
+            st.setLong (6, lesson.getStudentId());
             
             
             int addedRows = st.executeUpdate();
@@ -213,8 +216,8 @@ public class LessonManager {
             // need to check if new object doesn't cause stack overflow 
         lesson.setPrice(new BigDecimal(rs.getString("price")));
         lesson.setNotes(rs.getString("notes"));
-        lesson.setTeacher(tm.getTeacher(rs.getLong("teacher")));
-        lesson.setStudent(sm.getStudent(rs.getLong("student")));
+        lesson.setTeacherId(rs.getLong("teacher"));
+        lesson.setStudentId(rs.getLong("student"));
         return lesson;
     }
     
@@ -232,8 +235,8 @@ public class LessonManager {
             st.setInt(2, lesson.getDuration());
             st.setString(3, lesson.getPrice().toPlainString());
             st.setString(4, lesson.getNotes());
-            st.setLong(5, lesson.getTeacher().getId());
-            st.setLong(6, lesson.getStudent().getId());
+            st.setLong(5, lesson.getTeacherId());
+            st.setLong(6, lesson.getStudentId());
                 // to look at, not sure if works
             st.setLong(7, lesson.getId());
 
