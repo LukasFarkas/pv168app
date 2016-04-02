@@ -19,8 +19,8 @@ public class Lesson {
     private int duration;
     private BigDecimal price;
     private String notes;
-    private Long teacherId;
-    private Long studentId;
+    private Long teacherId; //metoda ktera bude vytvared lesson mi nastavi kdo s kym tu lekci ma
+    private Long studentId; //udelal jsem z toho id abych se zbavil nutnosti mit v lesson managerovi teacher a student managera
     private Long id;
 
     public Long getId() {

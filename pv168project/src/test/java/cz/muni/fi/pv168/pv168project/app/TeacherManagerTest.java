@@ -5,11 +5,15 @@
  */
 package cz.muni.fi.pv168.pv168project.app;
 
+import cz.muni.fi.pv168.common.DBUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.sql.SQLException;
+import javax.sql.DataSource;
+import org.apache.derby.jdbc.EmbeddedDataSource;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,24 +25,45 @@ import static org.junit.Assert.*;
  * @author L
  */
 public class TeacherManagerTest {
-    /*
+    
     private TeacherManager manager;
+    
+    private DataSource ds;
 
     @Rule
-    // attribute annotated with @Rule annotation must be public :-(
     public ExpectedException expectedException = ExpectedException.none();
     
-    @Before
-    public void setUp() throws Exception {
-        TeacherManager manager = new TeacherManager();
+    private static DataSource prepareDataSource() throws SQLException {
+        EmbeddedDataSource ds = new EmbeddedDataSource();
+        
+        ds.setDatabaseName("memory:lessonmanager-test");
+        
+        ds.setCreateDatabase("create");
+        return ds;
     }
+
+    @Before
+    public void setUp() throws SQLException {
+        ds = prepareDataSource();
+        DBUtils.executeSqlScript(ds,LessonManager.class.getResource("createTables.sql"));
+        manager = new TeacherManager();
+        manager.setDataSource(ds);
+    }
+
+    @After
+    public void tearDown() throws SQLException {
+        // Drop tables after each test
+        DBUtils.executeSqlScript(ds,LessonManager.class.getResource("dropTables.sql"));
+    }
+    
+    //Simple tests:
 
     @Test
     public void createTeacher() {
         Teacher teacher = newTeacher("Mr Peepants", "", 4, (long) 5);
         manager.createTeacher(teacher);
 
-        Long teacherId = teacher.getTeacherId();
+        Long teacherId = teacher.getId();
         assertNotNull(teacherId);
         Teacher result = manager.getTeacher(teacherId);
         assertEquals(teacher, result);
@@ -52,13 +77,13 @@ public class TeacherManagerTest {
         manager.createTeacher(t1);
         manager.createTeacher(t2);
 
-        assertNotNull(manager.getTeacher(t1.getTeacherId()));
-        assertNotNull(manager.getTeacher(t2.getTeacherId()));
+        assertNotNull(manager.getTeacher(t1.getId()));
+        assertNotNull(manager.getTeacher(t2.getId()));
 
-        manager.deleteTeacher(t1.teacherId);
+        manager.deleteTeacher(t1);
 
-        assertNull(manager.getTeacher(t1.getTeacherId()));
-        assertNotNull(manager.getTeacher(t2.getTeacherId()));
+        assertNull(manager.getTeacher(t1.getId()));
+        assertNotNull(manager.getTeacher(t2.getId()));
 
         
     }
@@ -72,9 +97,9 @@ public class TeacherManagerTest {
     @Test
     public void deleteTeacherWithNonExistingId() {
         Teacher teacher = newTeacher("","",2,(long) 10);
-        teacher.setTeacherId(1L);
+        teacher.setId(1L);
         expectedException.expect(EntityNotFoundException.class);
-        manager.deleteTeacher(teacher.getTeacherId());
+        manager.deleteTeacher(teacher);
     }
     
     
@@ -83,8 +108,8 @@ public class TeacherManagerTest {
         teacher.setFullName(fullName);
         teacher.setDetails(details);
         teacher.setLevel(level);
-        teacher.setTeacherId(teacherId);
+        teacher.setId(teacherId);
         return teacher;
     }
-    */
+    
 }

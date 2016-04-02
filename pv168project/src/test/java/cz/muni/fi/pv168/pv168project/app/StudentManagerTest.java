@@ -45,6 +45,7 @@ public class StudentManagerTest {
                     + "level int,"
                     + "details varchar(50))").executeUpdate();
         }
+        
         manager = new StudentManager(datasource);
     }
     

@@ -20,11 +20,12 @@ import javax.sql.DataSource;
  */
 public class TeacherManager {
     
-    private final DataSource dataSource;
-    
-    public TeacherManager (DataSource dataSource) {
+    private DataSource dataSource;
+
+    public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+    
     
     private void validate(Teacher teacher) throws IllegalArgumentException {
         if (teacher == null) {

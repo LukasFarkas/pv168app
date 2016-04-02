@@ -181,7 +181,7 @@ public class StudentManager {
         }
     }
     
-    public List<Student> findAllStudent() throws ServiceFailureException {
+    public List<Student> findAllStudents() throws ServiceFailureException {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement st = connection.prepareStatement(

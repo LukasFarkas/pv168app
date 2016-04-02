@@ -62,7 +62,7 @@ public class LessonManager {
         if (lesson.getId() != null) {
             throw new IllegalArgumentException("lesson id is already set");
         }
-        
+        validate(lesson);
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement st = connection.prepareStatement(
@@ -278,7 +278,7 @@ public class LessonManager {
         }
     }
     
-    public List<Lesson> findAllLesson() throws ServiceFailureException {
+    public List<Lesson> findAllLessons() throws ServiceFailureException {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement st = connection.prepareStatement(
