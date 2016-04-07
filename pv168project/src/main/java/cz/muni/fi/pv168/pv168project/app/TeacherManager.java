@@ -52,8 +52,8 @@ public class TeacherManager {
         if (teacher.getFullName() == null) {
             throw new ValidationException("name is null");
         }
-        if (teacher.getLevel() <= 0) {
-            throw new ValidationException("level is negative number");
+        if (teacher.getSkill() <= 0) {
+            throw new ValidationException("skill is negative number");
         }
         if (!isMember(teacher.getRegion()))
             throw new ValidationException("region is not permitted");
@@ -79,10 +79,10 @@ public class TeacherManager {
             conn.setAutoCommit(false);
             
             st = conn.prepareStatement(
-                    "INSERT INTO Teacher (fullName,level,region,price) VALUES (?,?,?,?)",
+                    "INSERT INTO Teacher (fullName,skill,region,price) VALUES (?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             st.setString(1, teacher.getFullName());
-            st.setInt(2, teacher.getLevel());
+            st.setInt(2, teacher.getSkill());
             st.setString(3, teacher.getRegion().toString());
             st.setBigDecimal(4, teacher.getPrice().setScale(2));
             
@@ -114,7 +114,7 @@ public class TeacherManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,fullName,level,region,price FROM Teacher WHERE id = ?");
+                    "SELECT id,fullName,skill,region,price FROM Teacher WHERE id = ?");
             st.setLong(1, id);
             return executeQueryForSingleTeacher(st);
         } catch (SQLException ex) {
@@ -139,8 +139,8 @@ public class TeacherManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,fullName,level,region,price FROM Teacher WHERE level >= ?, region = ?, price <= ?");
-            st.setInt(1, student.getLevel());
+                    "SELECT id,fullName,skill,region,price FROM Teacher WHERE skill >= ?, region = ?, price <= ?");
+            st.setInt(1, student.getSkill());
             st.setString(2, student.getRegion().toString());
             st.setBigDecimal(3, student.getPrice().setScale(2));
             
@@ -169,9 +169,9 @@ public class TeacherManager {
             // method DBUtils.closeQuietly(...) 
             conn.setAutoCommit(false);            
             st = conn.prepareStatement(
-                    "UPDATE Teacher SET fullName = ?, level = ?, region = ?, price = ? WHERE id = ?");
+                    "UPDATE Teacher SET fullName = ?, skill = ?, region = ?, price = ? WHERE id = ?");
             st.setString(1, teacher.getFullName());
-            st.setInt(2, teacher.getLevel());
+            st.setInt(2, teacher.getSkill());
             st.setString(3, teacher.getRegion().toString());
             st.setBigDecimal(4, teacher.getPrice().setScale(2));
             
@@ -230,7 +230,7 @@ public class TeacherManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,fullName,level,region,price FROM Teacher");
+                    "SELECT id,fullName,skill,region,price FROM Teacher");
             return executeQueryForMultipleTeachers(st);
         } catch (SQLException ex) {
             String msg = "Error when getting all teachers from DB";
@@ -249,7 +249,7 @@ public class TeacherManager {
             conn = dataSource.getConnection();
             // NOT SURE IF WORKS - HAVE NOT TRIED IT YET
             st = conn.prepareStatement(
-                    "SELECT id,fullName,level,region,price FROM Teacher WHERE id NOT IN (SELECT student FROM lesson) ");
+                    "SELECT id,fullName,skill,region,price FROM Teacher WHERE id NOT IN (SELECT student FROM lesson) ");
             return executeQueryForMultipleTeachers(st);
         } catch (SQLException ex) {
             String msg = "Error when getting all free teachers from DB";

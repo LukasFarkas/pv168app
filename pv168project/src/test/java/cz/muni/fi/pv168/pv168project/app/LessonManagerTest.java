@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.*;
 import static java.time.Month.*;
+import java.util.List;
 import javax.sql.DataSource;
 import org.apache.derby.jdbc.EmbeddedDataSource;
 import org.junit.*;
@@ -76,26 +77,26 @@ public class LessonManagerTest {
     
     private void prepareTestData() {
 
-        sLowLevel = new StudentBuilder().fullName("Jozko Mamradmrkvu").level(2).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
-        sHighLevel = new StudentBuilder().fullName("Bo Borovsky").level(8).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
+        sLowLevel = new StudentBuilder().fullName("Jozko Mamradmrkvu").skill(2).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
+        sHighLevel = new StudentBuilder().fullName("Bo Borovsky").skill(8).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
         
-        sLowPrice = new StudentBuilder().fullName("La Lfsf").level(4).price(BigDecimal.valueOf(100.00).setScale(2)).region(Region.ENGLAND).build();
-        sHighPrice = new StudentBuilder().fullName("Pu Papi").level(4).price(BigDecimal.valueOf(800.00).setScale(2)).region(Region.ENGLAND).build();
+        sLowPrice = new StudentBuilder().fullName("La Lfsf").skill(4).price(BigDecimal.valueOf(100.00).setScale(2)).region(Region.ENGLAND).build();
+        sHighPrice = new StudentBuilder().fullName("Pu Papi").skill(4).price(BigDecimal.valueOf(800.00).setScale(2)).region(Region.ENGLAND).build();
         
-        sBadCountry = new StudentBuilder().fullName("Igi Ga").level(4).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.INDIA).build();
+        sBadCountry = new StudentBuilder().fullName("Igi Ga").skill(4).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.INDIA).build();
         
-        sAverage = new StudentBuilder().fullName("Petka Plastova").level(4).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
+        sAverage = new StudentBuilder().fullName("Petka Plastova").skill(4).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
         
         
-        tLowLevel = new TeacherBuilder().fullName("Bozkov Bolehlav").level(2).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
-        tHighLevel = new TeacherBuilder().fullName("Tequila Blanco").level(8).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
+        tLowLevel = new TeacherBuilder().fullName("Bozkov Bolehlav").skill(2).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
+        tHighLevel = new TeacherBuilder().fullName("Tequila Blanco").skill(8).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
         
-        tLowPrice = new TeacherBuilder().fullName("Rasputin Iny").level(4).price(BigDecimal.valueOf(100.00).setScale(2)).region(Region.ENGLAND).build();
-        tHighPrice = new TeacherBuilder().fullName("Rychla Smrt").level(4).price(BigDecimal.valueOf(800.00).setScale(2)).region(Region.ENGLAND).build();
+        tLowPrice = new TeacherBuilder().fullName("Rasputin Iny").skill(4).price(BigDecimal.valueOf(100.00).setScale(2)).region(Region.ENGLAND).build();
+        tHighPrice = new TeacherBuilder().fullName("Rychla Smrt").skill(4).price(BigDecimal.valueOf(800.00).setScale(2)).region(Region.ENGLAND).build();
         
-        tAverage = new TeacherBuilder().fullName("Tak Ok").level(4).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
+        tAverage = new TeacherBuilder().fullName("Tak Ok").skill(4).price(BigDecimal.valueOf(400.00).setScale(2)).region(Region.ENGLAND).build();
         
-        tBadCountry = new TeacherBuilder().fullName("lala Opo").level(10).price(BigDecimal.valueOf(200.00).setScale(2)).region(Region.INDIA).build();
+        tBadCountry = new TeacherBuilder().fullName("lala Opo").skill(10).price(BigDecimal.valueOf(200.00).setScale(2)).region(Region.INDIA).build();
         
         
         
@@ -137,7 +138,7 @@ public class LessonManagerTest {
   
     @Test
     public void createLesson() {
-        Lesson body = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).level(7).region(Region.INDIA).student(sHighPrice.getId()).teacher(tHighPrice.getId()).build();
+        Lesson body = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).skill(7).region(Region.INDIA).student(sHighPrice.getId()).teacher(tHighPrice.getId()).build();
         manager.createLesson(body);
 
         Long bodyId = body.getId();
@@ -149,28 +150,28 @@ public class LessonManagerTest {
     }
     
     @Test
-    public void createLessonWithNegativeLevel () {
-        Lesson lesson = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).level(-1).region(Region.INDIA).student(sAverage.getId()).teacher(tAverage.getId()).build();
+    public void createLessonWithNegativeSkill () {
+        Lesson lesson = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).skill(-1).region(Region.INDIA).student(sAverage.getId()).teacher(tAverage.getId()).build();
         assertThatThrownBy(() -> manager.createLesson(lesson))
                 .isInstanceOf(ValidationException.class);
     }
     
     @Test
     public void createLessonWithNullRegion () {
-        Lesson lesson = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).level(5).region(null).student(sAverage.getId()).teacher(tAverage.getId()).build();
+        Lesson lesson = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).skill(5).region(null).student(sAverage.getId()).teacher(tAverage.getId()).build();
         assertThatThrownBy(() -> manager.createLesson(lesson))
                 .isInstanceOf(ValidationException.class);
     }
     
     @Test
     public void createLessonWithNegativePrice () {
-        Lesson lesson = new LessonBuilder().price(BigDecimal.valueOf(800.00).negate().setScale(2)).level(5).region(null).student(sHighLevel.getId()).teacher(tHighLevel.getId()).build();
+        Lesson lesson = new LessonBuilder().price(BigDecimal.valueOf(800.00).negate().setScale(2)).skill(5).region(null).student(sHighLevel.getId()).teacher(tHighLevel.getId()).build();
         expectedException.expect(ValidationException.class);
         manager.createLesson(lesson);
     }
     
     @Test
-    public void makeMatchWithHighLevelStudent () {
+    public void makeMatchWithHighSkillStudent () {
         assertThatThrownBy(() -> manager.makeMatch(tAverage, sHighLevel))
                 .isInstanceOf(ValidationException.class);
     }
@@ -193,8 +194,8 @@ public class LessonManagerTest {
     }
     
     private void testUpdateLesson(Operation<Lesson> updateOperation) {
-        Lesson l1 = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).level(5).region(Region.NORTH_AMERICA).student(sAverage.getId()).teacher(tAverage.getId()).build();
-        Lesson l2 = new LessonBuilder().price(BigDecimal.valueOf(300.00).setScale(2)).level(3).region(Region.RUSSIAN).student(sLowLevel.getId()).teacher(tLowLevel.getId()).build();
+        Lesson l1 = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).skill(5).region(Region.NORTH_AMERICA).student(sAverage.getId()).teacher(tAverage.getId()).build();
+        Lesson l2 = new LessonBuilder().price(BigDecimal.valueOf(300.00).setScale(2)).skill(3).region(Region.RUSSIAN).student(sLowLevel.getId()).teacher(tLowLevel.getId()).build();
         manager.createLesson(l1);
         manager.createLesson(l2);
 
@@ -219,12 +220,11 @@ public class LessonManagerTest {
         testUpdateLesson((grave) -> grave.setPrice(BigDecimal.valueOf(1000.10).setScale(2)));
     }
     
-    
     @Test
     public void matchForTeacher () {
         
-        assertThat(manager.findMatchForTeacher(tBadCountry).get(0))
-                .isEqualToComparingFieldByField(sBadCountry);
+        List <Student> list = manager.findMatchForTeacher(tBadCountry);
+        assertThat(list.get(0)).isEqualToComparingFieldByField(sBadCountry);
     }
     
 }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 public class LessonBuilder {
     private Long id;
-    private int level;
+    private int skill;
     private BigDecimal price;
     private Region region;
     private Long teacher;
@@ -34,8 +34,8 @@ public class LessonBuilder {
         return this;
     }
 
-    public LessonBuilder level(int level) {
-        this.level = level;
+    public LessonBuilder skill(int skill) {
+        this.skill = skill;
         return this;
     }
 
@@ -54,7 +54,7 @@ public class LessonBuilder {
         s.setId(id);
         s.setStudentId(student);
         s.setTeacherId(teacher);
-        s.setLevel(level);
+        s.setSkill(skill);
         s.setRegion(region);
         s.setPrice(price);
         return s;

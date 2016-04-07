@@ -16,19 +16,19 @@ import java.util.Objects;
 public class Lesson {
     
     //private LocalDateTime start;
-    private int level;
+    private int skill;
     private Region region;
     private BigDecimal price;
     private Long teacherId; //metoda ktera bude vytvared lesson mi nastavi kdo s kym tu lekci ma
     private Long studentId; //udelal jsem z toho id abych se zbavil nutnosti mit v lesson managerovi teacher a student managera
     private Long id;
 
-    public int getLevel() {
-        return level;
+    public int getSkill() {
+        return skill;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setSkill(int skill) {
+        this.skill = skill;
     }
 
     public Region getRegion() {

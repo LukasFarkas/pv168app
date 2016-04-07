@@ -17,7 +17,7 @@ public class Teacher {
     private String fullName;
     private Region region;
     private BigDecimal price;
-    private int level;
+    private int skill;
     private Long id;
 
     public Region getRegion() {
@@ -40,8 +40,8 @@ public class Teacher {
         return fullName;
     }
 
-    public int getLevel() {
-        return level;
+    public int getSkill() {
+        return skill;
     }
 
     public Long getId() {
@@ -52,8 +52,8 @@ public class Teacher {
         this.fullName = fullName;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setSkill (int level) {
+        this.skill = level;
     }
 
     public void setId(Long id) {

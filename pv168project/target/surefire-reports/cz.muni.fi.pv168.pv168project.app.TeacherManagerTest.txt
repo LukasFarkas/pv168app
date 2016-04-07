@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: cz.muni.fi.pv168.pv168project.app.TeacherManagerTest
 -------------------------------------------------------------------------------
-Tests run: 24, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.052 sec
+Tests run: 24, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.038 sec

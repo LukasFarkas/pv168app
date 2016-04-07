@@ -72,7 +72,7 @@ public class TeacherManagerTest {
     private Teacher sampleTeacherBozkov () {
         Teacher s = new Teacher();
         s.setFullName("Bozkov Bolehlav");
-        s.setLevel(5);
+        s.setSkill(5);
         s.setPrice(BigDecimal.valueOf(900.00).setScale(2));
         s.setRegion(Region.INDIA);
         return s;
@@ -81,7 +81,7 @@ public class TeacherManagerTest {
     private Teacher sampleTeacherTequila () {
         Teacher s = new Teacher();
         s.setFullName("Tequila Blanco");
-        s.setLevel(7);
+        s.setSkill(7);
         s.setPrice(BigDecimal.valueOf(100.00).setScale(2));
         s.setRegion(Region.NORTH_AMERICA);
         return s;
@@ -158,9 +158,9 @@ public class TeacherManagerTest {
     // This and next test are testing special cases with border values
     // Body died one day before born is not allowed ...
     @Test
-    public void createTeacherWithNegativeLevel() {
+    public void createTeacherWithNegativeSkill() {
         Teacher body = sampleTeacherBozkov();
-        body.setLevel(-4);
+        body.setSkill(-4);
         assertThatThrownBy(() -> manager.createTeacher(body))
                 .isInstanceOf(ValidationException.class);
     }
@@ -191,7 +191,7 @@ public class TeacherManagerTest {
         manager.createTeacher(p);
 
         // Performa the update operation ...
-        j.setLevel(10);
+        j.setSkill(10);
 
         // ... and save updated grave to database
         manager.updateTeacher(j);

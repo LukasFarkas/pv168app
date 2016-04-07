@@ -76,7 +76,7 @@ public class StudentManagerTest {
     private Student sampleStudentJozko () {
         Student s = new Student();
         s.setFullName("Jozko Mamradmrkvu");
-        s.setLevel(2);
+        s.setSkill(2);
         s.setPrice(BigDecimal.valueOf(500.00).setScale(2));
         s.setRegion(Region.INDIA);
         return s;
@@ -85,7 +85,7 @@ public class StudentManagerTest {
     private Student sampleStudentPetka () {
         Student s = new Student();
         s.setFullName("Petka Plastova");
-        s.setLevel(1);
+        s.setSkill(1);
         s.setPrice(BigDecimal.valueOf(200.00).setScale(2));
         s.setRegion(Region.ENGLAND);
         return s;
@@ -164,7 +164,7 @@ public class StudentManagerTest {
     @Test
     public void createStudentWithNegativeLevel() {
         Student body = sampleStudentJozko();
-        body.setLevel(-4);
+        body.setSkill(-4);
         assertThatThrownBy(() -> manager.createStudent(body))
                 .isInstanceOf(ValidationException.class);
     }
@@ -195,7 +195,7 @@ public class StudentManagerTest {
         manager.createStudent(p);
 
         // Performa the update operation ...
-        j.setLevel(10);
+        j.setSkill(10);
 
         // ... and save updated grave to database
         manager.updateStudent(j);

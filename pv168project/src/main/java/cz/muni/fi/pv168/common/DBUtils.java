@@ -221,7 +221,7 @@ public class DBUtils {
             // need to check if new object doesn't cause stack overflow or smt
         lesson.setPrice(rs.getBigDecimal("price").setScale(2));
         lesson.setRegion(Region.valueOf(rs.getString("region")));
-        lesson.setLevel(rs.getInt("level"));
+        lesson.setSkill(rs.getInt("skill"));
         lesson.setTeacherId(rs.getLong("teacherid"));
         lesson.setStudentId(rs.getLong("studentid"));
         return lesson;
@@ -254,7 +254,7 @@ public class DBUtils {
         Student student = new Student();
         student.setId(rs.getLong("id"));
         student.setFullName(rs.getString("fullName"));
-        student.setLevel(rs.getInt("level"));
+        student.setSkill(rs.getInt("skill"));
         student.setRegion(Region.valueOf(rs.getString("region")));
         student.setPrice(rs.getBigDecimal("price").setScale(2));
         return student;
@@ -287,7 +287,7 @@ public class DBUtils {
         Teacher teacher = new Teacher();
         teacher.setId(rs.getLong("id"));
         teacher.setFullName(rs.getString("fullName"));
-        teacher.setLevel(rs.getInt("level"));
+        teacher.setSkill(rs.getInt("skill"));
         teacher.setRegion(Region.valueOf(rs.getString("region")));
         teacher.setPrice(rs.getBigDecimal("price").setScale(2));
         return teacher;

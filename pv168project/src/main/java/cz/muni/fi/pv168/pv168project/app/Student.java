@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class Student {
     private String fullName;
-    private int level;
+    private int skill;
     private BigDecimal price;
     private Region region;
     private Long id;
@@ -40,8 +40,8 @@ public class Student {
         return fullName;
     }
 
-    public int getLevel() {
-        return level;
+    public int getSkill() {
+        return skill;
     }
 
     public Long getId() {
@@ -52,8 +52,8 @@ public class Student {
         this.fullName = fullName;
     }
     
-    public void setLevel(int level) {
-        this.level = level;
+    public void setSkill(int skill) {
+        this.skill = skill;
     }
 
     public void setId(Long id) {

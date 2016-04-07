@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class StudentBuilder {
     private Long id;
     private String fullName;
-    private int level;
+    private int skill;
     private BigDecimal price;
     private Region region;
 
@@ -28,8 +28,8 @@ public class StudentBuilder {
         return this;
     }
 
-    public StudentBuilder level(int level) {
-        this.level = level;
+    public StudentBuilder skill(int skill) {
+        this.skill = skill;
         return this;
     }
 
@@ -47,7 +47,7 @@ public class StudentBuilder {
         Student s = new Student();
         s.setId(id);
         s.setFullName(fullName);
-        s.setLevel(level);
+        s.setSkill(skill);
         s.setRegion(region);
         s.setPrice(price);
         return s;

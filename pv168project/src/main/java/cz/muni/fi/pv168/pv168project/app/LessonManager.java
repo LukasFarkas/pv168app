@@ -55,8 +55,8 @@ public class LessonManager {
         if (lesson == null) {
             throw new IllegalArgumentException("lesson is null");
         }
-        if (lesson.getLevel() < 0) {
-            throw new ValidationException("level value is not permitted");
+        if (lesson.getSkill() < 0) {
+            throw new ValidationException("skill value is not permitted");
         }
         if (!isMember(lesson.getRegion()) ) {
             throw new ValidationException("region is not valid");
@@ -90,11 +90,11 @@ public class LessonManager {
             conn.setAutoCommit(false);
             
             st = conn.prepareStatement(
-                    "INSERT INTO Lesson (level,region,price,teacherid,studentid) VALUES (?,?,?,?,?)",
+                    "INSERT INTO Lesson (skill,region,price,teacherid,studentid) VALUES (?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
             
             
-            st.setInt(1, lesson.getLevel());
+            st.setInt(1, lesson.getSkill());
             st.setString(2, lesson.getRegion().toString());
             st.setBigDecimal(3, lesson.getPrice().setScale(2));
             st.setLong(4, lesson.getTeacherId());
@@ -128,7 +128,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,level,region,price,teacherid,studentid FROM Lesson WHERE id = ?");
+                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE id = ?");
             st.setLong(1, id);
             return executeQueryForSingleLesson(st);
         } catch (SQLException ex) {
@@ -156,7 +156,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,level,region,price,teacherid,studentid FROM Lesson WHERE teacher = ?, student = ?");
+                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE teacher = ?, student = ?");
             st.setLong(1, teacher.getId());
             st.setLong(2, student.getId());
             return executeQueryForSingleLesson(st);
@@ -181,7 +181,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,level,region,price,teacherid,studentid FROM Lesson WHERE teacher = ?");
+                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE teacher = ?");
             return executeQueryForMultipleLessons(st);
         } catch (SQLException ex) {
             String msg = "Error when getting teacher's" + teacher.getId() + "lessons from DB";
@@ -204,7 +204,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,level,region,price,teacherid,studentid FROM Lesson WHERE student = ?");
+                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE student = ?");
             return executeQueryForMultipleLessons(st);
         } catch (SQLException ex) {
             String msg = "Error when getting student's" + student.getId() + "lessons from DB";
@@ -230,9 +230,9 @@ public class LessonManager {
             // method DBUtils.closeQuietly(...) 
             conn.setAutoCommit(false);            
             st = conn.prepareStatement(
-                    "UPDATE Lesson SET level = ?, region = ?, price = ?, teacherid = ?, studentid = ? WHERE id = ?");
+                    "UPDATE Lesson SET skill = ?, region = ?, price = ?, teacherid = ?, studentid = ? WHERE id = ?");
             
-            st.setInt(1, lesson.getLevel());
+            st.setInt(1, lesson.getSkill());
             st.setString(2, lesson.getRegion().toString());
             st.setBigDecimal(3, lesson.getPrice().setScale(2));
             st.setLong(4, lesson.getTeacherId());
@@ -310,8 +310,8 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,fullName,level,region,price FROM Teacher WHERE level >= ?, region = ?, price <= ?");
-            st.setInt(1,student.getLevel());
+                    "SELECT id,fullName,skill,region,price FROM Teacher WHERE skill >= ? AND region = ? AND price <= ?");
+            st.setInt(1,student.getSkill());
             st.setString(2,student.getRegion().toString());
             st.setBigDecimal(3,student.getPrice().setScale(2));
             return executeQueryForMultipleTeachers(st);
@@ -331,8 +331,8 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,fullName,level,region,price FROM Student WHERE level <= ?, region = ?, price >= ?");
-            st.setInt(1,teacher.getLevel());
+                    "SELECT id,fullName,skill,region,price FROM Student WHERE skill <= ? AND region = ? AND price >= ?");
+            st.setInt(1,teacher.getSkill());
             st.setString(2,teacher.getRegion().toString());
             st.setBigDecimal(3,teacher.getPrice().setScale(2));
             return executeQueryForMultipleStudents(st);
@@ -346,7 +346,7 @@ public class LessonManager {
     }
     
     private void matchValidation (Teacher teacher, Student student) throws ValidationException {
-        if (teacher.getLevel() < student.getLevel())
+        if (teacher.getSkill() < student.getSkill())
             throw new ValidationException ("teacher too stupid");
         if (teacher.getPrice().compareTo(student.getPrice()) > 0)
             throw new ValidationException ("student too broke");
@@ -363,7 +363,7 @@ public class LessonManager {
         
         Lesson lesson = new Lesson ();
         // level is set by student (teacher is always >= than student)
-        lesson.setLevel(student.getLevel());
+        lesson.setSkill(student.getSkill());
         // price is set by teacher ... go figure
         lesson.setPrice(teacher.getPrice());
         lesson.setRegion(teacher.getRegion());
