@@ -9,13 +9,9 @@ package cz.muni.fi.pv168.pv168project.app;
  *
  * @author L
  */
-public class AgencyManager {
-    
-    public void findMatch () {
-        
-    }
-    
-    public void makeMatch () {
-        
-    }
+public enum Region {
+    INDIA,
+    RUSSIAN,
+    ENGLAND,
+    NORTH_AMERICA;     
 }

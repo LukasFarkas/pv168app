@@ -5,13 +5,24 @@
  */
 package cz.muni.fi.pv168.pv168project.app;
 
+import cz.muni.fi.pv168.common.DBUtils;
+import static cz.muni.fi.pv168.common.DBUtils.executeQueryForMultipleStudents;
+import static cz.muni.fi.pv168.common.DBUtils.executeQueryForSingleStudent;
+import static cz.muni.fi.pv168.common.DBUtils.isMember;
+import cz.muni.fi.pv168.common.IllegalEntityException;
+import cz.muni.fi.pv168.common.ServiceFailureException;
+import cz.muni.fi.pv168.common.ValidationException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**
@@ -19,55 +30,241 @@ import javax.sql.DataSource;
  * @author L
  */
 public class StudentManager {
+
+    private DataSource dataSource;
     
-    private final DataSource dataSource;
-    
-    
-    public StudentManager (DataSource dataSource) {
+    private static final Logger logger = Logger.getLogger(
+            StudentManager.class.getName());
+
+    public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
     
-    private void validate(Student student) throws IllegalArgumentException {
+    private void checkDataSource() {
+        if (dataSource == null) {
+            throw new IllegalStateException("DataSource is not set");
+        }
+    }
+
+    private void validate(Student student) throws IllegalArgumentException, ValidationException {
         if (student == null) {
             throw new IllegalArgumentException("student is null");
         }
         if (student.getFullName() == null) {
-            throw new IllegalArgumentException();
+            throw new ValidationException("name is null");
         }
         if (student.getLevel() <= 0) {
-            throw new IllegalArgumentException("level is negative number");
+            throw new ValidationException("level is negative number");
         }
+        if (!isMember(student.getRegion()))
+            throw new ValidationException("region is not permitted");
+        if (student.getPrice().setScale(2).signum() == -1 )
+            throw new ValidationException("price is negative number");
     }
     
-    public void createStudent (Student student) throws ServiceFailureException {
+    public void createStudent(Student student) throws ServiceFailureException {
+        checkDataSource();
         validate(student);
+        
         if (student.getId() != null) {
-            throw new IllegalArgumentException("student id is already set");
+            throw new IllegalEntityException("student id is already set");
         }
 
-        try (
-                Connection connection = dataSource.getConnection();
-                PreparedStatement st = connection.prepareStatement(
-                        "INSERT INTO STUDENT (fullName,level,details) VALUES (?,?,?)",
-                        Statement.RETURN_GENERATED_KEYS)) {
-
+        Connection conn = null;
+        PreparedStatement st = null;
+        
+        try {
+            conn = dataSource.getConnection();
+            // Temporary turn autocommit mode off. It is turned back on in 
+            // method DBUtils.closeQuietly(...) 
+            conn.setAutoCommit(false);
+            
+            st = conn.prepareStatement(
+                    "INSERT INTO Student (fullName,level,region,price) VALUES (?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
             st.setString(1, student.getFullName());
             st.setInt(2, student.getLevel());
-            st.setString(3, student.getDetails());
-            int addedRows = st.executeUpdate();
-            if (addedRows != 1) {
-                throw new ServiceFailureException("Internal Error: More rows ("
-                        + addedRows + ") inserted when trying to insert student " + student);
-            }
+            st.setString(3, student.getRegion().toString());
+            st.setBigDecimal(4, student.getPrice().setScale(2));
+            
+            int count = st.executeUpdate();
+            DBUtils.checkUpdatesCount(count, student, true);  
 
-            ResultSet keyRS = st.getGeneratedKeys();
-            student.setId(getKey(keyRS, student));
-
+            Long id = DBUtils.getId(st.getGeneratedKeys());
+            student.setId(id);
+            conn.commit();
         } catch (SQLException ex) {
-            throw new ServiceFailureException("Error when inserting grave " + student, ex);
+            String msg = "Error when inserting student" + student.getId() + "into db";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.doRollbackQuietly(conn);
+            DBUtils.closeQuietly(conn, st);
         }
     }
     
+    public Student getStudent(Long id) throws ServiceFailureException {
+        checkDataSource();
+        
+        if (id == null) {
+            throw new IllegalArgumentException("id is null");
+        }
+        
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = dataSource.getConnection();
+            st = conn.prepareStatement(
+                    "SELECT id,fullName,level,region,price FROM Student WHERE id = ?");
+            st.setLong(1, id);
+            return executeQueryForSingleStudent(st);
+        } catch (SQLException ex) {
+            String msg = "Error when getting student " + id + " from DB";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.closeQuietly(conn, st);
+        }
+    }
+    
+    public List<Student> findMatchForTeacher (Teacher teacher) {
+        // validate in separate class ??
+        //validate();
+        checkDataSource();
+        
+        if (teacher == null) {
+            throw new IllegalArgumentException("teacher is null");
+        }
+        
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = dataSource.getConnection();
+            st = conn.prepareStatement(
+                    "SELECT id,fullName,level,region,price FROM Student WHERE level <= ?, region = ?, price >= ?");
+            st.setInt(1, teacher.getLevel());
+            st.setString (2, teacher.getRegion().toString());
+            st.setBigDecimal(3, teacher.getPrice().setScale(2));
+            
+            return executeQueryForMultipleStudents(st);
+        } catch (SQLException ex) {
+            String msg = "Error when getting match for teacher with id = " + teacher.getId() + " from DB";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.closeQuietly(conn, st);
+        }
+    }
+
+    public void updateStudent(Student student) throws ServiceFailureException {
+        checkDataSource();
+        validate(student);
+        
+        if (student.getId() == null) {
+            throw new IllegalEntityException("student id is null");
+        }        
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = dataSource.getConnection();
+            // Temporary turn autocommit mode off. It is turned back on in 
+            // method DBUtils.closeQuietly(...) 
+            conn.setAutoCommit(false);            
+            st = conn.prepareStatement(
+                    "UPDATE Student SET fullName = ?, level = ?, region = ?, price = ? WHERE id = ?");
+            st.setString(1, student.getFullName());
+            st.setInt(2, student.getLevel());
+            st.setString(3, student.getRegion().toString());
+            st.setBigDecimal(4, student.getPrice().setScale(2));
+            
+            st.setLong(5, student.getId());
+            
+            int count = st.executeUpdate();
+            DBUtils.checkUpdatesCount(count, student, false);
+            conn.commit();
+        } catch (SQLException ex) {
+            String msg = "Error when updating student" + student.getId() + "in the db";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.doRollbackQuietly(conn);
+            DBUtils.closeQuietly(conn, st);
+        }
+    }
+
+    public void deleteStudent(Student student) throws ServiceFailureException {
+        checkDataSource();
+        if (student == null) {
+            throw new IllegalArgumentException("student is null");
+        }        
+        if (student.getId() == null) {
+            throw new IllegalEntityException("student id is null");
+        }        
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = dataSource.getConnection();
+            // Temporary turn autocommit mode off. It is turned back on in 
+            // method DBUtils.closeQuietly(...) 
+            conn.setAutoCommit(false);
+            st = conn.prepareStatement(
+                    "DELETE FROM Student WHERE id = ?");
+            
+            st.setLong(1, student.getId());
+
+            int count = st.executeUpdate();
+            DBUtils.checkUpdatesCount(count, student, false);
+            conn.commit();
+        } catch (SQLException ex) {
+            String msg = "Error when deleting student" + student.getId() + "from the db";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.doRollbackQuietly(conn);
+            DBUtils.closeQuietly(conn, st);
+        }
+    }
+    
+    public List<Student> findAllStudents() throws ServiceFailureException {
+        checkDataSource();
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = dataSource.getConnection();
+            st = conn.prepareStatement(
+                    "SELECT id,fullName,level,region,price FROM Student");
+            return executeQueryForMultipleStudents(st);
+        } catch (SQLException ex) {
+            String msg = "Error when getting all students from DB";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.closeQuietly(conn, st);
+        }          
+    }
+    
+    public List<Student> findAllFreeStudents() {
+        checkDataSource();
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = dataSource.getConnection();
+            // NOT SURE IF WORKS - HAVE NOT TRIED IT YET
+            st = conn.prepareStatement(
+                    "SELECT id,fullName,level,region,price FROM Student WHERE id NOT IN (SELECT student FROM lesson) ");
+            return executeQueryForMultipleStudents(st);
+        } catch (SQLException ex) {
+            String msg = "Error when getting all free students from DB";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.closeQuietly(conn, st);
+        } 
+    }
+
+    
+    
+    /*
     private Long getKey(ResultSet keyRS, Student student) throws ServiceFailureException, SQLException {
         if (keyRS.next()) {
             if (keyRS.getMetaData().getColumnCount() != 1) {
@@ -88,36 +285,7 @@ public class StudentManager {
                     + " - no key found");
         }
     }
-
-    public Student getStudent(Long id) throws ServiceFailureException {
-        try (
-                Connection connection = dataSource.getConnection();
-                PreparedStatement st = connection.prepareStatement(
-                        "SELECT id,fullName,level,details FROM student WHERE id = ?")) {
-
-            st.setLong(1, id);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                Student student = resultSetToStudent(rs);
-
-                if (rs.next()) {
-                    throw new ServiceFailureException(
-                            "Internal error: More entities with the same id found "
-                            + "(source id: " + id + ", found " + student + " and " + resultSetToStudent(rs));
-                }
-
-                return student;
-            } else {
-                return null;
-            }
-
-        } catch (SQLException ex) {
-            throw new ServiceFailureException(
-                    "Error when retrieving student with id " + id, ex);
-        }
-    }
-
+    
     private Student resultSetToStudent(ResultSet rs) throws SQLException {
         Student student = new Student();
         student.setId(rs.getLong("id"));
@@ -125,80 +293,7 @@ public class StudentManager {
         student.setLevel(rs.getInt("level"));
         student.setDetails(rs.getString("details"));
         return student;
-    }
-
-    public void updateStudent(Student student) throws ServiceFailureException {
-        validate(student);
-        if (student.getId() == null) {
-            throw new IllegalArgumentException("student id is null");
-        }
-        try (
-                Connection connection = dataSource.getConnection();
-                PreparedStatement st = connection.prepareStatement(
-                    "UPDATE Student SET fullName = ?, level = ?, details = ? WHERE id = ?")) {
-
-            st.setString(1, student.getFullName());
-            st.setInt(2, student.getLevel());
-            st.setString(3, student.getDetails());
-                // param should be = 4 ???
-            st.setLong(5, student.getId());
-
-            int count = st.executeUpdate();
-            if (count == 0) {
-                throw new EntityNotFoundException("Student " + student + " was not found in database!");
-            } else if (count != 1) {
-                throw new ServiceFailureException("Invalid updated rows count detected (one row should be updated): " + count);
-            }
-        } catch (SQLException ex) {
-            throw new ServiceFailureException(
-                    "Error when updating student " + student, ex);
-        }
-    }
-
-    public void deleteStudent(Student student) throws ServiceFailureException {
-        if (student == null) {
-            throw new IllegalArgumentException("student is null");
-        }
-        if (student.getId() == null) {
-            throw new IllegalArgumentException("student id is null");
-        }
-        try (
-                Connection connection = dataSource.getConnection();
-                PreparedStatement st = connection.prepareStatement(
-                    "DELETE FROM student WHERE id = ?")) {
-
-            st.setLong(1, student.getId());
-
-            int count = st.executeUpdate();
-            if (count == 0) {
-                throw new EntityNotFoundException("Student " + student + " was not found in database!");
-            } else if (count != 1) {
-                throw new ServiceFailureException("Invalid deleted rows count detected (one row should be updated): " + count);
-            }
-        } catch (SQLException ex) {
-            throw new ServiceFailureException(
-                    "Error when updating student " + student, ex);
-        }
-    }
-    
-    public List<Student> findAllStudents() throws ServiceFailureException {
-        try (
-                Connection connection = dataSource.getConnection();
-                PreparedStatement st = connection.prepareStatement(
-                        "SELECT id,fullName,level,details FROM student")) {
-
-            ResultSet rs = st.executeQuery();
-
-            List<Student> result = new ArrayList<>();
-            while (rs.next()) {
-                result.add(resultSetToStudent(rs));
-            }
-            return result;
-
-        } catch (SQLException ex) {
-            throw new ServiceFailureException(
-                    "Error when retrieving all students", ex);
-        }
-    }
-    
+    }   
+*/
 }
+

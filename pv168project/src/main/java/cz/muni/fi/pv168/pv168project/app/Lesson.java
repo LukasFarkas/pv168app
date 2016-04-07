@@ -15,13 +15,30 @@ import java.util.Objects;
  */
 public class Lesson {
     
-    private LocalDateTime start;
-    private int duration;
+    //private LocalDateTime start;
+    private int level;
+    private Region region;
     private BigDecimal price;
-    private String notes;
     private Long teacherId; //metoda ktera bude vytvared lesson mi nastavi kdo s kym tu lekci ma
     private Long studentId; //udelal jsem z toho id abych se zbavil nutnosti mit v lesson managerovi teacher a student managera
     private Long id;
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+    
 
     public Long getId() {
         return id;
@@ -31,20 +48,8 @@ public class Lesson {
         this.id = id;
     }
 
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
     public BigDecimal getPrice() {
         return price;
-    }
-
-    public String getNotes() {
-        return notes;
     }
 
     public Long getTeacherId() {
@@ -55,20 +60,8 @@ public class Lesson {
         return studentId;
     }
 
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public void setTeacherId(Long teacherId) {

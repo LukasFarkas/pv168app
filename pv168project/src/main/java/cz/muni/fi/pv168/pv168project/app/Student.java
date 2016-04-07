@@ -5,6 +5,7 @@
  */
 package cz.muni.fi.pv168.pv168project.app;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,20 +15,29 @@ import java.util.Objects;
  */
 public class Student {
     private String fullName;
-    private String details;
     private int level;
+    private BigDecimal price;
+    private Region region;
     private Long id;
-    
-    public List<Lesson> listAllLessons() {
-        return null;
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
     }
 
     public String getFullName() {
         return fullName;
-    }
-
-    public String getDetails() {
-        return details;
     }
 
     public int getLevel() {
@@ -41,11 +51,7 @@ public class Student {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
+    
     public void setLevel(int level) {
         this.level = level;
     }
