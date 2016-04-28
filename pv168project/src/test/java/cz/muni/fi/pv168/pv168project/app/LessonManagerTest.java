@@ -133,7 +133,7 @@ public class LessonManagerTest {
         
     }
     //--------------------------------------------------------------------------
-    // Testing creating and getting Lessons
+    // Testing creating lesson
     //--------------------------------------------------------------------------
   
     @Test
@@ -170,6 +170,11 @@ public class LessonManagerTest {
         manager.createLesson(lesson);
     }
     
+    //--------------------------------------------------------------------------
+    // Testing making and finding a match
+    //--------------------------------------------------------------------------
+    
+    
     @Test
     public void makeMatchWithHighSkillStudent () {
         assertThatThrownBy(() -> manager.makeMatch(tAverage, sHighLevel))
@@ -187,6 +192,36 @@ public class LessonManagerTest {
         assertThatThrownBy(() -> manager.makeMatch(tAverage, sBadCountry))
                 .isInstanceOf(ValidationException.class);
     }
+    
+    @Test
+    public void makeMatchValid () {
+        manager.makeMatch(tAverage, sAverage);
+        assertThat(manager.getLesson(tAverage, sAverage)).isNotNull();
+    }
+    
+    @Test
+    public void matchForTeacherValid () {
+        
+        List <Student> list = manager.findMatchForTeacher(tBadCountry);
+        assertThat(list.get(0)).isEqualToComparingFieldByField(sBadCountry);
+    }
+    
+    @Test
+    public void matchForStudentValid () {
+        
+        List <Teacher> list = manager.findMatchForStudent(sBadCountry);
+        assertThat(list.get(0)).isEqualToComparingFieldByField(tBadCountry);
+    }
+    
+    @Test
+    public void matchForStudentIsNull () {
+        assertThatThrownBy(() -> manager.findMatchForStudent(null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+    
+    //--------------------------------------------------------------------------
+    // Testing updating lesson
+    //--------------------------------------------------------------------------
     
     @FunctionalInterface
     private static interface Operation<T> {
@@ -220,11 +255,52 @@ public class LessonManagerTest {
         testUpdateLesson((grave) -> grave.setPrice(BigDecimal.valueOf(1000.10).setScale(2)));
     }
     
-    @Test
-    public void matchForTeacher () {
-        
-        List <Student> list = manager.findMatchForTeacher(tBadCountry);
-        assertThat(list.get(0)).isEqualToComparingFieldByField(sBadCountry);
+    //--------------------------------------------------------------------------
+    // Tests if GraveManager methods throws ServiceFailureException in case of
+    // DB operation failure
+    //--------------------------------------------------------------------------
+
+    private void testExpectedServiceFailureException(Operation<LessonManager> operation) throws SQLException {
+        SQLException sqlException = new SQLException();
+        DataSource failingDataSource = mock(DataSource.class);
+        when(failingDataSource.getConnection()).thenThrow(sqlException);
+        manager.setDataSource(failingDataSource);
+        assertThatThrownBy(() -> operation.callOn(manager))
+                .isInstanceOf(ServiceFailureException.class)
+                .hasCause(sqlException);
     }
-    
+
+    @Test
+    public void findAllLessonsWithSqlExceptionThrown() throws SQLException {
+        testExpectedServiceFailureException((lessonManager) -> lessonManager.findAllLessons());
+    }
+
+    @Test
+    public void getLessonIdWithSqlExceptionThrown() throws SQLException {
+        testExpectedServiceFailureException((cemeteryManager) -> cemeteryManager.getLesson(1L));
+    }
+
+    @Test
+    public void getLessonStudentWithSqlExceptionThrown() throws SQLException {
+        testExpectedServiceFailureException((cemeteryManager) -> cemeteryManager.getLesson(sAverage));
+    }
+
+    @Test
+    public void deleteLessonWithSqlExceptionThrown() throws SQLException {
+        Lesson lesson = new LessonBuilder().skill(sAverage.getSkill()).price(tAverage.getPrice()).region(tAverage.getRegion()).student(sAverage.getId()).teacher(tAverage.getId()).build();
+        lesson.setId(1L);
+        testExpectedServiceFailureException((cemeteryManager) -> cemeteryManager.deleteLesson(lesson));
+    }
+
+    @Test
+    public void makeMatchWithSqlExceptionThrown() throws SQLException {
+        testExpectedServiceFailureException((cemeteryManager) -> cemeteryManager.makeMatch(tAverage, sAverage));
+    }
+
+    @Test
+    public void createLessonWithSqlExceptionThrown() throws SQLException {
+        Lesson lesson = new LessonBuilder().skill(sAverage.getSkill()).price(tAverage.getPrice()).region(tAverage.getRegion()).student(sAverage.getId()).teacher(tAverage.getId()).build();
+        testExpectedServiceFailureException((cemeteryManager) -> cemeteryManager.createLesson(lesson));
+    }
+
 }

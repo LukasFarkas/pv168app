@@ -33,6 +33,13 @@ public class StudentManager {
 
     private DataSource dataSource;
     
+    public StudentManager () {
+    }
+    
+    public StudentManager (DataSource ds) {
+        this.dataSource = ds;
+    }
+    
     private static final Logger logger = Logger.getLogger(
             StudentManager.class.getName());
 
@@ -127,35 +134,6 @@ public class StudentManager {
         }
     }
     
-    public List<Student> findMatchForTeacher (Teacher teacher) {
-        // validate in separate class ??
-        //validate();
-        checkDataSource();
-        
-        if (teacher == null) {
-            throw new IllegalArgumentException("teacher is null");
-        }
-        
-        Connection conn = null;
-        PreparedStatement st = null;
-        try {
-            conn = dataSource.getConnection();
-            st = conn.prepareStatement(
-                    "SELECT id,fullName,skill,region,price FROM Student WHERE skill <= ?, region = ?, price >= ?");
-            st.setInt(1, teacher.getSkill());
-            st.setString (2, teacher.getRegion().toString());
-            st.setBigDecimal(3, teacher.getPrice().setScale(2));
-            
-            return executeQueryForMultipleStudents(st);
-        } catch (SQLException ex) {
-            String msg = "Error when getting match for teacher with id = " + teacher.getId() + " from DB";
-            logger.log(Level.SEVERE, msg, ex);
-            throw new ServiceFailureException(msg, ex);
-        } finally {
-            DBUtils.closeQuietly(conn, st);
-        }
-    }
-
     public void updateStudent(Student student) throws ServiceFailureException {
         checkDataSource();
         validate(student);
@@ -262,9 +240,36 @@ public class StudentManager {
         } 
     }
 
-    
-    
     /*
+    public List<Student> findMatchForTeacher (Teacher teacher) {
+        // validate in separate class ??
+        //validate();
+        checkDataSource();
+        
+        if (teacher == null) {
+            throw new IllegalArgumentException("teacher is null");
+        }
+        
+        Connection conn = null;
+        PreparedStatement st = null;
+        try {
+            conn = dataSource.getConnection();
+            st = conn.prepareStatement(
+                    "SELECT id,fullName,skill,region,price FROM Student WHERE skill <= ?, region = ?, price >= ?");
+            st.setInt(1, teacher.getSkill());
+            st.setString (2, teacher.getRegion().toString());
+            st.setBigDecimal(3, teacher.getPrice().setScale(2));
+            
+            return executeQueryForMultipleStudents(st);
+        } catch (SQLException ex) {
+            String msg = "Error when getting match for teacher with id = " + teacher.getId() + " from DB";
+            logger.log(Level.SEVERE, msg, ex);
+            throw new ServiceFailureException(msg, ex);
+        } finally {
+            DBUtils.closeQuietly(conn, st);
+        }
+    }
+
     private Long getKey(ResultSet keyRS, Student student) throws ServiceFailureException, SQLException {
         if (keyRS.next()) {
             if (keyRS.getMetaData().getColumnCount() != 1) {

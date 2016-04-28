@@ -38,6 +38,13 @@ public class LessonManager {
     
     private DataSource dataSource;
     
+    public LessonManager () {
+    }
+    
+    public LessonManager (DataSource ds) {
+        this.dataSource = ds;
+    }
+    
     private static final Logger logger = Logger.getLogger(
             LessonManager.class.getName());
     
@@ -72,7 +79,7 @@ public class LessonManager {
         }
     }
     
-    public void createLesson(Lesson lesson) throws ServiceFailureException {
+    public void createLesson(Lesson lesson) throws IllegalEntityException, ServiceFailureException {
         checkDataSource();
         validate(lesson);
         
@@ -116,7 +123,7 @@ public class LessonManager {
         }
     }
     
-    public Lesson getLesson(Long id) throws ServiceFailureException {
+    public Lesson getLesson(Long id) throws IllegalArgumentException, ServiceFailureException {
         checkDataSource();
         
         if (id == null) {
@@ -140,8 +147,7 @@ public class LessonManager {
         }
     }
 
-    // until further notice - only one pair can exist consisting of specific teacher and student
-    public Lesson getLesson(Teacher teacher, Student student) throws ServiceFailureException{
+    public Lesson getLesson(Teacher teacher, Student student) throws IllegalArgumentException, ServiceFailureException{
         checkDataSource();
         
         if (teacher == null) {
@@ -156,7 +162,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE teacher = ?, student = ?");
+                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE teacherid = ? AND studentid = ?");
             st.setLong(1, teacher.getId());
             st.setLong(2, student.getId());
             return executeQueryForSingleLesson(st);
@@ -169,7 +175,7 @@ public class LessonManager {
         }
     }
     
-    public List<Lesson> getLesson(Teacher teacher) throws ServiceFailureException{
+    public List<Lesson> getLesson(Teacher teacher) throws IllegalArgumentException, ServiceFailureException{
         checkDataSource();
         
         if (teacher == null) {
@@ -181,7 +187,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE teacher = ?");
+                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE teacherid = ?");
             return executeQueryForMultipleLessons(st);
         } catch (SQLException ex) {
             String msg = "Error when getting teacher's" + teacher.getId() + "lessons from DB";
@@ -192,7 +198,7 @@ public class LessonManager {
         }
     }
     
-    public List<Lesson> getLesson(Student student) throws ServiceFailureException{
+    public List<Lesson> getLesson(Student student) throws IllegalArgumentException, ServiceFailureException{
         checkDataSource();
         
         if (student == null) {
@@ -204,7 +210,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE student = ?");
+                    "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE studentid = ?");
             return executeQueryForMultipleLessons(st);
         } catch (SQLException ex) {
             String msg = "Error when getting student's" + student.getId() + "lessons from DB";
@@ -215,12 +221,12 @@ public class LessonManager {
         }
     }
     
-    public void updateLesson(Lesson lesson) throws ServiceFailureException {
+    public void updateLesson(Lesson lesson) throws IllegalEntityException, ServiceFailureException {
         checkDataSource();
         validate(lesson);
         
         if (lesson.getId() == null) {
-            throw new IllegalEntityException("lesson id is null");
+            throw new IllegalEntityException("lesson id is null - it is not created");
         }        
         Connection conn = null;
         PreparedStatement st = null;
@@ -303,8 +309,16 @@ public class LessonManager {
         }
     }
     
-    public List<Teacher> findMatchForStudent (Student student) throws ServiceFailureException {
+    /*
+     *  Match between student-teacher: 
+     *  one student can have one pairing with one specific teacher (and vice versa) 
+     *  one student can have unlimited number of pairings with different teachers (and v.v.)
+     */
+    
+    public List<Teacher> findMatchForStudent (Student student) throws IllegalArgumentException, ServiceFailureException {
         checkDataSource();
+        if (student == null)
+            throw new IllegalArgumentException("student is null");
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -324,8 +338,10 @@ public class LessonManager {
         } 
     }
     
-    public List<Student> findMatchForTeacher (Teacher teacher) throws ServiceFailureException {
+    public List<Student> findMatchForTeacher (Teacher teacher) throws IllegalArgumentException, ServiceFailureException {
         checkDataSource();
+        if (teacher == null)
+            throw new IllegalArgumentException(" teacher is null");
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -337,7 +353,7 @@ public class LessonManager {
             st.setBigDecimal(3,teacher.getPrice().setScale(2));
             return executeQueryForMultipleStudents(st);
         } catch (SQLException ex) {
-            String msg = "Error when getting matching teachers from DB";
+            String msg = "Error when getting matching students from DB";
             logger.log(Level.SEVERE, msg, ex);
             throw new ServiceFailureException(msg, ex);
         } finally {

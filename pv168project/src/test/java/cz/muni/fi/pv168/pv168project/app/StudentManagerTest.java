@@ -360,21 +360,21 @@ public class StudentManagerTest {
     public void updateStudentWithSqlExceptionThrown() throws SQLException {
         Student grave = sampleStudentJozko();
         manager.createStudent(grave);
-        testExpectedServiceFailureException((graveManager) -> graveManager.updateStudent(grave));
+        testExpectedServiceFailureException((studentManager) -> studentManager.updateStudent(grave));
     }
 
     @Test
     public void getStudentWithSqlExceptionThrown() throws SQLException {
         Student grave = sampleStudentJozko();
         manager.createStudent(grave);
-        testExpectedServiceFailureException((graveManager) -> graveManager.getStudent(grave.getId()));
+        testExpectedServiceFailureException((studentManager) -> studentManager.getStudent(grave.getId()));
     }
 
     @Test
     public void deleteStudentWithSqlExceptionThrown() throws SQLException {
         Student grave = sampleStudentJozko();
         manager.createStudent(grave);
-        testExpectedServiceFailureException((graveManager) -> graveManager.deleteStudent(grave));
+        testExpectedServiceFailureException((studentManager) -> studentManager.deleteStudent(grave));
     }
 
     @Test
