@@ -152,7 +152,7 @@ public class PairAppUI extends javax.swing.JFrame {
         );
         jPanel_EmptyLayout.setVerticalGroup(
             jPanel_EmptyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+            .addGap(0, 425, Short.MAX_VALUE)
         );
 
         jPanel_MainPanel.add(jPanel_Empty, "card5");
@@ -240,7 +240,7 @@ public class PairAppUI extends javax.swing.JFrame {
                     .addComponent(jLabel_EntitySearchID)
                     .addComponent(jTextField_EntitySearchID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_EntitySearchIDOK))
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
 
         jPanel_MainPanel.add(jPanel_EntitySearch, "card2");
@@ -355,7 +355,7 @@ public class PairAppUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton_EntityDelete))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         jPanel_MainPanel.add(jPanel_EntityResult, "card3");
@@ -425,7 +425,7 @@ public class PairAppUI extends javax.swing.JFrame {
                 .addGroup(jPanel_EntityCreateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_EntityCreateRegion)
                     .addComponent(jTextField_EntityCreateRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 207, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
                 .addComponent(jButton_EntityCreateOK, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -576,7 +576,7 @@ public class PairAppUI extends javax.swing.JFrame {
                     .addComponent(jTextField_EntityUpdateRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel_EntityUpdateNewRegion)
                     .addComponent(jTextField_EntityUpdateNewRegion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
                 .addComponent(jButton_EntityUpdateOK, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -705,7 +705,7 @@ public class PairAppUI extends javax.swing.JFrame {
                 .addGroup(jPanel_LessonSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_LessonSearchPair)
                     .addComponent(jButton_LessonSearchPair))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
 
         jPanel_MainPanel.add(jPanel_LessonSearch, "card7");
@@ -799,7 +799,7 @@ public class PairAppUI extends javax.swing.JFrame {
                 .addComponent(jButton_LessonLinkToStudent)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_LessonLinkToTeacher)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
                 .addComponent(jButton_LessonDelete)
                 .addGap(26, 26, 26))
         );
@@ -846,7 +846,7 @@ public class PairAppUI extends javax.swing.JFrame {
                     .addGroup(jPanel_LessonCreateLayout.createSequentialGroup()
                         .addComponent(jLabel_LessonCreateStudent)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -881,7 +881,7 @@ public class PairAppUI extends javax.swing.JFrame {
                 .addComponent(jLabel_OccupationMultiple, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
         jPanel_MainPanel.add(jPanel_MultipleResults, "card4");
@@ -985,242 +985,159 @@ public class PairAppUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel_MainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+            .addComponent(jPanel_MainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
         );
 
         setBounds(0, 0, 731, 464);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ExitActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItem_ExitActionPerformed
-
-    private void jMenuItem_FindStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FindStudentActionPerformed
+    private void jButton_LessonCreateOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonCreateOKActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        jLabel_EntitySearch.setText("Searching for student");
-        jLabel_EntityOccupation.setText("Student");
-        jPanel_MainPanel.add(jPanel_EntitySearch);
+
+        jPanel_MainPanel.add(jPanel_Empty);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jMenuItem_FindStudentActionPerformed
+        JOptionPane.showMessageDialog(null, "Creating prolly ok.");
+    }//GEN-LAST:event_jButton_LessonCreateOKActionPerformed
 
-    private void jMenuItem_ExitMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenuItem_ExitMenuKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem_ExitMenuKeyPressed
-
-    private void jTextField_EntitySearchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EntitySearchNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_EntitySearchNameActionPerformed
-
-    private void jTextField_EntitySearchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EntitySearchIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_EntitySearchIDActionPerformed
-
-    private void jMenuItem_FindTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FindTeacherActionPerformed
+    private void jButton_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonDeleteActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        jLabel_EntitySearch.setText("Searching for teacher");
-        jLabel_EntityOccupation.setText("Teacher");
-        jPanel_MainPanel.add(jPanel_EntitySearch);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jMenuItem_FindTeacherActionPerformed
 
-    private void jButton_EntitySearchNameOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntitySearchNameOKActionPerformed
-        // TODO add your handling code here: 
-        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.add(jPanel_Empty);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        jPanel_MainPanel.add(jPanel_EntityResult);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jButton_EntitySearchNameOKActionPerformed
-
-    private void jMenuItem_ListAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ListAllStudentsActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jLabel_OccupationMultiple.setText("Students");
-        jPanel_MainPanel.add(jPanel_MultipleResults);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jMenuItem_ListAllStudentsActionPerformed
-
-    private void jMenuItem_ListAllTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ListAllTeachersActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jLabel_OccupationMultiple.setText("Teachers");
-        jPanel_MainPanel.add(jPanel_MultipleResults);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jMenuItem_ListAllTeachersActionPerformed
-
-    private void jButton_EntitySearchIDOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntitySearchIDOKActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jPanel_MainPanel.add(jPanel_EntityResult);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jButton_EntitySearchIDOKActionPerformed
-
-    private void jTextField_LessonRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LessonRegionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_LessonRegionActionPerformed
-
-    private void jButton_LessonLinkToStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonLinkToStudentActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jLabel_EntityOccupation.setText("Student");
-        jPanel_MainPanel.add(jPanel_EntityResult);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jButton_LessonLinkToStudentActionPerformed
-
-    private void jMenuItem_FindLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FindLessonActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jPanel_MainPanel.add(jPanel_LessonSearch);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jMenuItem_FindLessonActionPerformed
+        JOptionPane.showMessageDialog(null, "Deletion prolly ok.");
+    }//GEN-LAST:event_jButton_LessonDeleteActionPerformed
 
     private void jButton_LessonLinkToTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonLinkToTeacherActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
+
         jLabel_EntityOccupation.setText("Teacher");
         jPanel_MainPanel.add(jPanel_EntityResult);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
     }//GEN-LAST:event_jButton_LessonLinkToTeacherActionPerformed
 
-    private void jTextField_LessonSearchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_LessonSearchIDActionPerformed
-
-    private void jTextField_LessonSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchStudentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_LessonSearchStudentActionPerformed
-
-    private void jButton_LessonSearchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonSearchIDActionPerformed
+    private void jButton_LessonLinkToStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonLinkToStudentActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        jPanel_MainPanel.add(jPanel_LessonResult);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jButton_LessonSearchIDActionPerformed
 
-    private void jButton_LessonSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonSearchStudentActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
+        jLabel_EntityOccupation.setText("Student");
+        jPanel_MainPanel.add(jPanel_EntityResult);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        jLabel_OccupationMultiple.setText("Student's lessons");
-        jPanel_MainPanel.add(jPanel_MultipleResults);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jButton_LessonSearchStudentActionPerformed
+    }//GEN-LAST:event_jButton_LessonLinkToStudentActionPerformed
 
-    private void jButton_LessonSearchTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonSearchTeacherActionPerformed
+    private void jTextField_LessonRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LessonRegionActionPerformed
         // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jLabel_OccupationMultiple.setText("Teacher's lessons");
-        jPanel_MainPanel.add(jPanel_MultipleResults);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jButton_LessonSearchTeacherActionPerformed
+    }//GEN-LAST:event_jTextField_LessonRegionActionPerformed
 
     private void jButton_LessonSearchPairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonSearchPairActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
+
         jPanel_MainPanel.add(jPanel_LessonResult);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
     }//GEN-LAST:event_jButton_LessonSearchPairActionPerformed
 
-    private void jButton_EntityAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntityAddLessonActionPerformed
+    private void jButton_LessonSearchTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonSearchTeacherActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        if (jLabel_EntityOccupation.getText().toLowerCase().equals("teacher")){
-            jLabel_LessonCreateStudent.setText("Select student"); 
-        }
-        else {
-            jLabel_LessonCreateStudent.setText("Select teacher");
-        }
-        
-        jPanel_MainPanel.add(jPanel_LessonCreate);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jButton_EntityAddLessonActionPerformed
 
-    private void jMenuItem_AddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddStudentActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
+        jLabel_OccupationMultiple.setText("Teacher's lessons");
+        jPanel_MainPanel.add(jPanel_MultipleResults);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        jLabel_EntityCreateOccupation.setText("Create new student");
-        jPanel_MainPanel.add(jPanel_EntityCreate);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jMenuItem_AddStudentActionPerformed
+    }//GEN-LAST:event_jButton_LessonSearchTeacherActionPerformed
 
-    private void jMenuItem_AddTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddTeacherActionPerformed
+    private void jButton_LessonSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonSearchStudentActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
-        jLabel_EntityCreateOccupation.setText("Create new teacher");
-        jPanel_MainPanel.add(jPanel_EntityCreate);
+
+        jLabel_OccupationMultiple.setText("Student's lessons");
+        jPanel_MainPanel.add(jPanel_MultipleResults);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-    }//GEN-LAST:event_jMenuItem_AddTeacherActionPerformed
+    }//GEN-LAST:event_jButton_LessonSearchStudentActionPerformed
+
+    private void jButton_LessonSearchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonSearchIDActionPerformed
+        // TODO add your handling code here:
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jPanel_MainPanel.add(jPanel_LessonResult);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jButton_LessonSearchIDActionPerformed
+
+    private void jTextField_LessonSearchTeacherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchTeacherMouseClicked
+        // TODO add your handling code here:
+        jTextField_LessonSearchTeacher.setText("");
+    }//GEN-LAST:event_jTextField_LessonSearchTeacherMouseClicked
+
+    private void jTextField_LessonSearchStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_LessonSearchStudentActionPerformed
+
+    private void jTextField_LessonSearchStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchStudentMouseClicked
+        // TODO add your handling code here:
+        jTextField_LessonSearchStudent.setText("");
+    }//GEN-LAST:event_jTextField_LessonSearchStudentMouseClicked
+
+    private void jTextField_LessonSearchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_LessonSearchIDActionPerformed
+
+    private void jTextField_LessonSearchIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchIDMouseClicked
+        // TODO add your handling code here:
+        jTextField_LessonSearchID.setText("");
+    }//GEN-LAST:event_jTextField_LessonSearchIDMouseClicked
+
+    private void jTextField_EntityUpdateNewRegionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewRegionMouseClicked
+        // TODO add your handling code here:
+        jTextField_EntityUpdateNewRegion.setText("");
+    }//GEN-LAST:event_jTextField_EntityUpdateNewRegionMouseClicked
+
+    private void jTextField_EntityUpdateNewPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewPriceMouseClicked
+        // TODO add your handling code here:
+        jTextField_EntityUpdateNewPrice.setText("");
+    }//GEN-LAST:event_jTextField_EntityUpdateNewPriceMouseClicked
+
+    private void jTextField_EntityUpdateNewSkillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewSkillMouseClicked
+        // TODO add your handling code here:
+        jTextField_EntityUpdateNewSkill.setText("");
+    }//GEN-LAST:event_jTextField_EntityUpdateNewSkillMouseClicked
+
+    private void jTextField_EntityUpdateNewNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewNameMouseClicked
+        // TODO add your handling code here:
+        jTextField_EntityUpdateNewName.setText("");
+    }//GEN-LAST:event_jTextField_EntityUpdateNewNameMouseClicked
 
     private void jButton_EntityUpdateOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntityUpdateOKActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
+
         jPanel_MainPanel.add(jPanel_Empty);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
@@ -1232,105 +1149,188 @@ public class PairAppUI extends javax.swing.JFrame {
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
+
         jPanel_MainPanel.add(jPanel_Empty);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
         JOptionPane.showMessageDialog(null, "Creation prolly ok.");
     }//GEN-LAST:event_jButton_EntityCreateOKActionPerformed
 
+    private void jButton_EntityAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntityAddLessonActionPerformed
+        // TODO add your handling code here:
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        if (jLabel_EntityOccupation.getText().toLowerCase().equals("teacher")){
+            jLabel_LessonCreateStudent.setText("Select student");
+        }
+        else {
+            jLabel_LessonCreateStudent.setText("Select teacher");
+        }
+
+        jPanel_MainPanel.add(jPanel_LessonCreate);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jButton_EntityAddLessonActionPerformed
+
     private void jButton_EntityDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntityDeleteActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
+
         jPanel_MainPanel.add(jPanel_Empty);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
         JOptionPane.showMessageDialog(null, "Deletion prolly ok.");
     }//GEN-LAST:event_jButton_EntityDeleteActionPerformed
 
-    private void jButton_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonDeleteActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jPanel_MainPanel.add(jPanel_Empty);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        JOptionPane.showMessageDialog(null, "Deletion prolly ok.");
-    }//GEN-LAST:event_jButton_LessonDeleteActionPerformed
-
-    private void jButton_LessonCreateOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LessonCreateOKActionPerformed
-        // TODO add your handling code here:
-        jPanel_MainPanel.removeAll();
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        
-        jPanel_MainPanel.add(jPanel_Empty);
-        jPanel_MainPanel.repaint();
-        jPanel_MainPanel.revalidate();
-        JOptionPane.showMessageDialog(null, "Creating prolly ok.");
-    }//GEN-LAST:event_jButton_LessonCreateOKActionPerformed
-
     private void jButton_EntityUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntityUpdateActionPerformed
         // TODO add your handling code here:
         jPanel_MainPanel.removeAll();
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
-        
+
         jLabel_EntityUpdateOccupation.setText("Update " + jLabel_EntityOccupation.getText().toLowerCase() );
         jPanel_MainPanel.add(jPanel_EntityUpdate);
         jPanel_MainPanel.repaint();
         jPanel_MainPanel.revalidate();
     }//GEN-LAST:event_jButton_EntityUpdateActionPerformed
 
-    private void jTextField_EntitySearchNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntitySearchNameMouseClicked
+    private void jButton_EntitySearchIDOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntitySearchIDOKActionPerformed
         // TODO add your handling code here:
-        jTextField_EntitySearchName.setText("");
-    }//GEN-LAST:event_jTextField_EntitySearchNameMouseClicked
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jPanel_MainPanel.add(jPanel_EntityResult);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jButton_EntitySearchIDOKActionPerformed
+
+    private void jButton_EntitySearchNameOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_EntitySearchNameOKActionPerformed
+        // TODO add your handling code here:
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jPanel_MainPanel.add(jPanel_EntityResult);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jButton_EntitySearchNameOKActionPerformed
+
+    private void jTextField_EntitySearchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EntitySearchIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_EntitySearchIDActionPerformed
 
     private void jTextField_EntitySearchIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntitySearchIDMouseClicked
         // TODO add your handling code here:
         jTextField_EntitySearchID.setText("");
     }//GEN-LAST:event_jTextField_EntitySearchIDMouseClicked
 
-    private void jTextField_EntityUpdateNewNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewNameMouseClicked
+    private void jTextField_EntitySearchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EntitySearchNameActionPerformed
         // TODO add your handling code here:
-        jTextField_EntityUpdateNewName.setText("");
-    }//GEN-LAST:event_jTextField_EntityUpdateNewNameMouseClicked
+    }//GEN-LAST:event_jTextField_EntitySearchNameActionPerformed
 
-    private void jTextField_EntityUpdateNewSkillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewSkillMouseClicked
+    private void jTextField_EntitySearchNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntitySearchNameMouseClicked
         // TODO add your handling code here:
-        jTextField_EntityUpdateNewSkill.setText("");
-    }//GEN-LAST:event_jTextField_EntityUpdateNewSkillMouseClicked
+        jTextField_EntitySearchName.setText("");
+    }//GEN-LAST:event_jTextField_EntitySearchNameMouseClicked
 
-    private void jTextField_EntityUpdateNewPriceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewPriceMouseClicked
+    private void jMenuItem_FindLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FindLessonActionPerformed
         // TODO add your handling code here:
-        jTextField_EntityUpdateNewPrice.setText("");
-    }//GEN-LAST:event_jTextField_EntityUpdateNewPriceMouseClicked
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
 
-    private void jTextField_EntityUpdateNewRegionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_EntityUpdateNewRegionMouseClicked
-        // TODO add your handling code here:
-        jTextField_EntityUpdateNewRegion.setText("");
-    }//GEN-LAST:event_jTextField_EntityUpdateNewRegionMouseClicked
+        jPanel_MainPanel.add(jPanel_LessonSearch);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jMenuItem_FindLessonActionPerformed
 
-    private void jTextField_LessonSearchIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchIDMouseClicked
+    private void jMenuItem_AddTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddTeacherActionPerformed
         // TODO add your handling code here:
-        jTextField_LessonSearchID.setText("");
-    }//GEN-LAST:event_jTextField_LessonSearchIDMouseClicked
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
 
-    private void jTextField_LessonSearchStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchStudentMouseClicked
-        // TODO add your handling code here:
-        jTextField_LessonSearchStudent.setText("");
-    }//GEN-LAST:event_jTextField_LessonSearchStudentMouseClicked
+        jLabel_EntityCreateOccupation.setText("Create new teacher");
+        jPanel_MainPanel.add(jPanel_EntityCreate);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jMenuItem_AddTeacherActionPerformed
 
-    private void jTextField_LessonSearchTeacherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField_LessonSearchTeacherMouseClicked
+    private void jMenuItem_ListAllTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ListAllTeachersActionPerformed
         // TODO add your handling code here:
-        jTextField_LessonSearchTeacher.setText("");
-    }//GEN-LAST:event_jTextField_LessonSearchTeacherMouseClicked
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jLabel_OccupationMultiple.setText("Teachers");
+        jPanel_MainPanel.add(jPanel_MultipleResults);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jMenuItem_ListAllTeachersActionPerformed
+
+    private void jMenuItem_FindTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FindTeacherActionPerformed
+        // TODO add your handling code here:
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jLabel_EntitySearch.setText("Searching for teacher");
+        jLabel_EntityOccupation.setText("Teacher");
+        jPanel_MainPanel.add(jPanel_EntitySearch);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jMenuItem_FindTeacherActionPerformed
+
+    private void jMenuItem_AddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AddStudentActionPerformed
+        // TODO add your handling code here:
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jLabel_EntityCreateOccupation.setText("Create new student");
+        jPanel_MainPanel.add(jPanel_EntityCreate);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jMenuItem_AddStudentActionPerformed
+
+    private void jMenuItem_ListAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ListAllStudentsActionPerformed
+        // TODO add your handling code here:
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jLabel_OccupationMultiple.setText("Students");
+        jPanel_MainPanel.add(jPanel_MultipleResults);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jMenuItem_ListAllStudentsActionPerformed
+
+    private void jMenuItem_FindStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FindStudentActionPerformed
+        // TODO add your handling code here:
+        jPanel_MainPanel.removeAll();
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+
+        jLabel_EntitySearch.setText("Searching for student");
+        jLabel_EntityOccupation.setText("Student");
+        jPanel_MainPanel.add(jPanel_EntitySearch);
+        jPanel_MainPanel.repaint();
+        jPanel_MainPanel.revalidate();
+    }//GEN-LAST:event_jMenuItem_FindStudentActionPerformed
+
+    private void jMenuItem_ExitMenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenuItem_ExitMenuKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem_ExitMenuKeyPressed
+
+    private void jMenuItem_ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem_ExitActionPerformed
 
     /**
      * @param args the command line arguments

@@ -133,7 +133,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel_MainPanel" alignment="1" pref="404" max="32767" attributes="0"/>
+          <Component id="jPanel_MainPanel" alignment="1" pref="425" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -157,7 +157,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="404" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="425" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -217,7 +217,7 @@
                           <Component id="jTextField_EntitySearchID" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton_EntitySearchIDOK" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="272" max="32767" attributes="0"/>
+                      <EmptySpace pref="293" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -362,7 +362,7 @@
                           </Group>
                           <Component id="jScrollPane2" min="-2" pref="248" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="114" max="32767" attributes="0"/>
+                      <EmptySpace pref="135" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -528,7 +528,7 @@
                           <Component id="jLabel_EntityCreateRegion" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField_EntityCreateRegion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="207" max="32767" attributes="0"/>
+                      <EmptySpace pref="228" max="32767" attributes="0"/>
                       <Component id="jButton_EntityCreateOK" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -685,7 +685,7 @@
                           <Component id="jLabel_EntityUpdateNewRegion" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField_EntityUpdateNewRegion" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="170" max="32767" attributes="0"/>
+                      <EmptySpace pref="191" max="32767" attributes="0"/>
                       <Component id="jButton_EntityUpdateOK" min="-2" pref="46" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -885,7 +885,7 @@
                           <Component id="jLabel_LessonSearchPair" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton_LessonSearchPair" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="190" max="32767" attributes="0"/>
+                      <EmptySpace pref="211" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1044,7 +1044,7 @@
                       <Component id="jButton_LessonLinkToStudent" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_LessonLinkToTeacher" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="146" max="32767" attributes="0"/>
+                      <EmptySpace pref="167" max="32767" attributes="0"/>
                       <Component id="jButton_LessonDelete" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
@@ -1151,7 +1151,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jLabel_LessonCreateStudent" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane3" pref="362" max="32767" attributes="0"/>
+                              <Component id="jScrollPane3" pref="383" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -1224,7 +1224,7 @@
                       <Component id="jLabel_OccupationMultiple" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="257" max="-2" attributes="0"/>
-                      <EmptySpace pref="94" max="32767" attributes="0"/>
+                      <EmptySpace pref="114" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

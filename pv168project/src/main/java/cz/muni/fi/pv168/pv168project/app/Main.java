@@ -25,10 +25,10 @@ public class Main {
         bds.setDriverClassName(EmbeddedDriver.class.getName());
         bds.setUrl("jdbc:derby:memory:studentsDB;create=true");
         //populate db with tables and data
-        new ResourceDatabasePopulator(
-                new ClassPathResource("schema-javadb.sql"),
+       /* new ResourceDatabasePopulator(
+                new ClassPathResource("createTables.sql"),
                 new ClassPathResource("test-data.sql"))
-                .execute(bds);
+                .execute(bds);*/
         return bds;
     }
 
