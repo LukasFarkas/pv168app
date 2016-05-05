@@ -1,37 +1,11 @@
 ----------------------------------------------------------------
-Thu Apr 28 08:17:42 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0154-5b84-122f-0000039a3340 
-on database directory memory:C:\_mov\_not yet watched\_other share\pv168project\Lessonmgr-test with class loader sun.misc.Launcher$AppClassLoader@42a57993 
+Thu May 05 11:05:31 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0154-802a-390a-000002f7a620 
+on database directory memory:C:\Users\L\Documents\pv168app\pv168project\studentsDB with class loader sun.misc.Launcher$AppClassLoader@c387f44 
 Loaded from file:/C:/Users/L/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_45-b14
-user.dir=C:\_mov\_not yet watched\_other share\pv168project
-os.name=Windows 7
-os.arch=amd64
-os.version=6.1
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Thu Apr 28 08:17:45 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance 12ef04c8-0154-5b84-122f-0000039a3340 
-on database directory memory:C:\_mov\_not yet watched\_other share\pv168project\studentmgr-test with class loader sun.misc.Launcher$AppClassLoader@42a57993 
-Loaded from file:/C:/Users/L/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_45-b14
-user.dir=C:\_mov\_not yet watched\_other share\pv168project
-os.name=Windows 7
-os.arch=amd64
-os.version=6.1
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Thu Apr 28 08:17:46 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance 6f6d4847-0154-5b84-122f-0000039a3340 
-on database directory memory:C:\_mov\_not yet watched\_other share\pv168project\teachermgr-test with class loader sun.misc.Launcher$AppClassLoader@42a57993 
-Loaded from file:/C:/Users/L/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_45-b14
-user.dir=C:\_mov\_not yet watched\_other share\pv168project
+user.dir=C:\Users\L\Documents\pv168app\pv168project
 os.name=Windows 7
 os.arch=amd64
 os.version=6.1

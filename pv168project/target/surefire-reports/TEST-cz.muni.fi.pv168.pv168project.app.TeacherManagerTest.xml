@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="24" failures="0" name="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" time="0.93" errors="0" skipped="0">
+<testsuite tests="24" failures="0" name="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" time="1.017" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_45\jre\bin"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="Service Pack 1"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\_mov\_not yet watched\_other share\pv168project"/>
+    <property name="user.dir" value="C:\Users\L\Documents\pv168app\pv168project"/>
     <property name="java.runtime.version" value="1.8.0_45-b14"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_45\jre\lib\endorsed"/>
@@ -61,28 +61,28 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullName" time="0.112"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullName" time="0.095"/>
   <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithNullId" time="0.022"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacher" time="0.074"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithExistingId" time="0.027"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherWithSqlExceptionThrown" time="0.044"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPrice" time="0.048"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="getTeacherWithSqlExceptionThrown" time="0.035"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateNullTeacher" time="0.035"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPriceToNegative" time="0.029"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachers" time="0.035"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullRegion" time="0.025"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteNullTeacher" time="0.028"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherName" time="0.04"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacher" time="0.034"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacher" time="0.079"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithExistingId" time="0"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherWithSqlExceptionThrown" time="0.084"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPrice" time="0.027"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="getTeacherWithSqlExceptionThrown" time="0.051"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateNullTeacher" time="0.008"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPriceToNegative" time="0.033"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachers" time="0.049"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullRegion" time="0.017"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteNullTeacher" time="0.036"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherName" time="0.035"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacher" time="0.031"/>
   <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherWithNullId" time="0.021"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createNullTeacher" time="0.019"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherColumn" time="0.038"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithNonExistingId" time="0.063"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithSqlExceptionThrown" time="0.043"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherRegion" time="0.027"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativePrice" time="0.029"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativeSkill" time="0.025"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithSqlExceptionThrown" time="0.032"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachersWithSqlExceptionThrown" time="0.024"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createNullTeacher" time="0.021"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherColumn" time="0.041"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithNonExistingId" time="0.036"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithSqlExceptionThrown" time="0.023"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherRegion" time="0.04"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativePrice" time="0.021"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativeSkill" time="0.026"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithSqlExceptionThrown" time="0.04"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachersWithSqlExceptionThrown" time="0.166"/>
 </testsuite>
