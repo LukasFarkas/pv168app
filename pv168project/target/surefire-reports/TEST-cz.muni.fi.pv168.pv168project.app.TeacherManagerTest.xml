@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="24" failures="0" name="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" time="1.017" errors="0" skipped="0">
+<testsuite tests="24" failures="0" name="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" time="0.809" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_45\jre\bin"/>
@@ -29,7 +29,7 @@
     <property name="maven.ext.class.path" value="C:\Program Files\NetBeans 8.0.2\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans 8.0.2\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_45\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x64;C:\Program Files\Lenovo\Fingerprint Manager Pro\;C:\Program Files\Condusiv Technologies\ExpressCache\;C:\Program Files (x86)\Common Files\Lenovo;C:\SWTOOLS\ReadyApps;C:\Program Files (x86)\Lenovo\Access Connections\;C:\windows\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\texlive\2015\bin\win32;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_45\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x64;C:\Program Files\Lenovo\Fingerprint Manager Pro\;C:\Program Files\Condusiv Technologies\ExpressCache\;C:\Program Files (x86)\Common Files\Lenovo;C:\SWTOOLS\ReadyApps;C:\Program Files (x86)\Lenovo\Access Connections\;C:\windows\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\texlive\2015\bin\win32;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="52.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -44,7 +44,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_45\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans 8.0.2\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans 8.0.2\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 clean install"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -61,28 +61,28 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullName" time="0.095"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithNullId" time="0.022"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacher" time="0.079"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithExistingId" time="0"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherWithSqlExceptionThrown" time="0.084"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPrice" time="0.027"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="getTeacherWithSqlExceptionThrown" time="0.051"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateNullTeacher" time="0.008"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPriceToNegative" time="0.033"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachers" time="0.049"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullRegion" time="0.017"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteNullTeacher" time="0.036"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherName" time="0.035"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacher" time="0.031"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherWithNullId" time="0.021"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createNullTeacher" time="0.021"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherColumn" time="0.041"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithNonExistingId" time="0.036"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithSqlExceptionThrown" time="0.023"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullName" time="0.082"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithNullId" time="0.021"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacher" time="0.037"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithExistingId" time="0.032"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherWithSqlExceptionThrown" time="0.034"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPrice" time="0.038"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="getTeacherWithSqlExceptionThrown" time="0.033"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateNullTeacher" time="0.056"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherPriceToNegative" time="0.028"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachers" time="0.038"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNullRegion" time="0.024"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteNullTeacher" time="0.022"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherName" time="0.046"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacher" time="0.03"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherWithNullId" time="0.02"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createNullTeacher" time="0.024"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherColumn" time="0.04"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithNonExistingId" time="0.032"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="deleteTeacherWithSqlExceptionThrown" time="0.031"/>
   <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="updateTeacherRegion" time="0.04"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativePrice" time="0.021"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativeSkill" time="0.026"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithSqlExceptionThrown" time="0.04"/>
-  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachersWithSqlExceptionThrown" time="0.166"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativePrice" time="0.031"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithNegativeSkill" time="0.013"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="createTeacherWithSqlExceptionThrown" time="0.025"/>
+  <testcase classname="cz.muni.fi.pv168.pv168project.app.TeacherManagerTest" name="findAllTeachersWithSqlExceptionThrown" time="0.028"/>
 </testsuite>

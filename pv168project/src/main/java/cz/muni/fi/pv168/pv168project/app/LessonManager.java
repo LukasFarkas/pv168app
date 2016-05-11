@@ -298,7 +298,7 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,start,duration,price,notes,teacherid,studentid FROM Lesson");
+                    "SELECT id,skill,price,region,teacherid,studentid FROM Lesson");
             return executeQueryForMultipleLessons(st);
         } catch (SQLException ex) {
             String msg = "Error when getting all lessons from DB";
