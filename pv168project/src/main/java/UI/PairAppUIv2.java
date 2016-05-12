@@ -7,6 +7,8 @@ package UI;
 import cz.muni.fi.pv168.common.DBUtils;
 import cz.muni.fi.pv168.common.ServiceFailureException;
 import cz.muni.fi.pv168.pv168project.app.*;
+import java.awt.Component;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +22,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
 import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -39,6 +43,30 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private static TeacherManager tm;
     private static StudentManager sm;
      
+    
+    public class EntityListRenderer extends JLabel implements ListCellRenderer {
+        
+        @Override
+        public Component getListCellRendererComponent(JList jlist, Object e, int index, boolean isSelected, boolean cellHasFocus) {
+            
+            if (e.getClass().equals(Student.class) ) {
+                Student student = (Student) e;
+                setText(student.getFullName());
+            }
+            else if (e.getClass().equals(Teacher.class)) {
+                Teacher teacher = (Teacher) e;
+                setText(teacher.getFullName());   
+            }
+            else  {
+                throw new IllegalArgumentException();
+            }
+            return this;
+        }
+
+
+    }
+    
+    
     class LessonTableModel extends AbstractTableModel {
         private List<Lesson> cars; 
         
@@ -143,6 +171,25 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        Panel_StudentEditPanel1 = new javax.swing.JPanel();
+        Label_Student1 = new javax.swing.JLabel();
+        SplitPane_StudentID1 = new javax.swing.JSplitPane();
+        StudentID1 = new javax.swing.JLabel();
+        Label_StudentID1 = new javax.swing.JLabel();
+        SplitPane_StudentName1 = new javax.swing.JSplitPane();
+        TextField_StudentName1 = new javax.swing.JTextField();
+        Label_StudentName1 = new javax.swing.JLabel();
+        SplitPane_StudentPrice1 = new javax.swing.JSplitPane();
+        TextField_StudentPrice1 = new javax.swing.JTextField();
+        Label_StudentPrice1 = new javax.swing.JLabel();
+        SplitPane_StudentSkill2 = new javax.swing.JSplitPane();
+        TextField_StudentSkill1 = new javax.swing.JTextField();
+        Label_StudentSkill1 = new javax.swing.JLabel();
+        SplitPane_StudentRegion1 = new javax.swing.JSplitPane();
+        Label_StudentRegion1 = new javax.swing.JLabel();
+        ComboBox_StudentRegion1 = new javax.swing.JComboBox();
+        Button_StudentUpdate1 = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Panel_StudentsTab = new javax.swing.JPanel();
         Label_StudentsList = new javax.swing.JLabel();
@@ -203,6 +250,133 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        Label_Student1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Label_Student1.setText("Student");
+
+        SplitPane_StudentID1.setDividerLocation(200);
+
+        StudentID1.setText("IDValue_UNKNOWN");
+        SplitPane_StudentID1.setRightComponent(StudentID1);
+
+        Label_StudentID1.setText("ID");
+        SplitPane_StudentID1.setLeftComponent(Label_StudentID1);
+
+        SplitPane_StudentName1.setDividerLocation(200);
+
+        TextField_StudentName1.setText("fullName");
+        TextField_StudentName1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextField_StudentName1ActionPerformed(evt);
+            }
+        });
+        SplitPane_StudentName1.setRightComponent(TextField_StudentName1);
+
+        Label_StudentName1.setText("Name");
+        SplitPane_StudentName1.setLeftComponent(Label_StudentName1);
+
+        SplitPane_StudentPrice1.setDividerLocation(200);
+
+        TextField_StudentPrice1.setText("price");
+        TextField_StudentPrice1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextField_StudentPrice1ActionPerformed(evt);
+            }
+        });
+        SplitPane_StudentPrice1.setRightComponent(TextField_StudentPrice1);
+
+        Label_StudentPrice1.setText("Price");
+        SplitPane_StudentPrice1.setLeftComponent(Label_StudentPrice1);
+
+        SplitPane_StudentSkill2.setDividerLocation(200);
+
+        TextField_StudentSkill1.setText("skill");
+        TextField_StudentSkill1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextField_StudentSkill1ActionPerformed(evt);
+            }
+        });
+        SplitPane_StudentSkill2.setRightComponent(TextField_StudentSkill1);
+
+        Label_StudentSkill1.setText("Skill");
+        SplitPane_StudentSkill2.setLeftComponent(Label_StudentSkill1);
+
+        SplitPane_StudentRegion1.setDividerLocation(200);
+
+        Label_StudentRegion1.setText("Region");
+        SplitPane_StudentRegion1.setLeftComponent(Label_StudentRegion1);
+
+        ComboBox_StudentRegion1.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
+        SplitPane_StudentRegion1.setRightComponent(ComboBox_StudentRegion1);
+
+        Button_StudentUpdate1.setText("Save");
+        Button_StudentUpdate1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_StudentUpdate1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout Panel_StudentEditPanel1Layout = new javax.swing.GroupLayout(Panel_StudentEditPanel1);
+        Panel_StudentEditPanel1.setLayout(Panel_StudentEditPanel1Layout);
+        Panel_StudentEditPanel1Layout.setHorizontalGroup(
+            Panel_StudentEditPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Panel_StudentEditPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(SplitPane_StudentName1)
+                    .addComponent(SplitPane_StudentPrice1)
+                    .addComponent(SplitPane_StudentID1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                    .addComponent(SplitPane_StudentSkill2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SplitPane_StudentRegion1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Panel_StudentEditPanel1Layout.createSequentialGroup()
+                        .addComponent(Label_Student1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(Panel_StudentEditPanel1Layout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(Button_StudentUpdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Panel_StudentEditPanel1Layout.setVerticalGroup(
+            Panel_StudentEditPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Panel_StudentEditPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(Label_Student1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(SplitPane_StudentID1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(SplitPane_StudentName1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 47, Short.MAX_VALUE)
+                .addComponent(SplitPane_StudentPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(SplitPane_StudentSkill2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SplitPane_StudentRegion1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Button_StudentUpdate1)
+                .addGap(30, 30, 30))
+        );
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 427, Short.MAX_VALUE)
+            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(Panel_StudentEditPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 416, Short.MAX_VALUE)
+            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(Panel_StudentEditPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -303,12 +477,12 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addComponent(SplitPane_StudentPrice, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(SplitPane_StudentID)
                     .addComponent(SplitPane_StudentSkill)
-                    .addComponent(SplitPane_StudentRegion, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+                    .addComponent(SplitPane_StudentRegion)
                     .addGroup(Panel_StudentEditPanelLayout.createSequentialGroup()
                         .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Button_StudentAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Label_Student))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 398, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -316,7 +490,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                 .addComponent(Button_StudentUpdate)
                 .addGap(90, 90, 90)
                 .addComponent(jButton2)
@@ -357,6 +531,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             String[] strings = { };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        List_StudentList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                List_StudentListValueChanged(evt);
+            }
         });
         jScrollPane2.setViewportView(List_StudentList);
 
@@ -678,6 +857,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
     private void Button_StudentAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddActionPerformed
         // TODO add your handling code here:
+        jDialog1.setVisible(true);
+        jDialog1.pack();
     }//GEN-LAST:event_Button_StudentAddActionPerformed
 
     private void TextField_TeacherNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherNameActionPerformed
@@ -701,9 +882,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         List<Student> list = sm.findAllStudents();
         DefaultListModel model = new DefaultListModel();
         for (Student t : list) {
-            model.addElement(t.getFullName());
+            model.addElement(t);
         }
         List_StudentList.setModel(model);
+        List_StudentList.setCellRenderer(new EntityListRenderer());
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -714,6 +896,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             model.addElement(t.getFullName());
         }
         List_TeachersList.setModel(model);
+        List_StudentList.setCellRenderer(new EntityListRenderer());
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -749,8 +932,43 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         
-        lm.deleteLesson(lesson);
+        //lm.deleteLesson(lesson);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void List_StudentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_StudentListValueChanged
+        // TODO add your handling code here:
+        Student st = (Student) List_StudentList.getSelectedValue();
+        TextField_StudentName.setText(st.getFullName());
+        StudentID.setText(st.getId().toString());
+        
+        ComboBox_StudentRegion.setSelectedItem(st.getRegion());
+        
+        
+    }//GEN-LAST:event_List_StudentListValueChanged
+
+    private void TextField_StudentName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_StudentName1ActionPerformed
+
+    private void TextField_StudentPrice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentPrice1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_StudentPrice1ActionPerformed
+
+    private void TextField_StudentSkill1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentSkill1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_StudentSkill1ActionPerformed
+
+    private void Button_StudentUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentUpdate1ActionPerformed
+        // TODO add your handling code here:
+        Student student = new Student();
+        student.setFullName(TextField_StudentName1.getText());
+        student.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_StudentPrice1.getText())).setScale(2));
+        student.setRegion((Region) ComboBox_StudentRegion1.getSelectedItem());
+        student.setSkill(Integer.parseInt(TextField_StudentSkill1.getText()));
+        sm.createStudent(student);
+        jDialog1.dispose();
+        
+    }//GEN-LAST:event_Button_StudentUpdate1ActionPerformed
 
     
     public static DataSource createMemoryDatabase() throws SQLException {
@@ -823,18 +1041,26 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_StudentAdd;
     private javax.swing.JButton Button_StudentUpdate;
+    private javax.swing.JButton Button_StudentUpdate1;
     private javax.swing.JButton Button_TeacherAdd;
     private javax.swing.JButton Button_TeacherLessons;
     private javax.swing.JButton Button_TeacherUpdate;
     private javax.swing.JComboBox ComboBox_StudentRegion;
+    private javax.swing.JComboBox ComboBox_StudentRegion1;
     private javax.swing.JComboBox ComboBox_TeacherRegion;
     private javax.swing.JLabel Label_LessonsList;
     private javax.swing.JLabel Label_Student;
+    private javax.swing.JLabel Label_Student1;
     private javax.swing.JLabel Label_StudentID;
+    private javax.swing.JLabel Label_StudentID1;
     private javax.swing.JLabel Label_StudentName;
+    private javax.swing.JLabel Label_StudentName1;
     private javax.swing.JLabel Label_StudentPrice;
+    private javax.swing.JLabel Label_StudentPrice1;
     private javax.swing.JLabel Label_StudentRegion;
+    private javax.swing.JLabel Label_StudentRegion1;
     private javax.swing.JLabel Label_StudentSkill;
+    private javax.swing.JLabel Label_StudentSkill1;
     private javax.swing.JLabel Label_StudentsList;
     private javax.swing.JLabel Label_Teacher;
     private javax.swing.JLabel Label_TeacherID;
@@ -848,24 +1074,34 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JList List_TeachersList;
     private javax.swing.JPanel Panel_LessonsTab;
     private javax.swing.JPanel Panel_StudentEditPanel;
+    private javax.swing.JPanel Panel_StudentEditPanel1;
     private javax.swing.JPanel Panel_StudentsTab;
     private javax.swing.JPanel Panel_TeacherEditPanel;
     private javax.swing.JPanel Panel_TeachersTab;
     private javax.swing.JScrollPane ScrollPane_TeachersList;
     private javax.swing.JSplitPane SplitPane_StudentID;
+    private javax.swing.JSplitPane SplitPane_StudentID1;
     private javax.swing.JSplitPane SplitPane_StudentName;
+    private javax.swing.JSplitPane SplitPane_StudentName1;
     private javax.swing.JSplitPane SplitPane_StudentPrice;
+    private javax.swing.JSplitPane SplitPane_StudentPrice1;
     private javax.swing.JSplitPane SplitPane_StudentRegion;
+    private javax.swing.JSplitPane SplitPane_StudentRegion1;
     private javax.swing.JSplitPane SplitPane_StudentSkill;
     private javax.swing.JSplitPane SplitPane_StudentSkill1;
+    private javax.swing.JSplitPane SplitPane_StudentSkill2;
     private javax.swing.JSplitPane SplitPane_TeacherID;
     private javax.swing.JSplitPane SplitPane_TeacherName;
     private javax.swing.JSplitPane SplitPane_TeacherPrice;
     private javax.swing.JSplitPane SplitPane_TeacherRegion;
     private javax.swing.JLabel StudentID;
+    private javax.swing.JLabel StudentID1;
     private javax.swing.JTextField TextField_StudentName;
+    private javax.swing.JTextField TextField_StudentName1;
     private javax.swing.JTextField TextField_StudentPrice;
+    private javax.swing.JTextField TextField_StudentPrice1;
     private javax.swing.JTextField TextField_StudentSkill;
+    private javax.swing.JTextField TextField_StudentSkill1;
     private javax.swing.JTextField TextField_TeacherName;
     private javax.swing.JTextField TextField_TeacherPrice;
     private javax.swing.JTextField TextField_TeacherSkill;
@@ -876,6 +1112,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
