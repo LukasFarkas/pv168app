@@ -231,7 +231,7 @@ public class StudentManagerTest {
     
     @Test
     public void updateStudentRegion() {
-        testUpdateStudent((grave) -> grave.setRegion(Region.RUSSIAN));
+        testUpdateStudent((grave) -> grave.setRegion(Region.RUSSIA));
     }
 
     @Test

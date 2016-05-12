@@ -5,19 +5,13 @@
  */
 package UI;
 import cz.muni.fi.pv168.common.DBUtils;
-import cz.muni.fi.pv168.common.ServiceFailureException;
 import cz.muni.fi.pv168.pv168project.app.*;
+import java.awt.Color;
 import java.awt.Component;
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -26,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.derby.jdbc.EmbeddedDriver;
 
@@ -44,8 +37,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private static StudentManager sm;
      
     
+    /**
+     * List renderer for teacher and student
+     */
     public class EntityListRenderer extends JLabel implements ListCellRenderer {
-        
         @Override
         public Component getListCellRendererComponent(JList jlist, Object e, int index, boolean isSelected, boolean cellHasFocus) {
             
@@ -60,51 +55,96 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             else  {
                 throw new IllegalArgumentException();
             }
+
+            Color background;
+            Color foreground;
+
+//            // check if this cell represents the current DnD drop location
+//            if (jlist.getDropLocation() != null
+//                && !jlist.getDropLocation().isInsert()
+//                && jlist.getDropLocation().getIndex() == index) {
+//
+//                background = Color.WHITE;
+//                foreground = Color.BLUE;
+//
+//            // check if this cell is selected
+//            } else 
+            if (isSelected) {
+                background = Color.WHITE;
+                foreground = Color.RED;
+
+            // unselected, and not the DnD drop location
+            } else {
+                background = Color.WHITE;
+                foreground = Color.BLACK;
+            }
+
+            setBackground(background);
+            setForeground(foreground);
+            
             return this;
         }
 
 
     }
     
-    
+    /**
+     * Table model for lessons
+     */
     class LessonTableModel extends AbstractTableModel {
-        private List<Lesson> cars; 
+        private List<Lesson> lessons; 
         
-    private LessonTableModel (List<Lesson> lessons) {
-        this.cars = new ArrayList<Lesson>(lessons);
-    }
+        private LessonTableModel (List<Lesson> lessons) {
+            this.lessons = new ArrayList<Lesson>(lessons);
+        }
         
-    @Override
-    public int getRowCount() {
-        return cars.size();
-    }
- 
-    @Override
-    public int getColumnCount() {
-        return 5;
-    }
- 
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        Lesson car = cars.get(rowIndex);
-        switch (columnIndex) {
-            case 0:
-                return car.getPrice(); 
-            case 1:
-                return car.getRegion();
-            case 2:
-                return car.getSkill();
-            case 3:
-                //return car.getTeacherId();
-                return "";
-            case 4:
-                //return car.getStudentId();
-                return "";
-            default:
-                throw new IllegalArgumentException("columnIndex");
+        boolean[] canEdit = new boolean [] {
+            false, false, false, false, false
+        };
+        
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit [columnIndex];
+        }
+
+        @Override
+        public int getRowCount() {
+            return lessons.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 5;
+        }
+        
+        @Override
+        public String getColumnName(int column) {
+            String[] columnNames = {"Student", "Teacher", "Skill", "Price", "Region"};
+            return columnNames[column];
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Lesson lesson = lessons.get(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return lesson.getPrice(); 
+                case 1:
+                    return lesson.getRegion();
+                case 2:
+                    return lesson.getSkill();
+                case 3:
+                    //resit v jinem vlakne!!!!
+                    Teacher teacher = tm.getTeacher(lesson.getTeacherId());
+                    return teacher.getFullName();
+                case 4:
+                    Student student = sm.getStudent(lesson.getStudentId());
+                    return student.getFullName();
+                default:
+                    throw new IllegalArgumentException("Wrong column index");
+            }
         }
     }
-}
     
     /**
      * Creates new form PairAppUIv2
@@ -113,55 +153,64 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         initComponents();
     }
     
-    public DefaultListModel populateJList (DataSource dataSource) throws SQLException {
-        DefaultListModel model = new DefaultListModel();
-        Connection conn = null;
-        PreparedStatement st = null;
-        ResultSet rs;
-        
-        try {
-            conn = dataSource.getConnection();
-            st = conn.prepareStatement(
-                    "SELECT fullName FROM Student");
-            rs = st.executeQuery();
-            
-            while (rs.next()) {
-                String name = rs.getString ("fullName");
-                model.addElement(name);
-            }
-            return model;
-            
-        } catch (SQLException ex) {
-            String msg = "Error when getting all students from DB - list";
-            //logger.log(Level.SEVERE, msg, ex);
-            throw new ServiceFailureException(msg, ex);
-        } finally {
-            DBUtils.closeQuietly(conn, st);
-        }
-    }
     
-    public void pop (DefaultListModel model, JList list) {
-        list.setModel(model);
-    }
     
-    public DefaultTableModel popjTable () {
-        Connection conn = null;
-        PreparedStatement st = null;
-        try {
-            conn = dataSource.getConnection();
-            st = conn.prepareStatement(
-                    "SELECT id,price,skill,region,teacherid,studentid FROM Lesson");
-            ResultSet rs = st.executeQuery();
-            return null;
-        } catch (SQLException ex) {
-            String msg = "Error when getting all lessons from DB";
-            //logger.log(Level.SEVERE, msg, ex);
-            throw new ServiceFailureException(msg, ex);
-        } finally {
-            DBUtils.closeQuietly(conn, st);
-        }
-    }
+    //nasledujici tri metody reseny pres managery:
+    
+//    public DefaultListModel populateJList (DataSource dataSource) throws SQLException {
+//        DefaultListModel model = new DefaultListModel();
+//        Connection conn = null;
+//        PreparedStatement st = null;
+//        ResultSet rs;
+//        
+//        try {
+//            conn = dataSource.getConnection();
+//            st = conn.prepareStatement(
+//                    "SELECT fullName FROM Student");
+//            rs = st.executeQuery();
+//            
+//            while (rs.next()) {
+//                String name = rs.getString ("fullName");
+//                model.addElement(name);
+//            }
+//            return model;
+//            
+//        } catch (SQLException ex) {
+//            String msg = "Error when getting all students from DB - list";
+//            //logger.log(Level.SEVERE, msg, ex);
+//            throw new ServiceFailureException(msg, ex);
+//        } finally {
+//            DBUtils.closeQuietly(conn, st);
+//        }
+//    }
+//    
+//    public void pop (DefaultListModel model, JList list) {
+//        list.setModel(model);
+//    }
+//    
+//    public DefaultTableModel popjTable () {
+//        Connection conn = null;
+//        PreparedStatement st = null;
+//        try {
+//            conn = dataSource.getConnection();
+//            st = conn.prepareStatement(
+//                    "SELECT id,price,skill,region,teacherid,studentid FROM Lesson");
+//            ResultSet rs = st.executeQuery();
+//            return null;
+//        } catch (SQLException ex) {
+//            String msg = "Error when getting all lessons from DB";
+//            //logger.log(Level.SEVERE, msg, ex);
+//            throw new ServiceFailureException(msg, ex);
+//        } finally {
+//            DBUtils.closeQuietly(conn, st);
+//        }
+//    }
 
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,8 +220,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
-        Panel_StudentEditPanel1 = new javax.swing.JPanel();
+        jDialog_AddingNewStudent = new javax.swing.JDialog();
+        Panel_AddingStudentEditPanel = new javax.swing.JPanel();
         Label_Student1 = new javax.swing.JLabel();
         SplitPane_StudentID1 = new javax.swing.JSplitPane();
         StudentID1 = new javax.swing.JLabel();
@@ -183,13 +232,13 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         SplitPane_StudentPrice1 = new javax.swing.JSplitPane();
         TextField_StudentPrice1 = new javax.swing.JTextField();
         Label_StudentPrice1 = new javax.swing.JLabel();
-        SplitPane_StudentSkill2 = new javax.swing.JSplitPane();
+        SplitPane_StudentSkill1 = new javax.swing.JSplitPane();
         TextField_StudentSkill1 = new javax.swing.JTextField();
         Label_StudentSkill1 = new javax.swing.JLabel();
         SplitPane_StudentRegion1 = new javax.swing.JSplitPane();
         Label_StudentRegion1 = new javax.swing.JLabel();
         ComboBox_StudentRegion1 = new javax.swing.JComboBox();
-        Button_StudentUpdate1 = new javax.swing.JButton();
+        Button_AddingStudentSaveNew = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Panel_StudentsTab = new javax.swing.JPanel();
         Label_StudentsList = new javax.swing.JLabel();
@@ -210,17 +259,15 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         SplitPane_StudentRegion = new javax.swing.JSplitPane();
         Label_StudentRegion = new javax.swing.JLabel();
         ComboBox_StudentRegion = new javax.swing.JComboBox();
-        Button_StudentAdd = new javax.swing.JButton();
+        Button_StudentAddNew = new javax.swing.JButton();
         Button_StudentUpdate = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        Button_StudentDisplayLessons = new javax.swing.JButton();
+        Button_StudentAddLesson = new javax.swing.JButton();
+        jScrollPane_StudentList = new javax.swing.JScrollPane();
         List_StudentList = new javax.swing.JList();
+        Button_StudentShowAllStudents = new javax.swing.JButton();
         Panel_TeachersTab = new javax.swing.JPanel();
         Label_TeachersList = new javax.swing.JLabel();
-        ScrollPane_TeachersList = new javax.swing.JScrollPane();
-        List_TeachersList = new javax.swing.JList();
         Panel_TeacherEditPanel = new javax.swing.JPanel();
         Label_Teacher = new javax.swing.JLabel();
         SplitPane_TeacherID = new javax.swing.JSplitPane();
@@ -232,27 +279,29 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         SplitPane_TeacherPrice = new javax.swing.JSplitPane();
         TextField_TeacherPrice = new javax.swing.JTextField();
         Label_TeacherPrice = new javax.swing.JLabel();
-        SplitPane_StudentSkill1 = new javax.swing.JSplitPane();
+        SplitPane_TeacherSkill = new javax.swing.JSplitPane();
         TextField_TeacherSkill = new javax.swing.JTextField();
         Label_TeacherSkill = new javax.swing.JLabel();
         SplitPane_TeacherRegion = new javax.swing.JSplitPane();
         Label_TeacherRegion = new javax.swing.JLabel();
         ComboBox_TeacherRegion = new javax.swing.JComboBox();
-        Button_TeacherAdd = new javax.swing.JButton();
+        Button_TeacherAddNew = new javax.swing.JButton();
         Button_TeacherUpdate = new javax.swing.JButton();
-        Button_TeacherLessons = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        Button_TeacherDisplayLessons = new javax.swing.JButton();
+        Button_TeacherAddLesson = new javax.swing.JButton();
+        ScrollPane_TeacherList = new javax.swing.JScrollPane();
+        List_TeachersList = new javax.swing.JList();
+        Button_StudentShowAllTeachers = new javax.swing.JButton();
         Panel_LessonsTab = new javax.swing.JPanel();
         Label_LessonsList = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        ScrollPane_Lessons = new javax.swing.JScrollPane();
+        jTable_lessons = new javax.swing.JTable();
+        Button_LessonDelete = new javax.swing.JButton();
+        Button_LessonDisplayAll = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         Label_Student1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        Label_Student1.setText("Student");
+        Label_Student1.setText("New student");
 
         SplitPane_StudentID1.setDividerLocation(200);
 
@@ -288,7 +337,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_StudentPrice1.setText("Price");
         SplitPane_StudentPrice1.setLeftComponent(Label_StudentPrice1);
 
-        SplitPane_StudentSkill2.setDividerLocation(200);
+        SplitPane_StudentSkill1.setDividerLocation(200);
 
         TextField_StudentSkill1.setText("skill");
         TextField_StudentSkill1.addActionListener(new java.awt.event.ActionListener() {
@@ -296,10 +345,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 TextField_StudentSkill1ActionPerformed(evt);
             }
         });
-        SplitPane_StudentSkill2.setRightComponent(TextField_StudentSkill1);
+        SplitPane_StudentSkill1.setRightComponent(TextField_StudentSkill1);
 
         Label_StudentSkill1.setText("Skill");
-        SplitPane_StudentSkill2.setLeftComponent(Label_StudentSkill1);
+        SplitPane_StudentSkill1.setLeftComponent(Label_StudentSkill1);
 
         SplitPane_StudentRegion1.setDividerLocation(200);
 
@@ -309,72 +358,73 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         ComboBox_StudentRegion1.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
         SplitPane_StudentRegion1.setRightComponent(ComboBox_StudentRegion1);
 
-        Button_StudentUpdate1.setText("Save");
-        Button_StudentUpdate1.addActionListener(new java.awt.event.ActionListener() {
+        Button_AddingStudentSaveNew.setText("Save");
+        Button_AddingStudentSaveNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_StudentUpdate1ActionPerformed(evt);
+                Button_AddingStudentSaveNewActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout Panel_StudentEditPanel1Layout = new javax.swing.GroupLayout(Panel_StudentEditPanel1);
-        Panel_StudentEditPanel1.setLayout(Panel_StudentEditPanel1Layout);
-        Panel_StudentEditPanel1Layout.setHorizontalGroup(
-            Panel_StudentEditPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout Panel_AddingStudentEditPanelLayout = new javax.swing.GroupLayout(Panel_AddingStudentEditPanel);
+        Panel_AddingStudentEditPanel.setLayout(Panel_AddingStudentEditPanelLayout);
+        Panel_AddingStudentEditPanelLayout.setHorizontalGroup(
+            Panel_AddingStudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_AddingStudentEditPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(Panel_StudentEditPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(Panel_AddingStudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(SplitPane_StudentName1)
                     .addComponent(SplitPane_StudentPrice1)
                     .addComponent(SplitPane_StudentID1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
-                    .addComponent(SplitPane_StudentSkill2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SplitPane_StudentSkill1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SplitPane_StudentRegion1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Panel_StudentEditPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Panel_AddingStudentEditPanelLayout.createSequentialGroup()
+                        .addGap(151, 151, 151)
                         .addComponent(Label_Student1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(Panel_StudentEditPanel1Layout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(Button_StudentUpdate1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(Panel_AddingStudentEditPanelLayout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(Button_AddingStudentSaveNew, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        Panel_StudentEditPanel1Layout.setVerticalGroup(
-            Panel_StudentEditPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Panel_StudentEditPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+        Panel_AddingStudentEditPanelLayout.setVerticalGroup(
+            Panel_AddingStudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Panel_AddingStudentEditPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(Label_Student1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addComponent(SplitPane_StudentID1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(SplitPane_StudentName1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 47, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addComponent(SplitPane_StudentPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(SplitPane_StudentSkill2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
+                .addComponent(SplitPane_StudentSkill1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(SplitPane_StudentRegion1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Button_StudentUpdate1)
-                .addGap(30, 30, 30))
+                .addComponent(Button_AddingStudentSaveNew)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jDialog_AddingNewStudentLayout = new javax.swing.GroupLayout(jDialog_AddingNewStudent.getContentPane());
+        jDialog_AddingNewStudent.getContentPane().setLayout(jDialog_AddingNewStudentLayout);
+        jDialog_AddingNewStudentLayout.setHorizontalGroup(
+            jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 427, Short.MAX_VALUE)
-            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jDialog1Layout.createSequentialGroup()
+            .addGroup(jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog_AddingNewStudentLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(Panel_StudentEditPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Panel_AddingStudentEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jDialog_AddingNewStudentLayout.setVerticalGroup(
+            jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 416, Short.MAX_VALUE)
-            .addGroup(jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jDialog1Layout.createSequentialGroup()
+            .addGroup(jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jDialog_AddingNewStudentLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(Panel_StudentEditPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Panel_AddingStudentEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -441,28 +491,21 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         ComboBox_StudentRegion.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
         SplitPane_StudentRegion.setRightComponent(ComboBox_StudentRegion);
 
-        Button_StudentAdd.setText("Add student");
-        Button_StudentAdd.addActionListener(new java.awt.event.ActionListener() {
+        Button_StudentAddNew.setText("Add new student");
+        Button_StudentAddNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_StudentAddActionPerformed(evt);
+                Button_StudentAddNewActionPerformed(evt);
             }
         });
 
-        Button_StudentUpdate.setText("Save");
+        Button_StudentUpdate.setText("Save edit");
 
-        jButton1.setText("Display lessons");
+        Button_StudentDisplayLessons.setText("Display lessons");
 
-        jButton2.setText("Add lesson");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Button_StudentAddLesson.setText("Add lesson");
+        Button_StudentAddLesson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton6.setText("Show all students");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                Button_StudentAddLessonActionPerformed(evt);
             }
         });
 
@@ -479,22 +522,19 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addComponent(SplitPane_StudentSkill)
                     .addComponent(SplitPane_StudentRegion)
                     .addGroup(Panel_StudentEditPanelLayout.createSequentialGroup()
-                        .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Button_StudentAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Label_Student))
-                        .addGap(0, 398, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Label_Student)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(Panel_StudentEditPanelLayout.createSequentialGroup()
+                        .addComponent(Button_StudentAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                        .addComponent(Button_StudentAddLesson)
+                        .addGap(18, 18, 18)
+                        .addComponent(Button_StudentDisplayLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
-                .addComponent(Button_StudentUpdate)
-                .addGap(90, 90, 90)
-                .addComponent(jButton2)
-                .addGap(33, 33, 33))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Button_StudentUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(176, 176, 176))
         );
         Panel_StudentEditPanelLayout.setVerticalGroup(
             Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -502,28 +542,23 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(Label_Student)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SplitPane_StudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(SplitPane_StudentName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(SplitPane_StudentPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(SplitPane_StudentSkill, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SplitPane_StudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(SplitPane_StudentRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Panel_StudentEditPanelLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(Button_StudentUpdate)))
-                    .addGroup(Panel_StudentEditPanelLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jButton6)))
+                .addComponent(SplitPane_StudentName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SplitPane_StudentPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SplitPane_StudentSkill, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SplitPane_StudentRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Button_StudentUpdate)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Button_StudentAdd)
-                    .addComponent(jButton1))
+                .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Button_StudentAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Button_StudentDisplayLessons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Button_StudentAddLesson)))
                 .addContainerGap())
         );
 
@@ -537,7 +572,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 List_StudentListValueChanged(evt);
             }
         });
-        jScrollPane2.setViewportView(List_StudentList);
+        jScrollPane_StudentList.setViewportView(List_StudentList);
+
+        Button_StudentShowAllStudents.setText("Show all students");
+        Button_StudentShowAllStudents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_StudentShowAllStudentsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Panel_StudentsTabLayout = new javax.swing.GroupLayout(Panel_StudentsTab);
         Panel_StudentsTab.setLayout(Panel_StudentsTabLayout);
@@ -547,7 +589,9 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(Panel_StudentsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_StudentsTabLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(Panel_StudentsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane_StudentList, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                            .addComponent(Button_StudentShowAllStudents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Panel_StudentEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(Label_StudentsList))
@@ -562,8 +606,9 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addGroup(Panel_StudentsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Panel_StudentEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(Panel_StudentsTabLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 12, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane_StudentList, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Button_StudentShowAllStudents, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -571,13 +616,6 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         Label_TeachersList.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Label_TeachersList.setText("Teachers");
-
-        List_TeachersList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = {};
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        ScrollPane_TeachersList.setViewportView(List_TeachersList);
 
         Label_Teacher.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Label_Teacher.setText("Teacher");
@@ -616,7 +654,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_TeacherPrice.setText("Price");
         SplitPane_TeacherPrice.setLeftComponent(Label_TeacherPrice);
 
-        SplitPane_StudentSkill1.setDividerLocation(200);
+        SplitPane_TeacherSkill.setDividerLocation(200);
 
         TextField_TeacherSkill.setText("skill");
         TextField_TeacherSkill.addActionListener(new java.awt.event.ActionListener() {
@@ -624,10 +662,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 TextField_TeacherSkillActionPerformed(evt);
             }
         });
-        SplitPane_StudentSkill1.setRightComponent(TextField_TeacherSkill);
+        SplitPane_TeacherSkill.setRightComponent(TextField_TeacherSkill);
 
         Label_TeacherSkill.setText("Skill");
-        SplitPane_StudentSkill1.setLeftComponent(Label_TeacherSkill);
+        SplitPane_TeacherSkill.setLeftComponent(Label_TeacherSkill);
 
         SplitPane_TeacherRegion.setDividerLocation(200);
 
@@ -637,25 +675,23 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         ComboBox_TeacherRegion.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
         SplitPane_TeacherRegion.setRightComponent(ComboBox_TeacherRegion);
 
-        Button_TeacherAdd.setText("Add teacher");
-        Button_TeacherAdd.addActionListener(new java.awt.event.ActionListener() {
+        Button_TeacherAddNew.setText("Add new teacher");
+        Button_TeacherAddNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Button_TeacherAddActionPerformed(evt);
+                Button_TeacherAddNewActionPerformed(evt);
             }
         });
 
-        Button_TeacherUpdate.setText("Save");
-
-        Button_TeacherLessons.setText("Display lessons");
-
-        jButton3.setText("Add lesson");
-
-        jButton7.setText("Show all teachers");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        Button_TeacherUpdate.setText("Save edit");
+        Button_TeacherUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                Button_TeacherUpdateActionPerformed(evt);
             }
         });
+
+        Button_TeacherDisplayLessons.setText("Display lessons");
+
+        Button_TeacherAddLesson.setText("Add lesson");
 
         javax.swing.GroupLayout Panel_TeacherEditPanelLayout = new javax.swing.GroupLayout(Panel_TeacherEditPanel);
         Panel_TeacherEditPanel.setLayout(Panel_TeacherEditPanelLayout);
@@ -667,21 +703,22 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addComponent(SplitPane_TeacherName)
                     .addComponent(SplitPane_TeacherPrice)
                     .addComponent(SplitPane_TeacherID, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Label_Teacher, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SplitPane_StudentSkill1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SplitPane_TeacherRegion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Panel_TeacherEditPanelLayout.createSequentialGroup()
-                        .addComponent(Button_TeacherAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Button_TeacherLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Label_Teacher)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(SplitPane_TeacherSkill, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(SplitPane_TeacherRegion, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_TeacherEditPanelLayout.createSequentialGroup()
-                        .addComponent(jButton7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Button_TeacherUpdate)
-                        .addGap(64, 64, 64)
-                        .addComponent(jButton3)
-                        .addGap(25, 25, 25)))
+                        .addComponent(Button_TeacherAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
+                        .addComponent(Button_TeacherAddLesson)
+                        .addGap(18, 18, 18)
+                        .addComponent(Button_TeacherDisplayLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_TeacherEditPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Button_TeacherUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(176, 176, 176))
         );
         Panel_TeacherEditPanelLayout.setVerticalGroup(
             Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -690,25 +727,38 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addComponent(Label_Teacher)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(SplitPane_TeacherID, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SplitPane_TeacherName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(SplitPane_TeacherPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(SplitPane_StudentSkill1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(SplitPane_TeacherRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(Button_TeacherUpdate)
-                    .addComponent(jButton7))
-                .addGap(35, 35, 35)
-                .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Button_TeacherLessons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Button_TeacherAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(SplitPane_TeacherName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SplitPane_TeacherPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SplitPane_TeacherSkill, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(SplitPane_TeacherRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Button_TeacherUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(Button_TeacherAddNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Button_TeacherAddLesson))
+                    .addComponent(Button_TeacherDisplayLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        List_TeachersList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = {};
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        ScrollPane_TeacherList.setViewportView(List_TeachersList);
+
+        Button_StudentShowAllTeachers.setText("Show all teachers");
+        Button_StudentShowAllTeachers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_StudentShowAllTeachersActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Panel_TeachersTabLayout = new javax.swing.GroupLayout(Panel_TeachersTab);
         Panel_TeachersTab.setLayout(Panel_TeachersTabLayout);
@@ -718,8 +768,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(Panel_TeachersTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_TeachersTabLayout.createSequentialGroup()
-                        .addComponent(ScrollPane_TeachersList, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
+                        .addGroup(Panel_TeachersTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(ScrollPane_TeacherList, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                            .addComponent(Button_StudentShowAllTeachers, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Panel_TeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(Label_TeachersList))
                 .addGap(11, 11, 11))
@@ -731,10 +783,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addComponent(Label_TeachersList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(Panel_TeachersTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Panel_TeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(Panel_TeachersTabLayout.createSequentialGroup()
-                        .addComponent(ScrollPane_TeachersList, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 9, Short.MAX_VALUE)))
+                        .addComponent(ScrollPane_TeacherList, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Button_StudentShowAllTeachers, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                    .addComponent(Panel_TeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -743,7 +796,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_LessonsList.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Label_LessonsList.setText("Lessons");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_lessons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -769,19 +822,21 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jTable_lessons.setColumnSelectionAllowed(true);
+        ScrollPane_Lessons.setViewportView(jTable_lessons);
+        jTable_lessons.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jButton4.setText("Delete lesson");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Button_LessonDelete.setText("Delete lesson");
+        Button_LessonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                Button_LessonDeleteActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Display all");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        Button_LessonDisplayAll.setText("Display all");
+        Button_LessonDisplayAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                Button_LessonDisplayAllActionPerformed(evt);
             }
         });
 
@@ -798,28 +853,29 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
                             .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
-                                .addComponent(jButton5)
+                                .addComponent(Button_LessonDisplayAll)
                                 .addGap(155, 155, 155)
                                 .addComponent(jLabel1)
                                 .addGap(238, 238, 238)
-                                .addComponent(jButton4))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(195, Short.MAX_VALUE))
+                                .addComponent(Button_LessonDelete)))))
+                .addContainerGap())
         );
         Panel_LessonsTabLayout.setVerticalGroup(
             Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Label_LessonsList)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
-                            .addComponent(jButton5))
+                            .addComponent(Button_LessonDelete)
+                            .addComponent(Button_LessonDisplayAll))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_LessonsTabLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -855,11 +911,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_StudentSkillActionPerformed
 
-    private void Button_StudentAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddActionPerformed
+    private void Button_StudentAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddNewActionPerformed
         // TODO add your handling code here:
-        jDialog1.setVisible(true);
-        jDialog1.pack();
-    }//GEN-LAST:event_Button_StudentAddActionPerformed
+        jDialog_AddingNewStudent.setVisible(true);
+        jDialog_AddingNewStudent.pack();
+    }//GEN-LAST:event_Button_StudentAddNewActionPerformed
 
     private void TextField_TeacherNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherNameActionPerformed
         // TODO add your handling code here:
@@ -873,11 +929,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_TeacherSkillActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void Button_StudentAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddLessonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_Button_StudentAddLessonActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void Button_StudentShowAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentShowAllStudentsActionPerformed
         // TODO add your handling code here:
         List<Student> list = sm.findAllStudents();
         DefaultListModel model = new DefaultListModel();
@@ -886,9 +942,9 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         }
         List_StudentList.setModel(model);
         List_StudentList.setCellRenderer(new EntityListRenderer());
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_Button_StudentShowAllStudentsActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void Button_StudentShowAllTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentShowAllTeachersActionPerformed
         // TODO add your handling code here:
         List<Teacher> list = tm.findAllTeachers();
         DefaultListModel model = new DefaultListModel();
@@ -897,43 +953,29 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         }
         List_TeachersList.setModel(model);
         List_StudentList.setCellRenderer(new EntityListRenderer());
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_Button_StudentShowAllTeachersActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void Button_LessonDisplayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDisplayAllActionPerformed
         // TODO add your handling code here:
         
             List<Lesson> ls = lm.findAllLessons();
             LessonTableModel model = new LessonTableModel(ls);
             
-            /*
-            Object[] columnNames = {"Student", "Teacher", "Skill", "Price", "Region"};
-            DefaultTableModel model = new DefaultTableModel(new Object[0][0], columnNames);
-            for (Lesson adv : ls) {
-                Object[] o = new Object[5];
-                o[0] = adv.getStudentId();
-                if (o[2] == null)
-                    o[0] = 
-                o[1] = adv.getTeacherId();
-                o[2] = adv.getSkill();
-                o[3] = adv.getPrice();
-                o[4] = adv.getRegion();
-                model.addRow(o);
-            }
-            */
-            jTable1.setModel(model);
+            jTable_lessons.setModel(model);
+            //nastavime jinej model nez pri inicializaci, nejake nastaveni se muze zmenit (napr column selection)
         
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_Button_LessonDisplayAllActionPerformed
 
-    private void Button_TeacherAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddActionPerformed
+    private void Button_TeacherAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddNewActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_Button_TeacherAddActionPerformed
+    }//GEN-LAST:event_Button_TeacherAddNewActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void Button_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDeleteActionPerformed
         // TODO add your handling code here:
         
         //lm.deleteLesson(lesson);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_Button_LessonDeleteActionPerformed
 
     private void List_StudentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_StudentListValueChanged
         // TODO add your handling code here:
@@ -958,17 +1000,22 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_StudentSkill1ActionPerformed
 
-    private void Button_StudentUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentUpdate1ActionPerformed
-        // TODO add your handling code here:
+    private void Button_AddingStudentSaveNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_AddingStudentSaveNewActionPerformed
+        
+        //need to check valid data!!
         Student student = new Student();
         student.setFullName(TextField_StudentName1.getText());
         student.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_StudentPrice1.getText())).setScale(2));
         student.setRegion((Region) ComboBox_StudentRegion1.getSelectedItem());
         student.setSkill(Integer.parseInt(TextField_StudentSkill1.getText()));
         sm.createStudent(student);
-        jDialog1.dispose();
+        jDialog_AddingNewStudent.dispose();
         
-    }//GEN-LAST:event_Button_StudentUpdate1ActionPerformed
+    }//GEN-LAST:event_Button_AddingStudentSaveNewActionPerformed
+
+    private void Button_TeacherUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Button_TeacherUpdateActionPerformed
 
     
     public static DataSource createMemoryDatabase() throws SQLException {
@@ -986,7 +1033,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     public static void main(String args[]) {
         
         try {
-            dataSource = createMemoryDatabase();
+            dataSource = createMemoryDatabase(); // delat v jinym vlakne?
             lm = new LessonManager();
             lm.setDataSource(dataSource);
             tm = new TeacherManager();
@@ -1039,11 +1086,18 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Button_StudentAdd;
+    private javax.swing.JButton Button_AddingStudentSaveNew;
+    private javax.swing.JButton Button_LessonDelete;
+    private javax.swing.JButton Button_LessonDisplayAll;
+    private javax.swing.JButton Button_StudentAddLesson;
+    private javax.swing.JButton Button_StudentAddNew;
+    private javax.swing.JButton Button_StudentDisplayLessons;
+    private javax.swing.JButton Button_StudentShowAllStudents;
+    private javax.swing.JButton Button_StudentShowAllTeachers;
     private javax.swing.JButton Button_StudentUpdate;
-    private javax.swing.JButton Button_StudentUpdate1;
-    private javax.swing.JButton Button_TeacherAdd;
-    private javax.swing.JButton Button_TeacherLessons;
+    private javax.swing.JButton Button_TeacherAddLesson;
+    private javax.swing.JButton Button_TeacherAddNew;
+    private javax.swing.JButton Button_TeacherDisplayLessons;
     private javax.swing.JButton Button_TeacherUpdate;
     private javax.swing.JComboBox ComboBox_StudentRegion;
     private javax.swing.JComboBox ComboBox_StudentRegion1;
@@ -1072,13 +1126,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JLabel Label_TeachersList;
     private javax.swing.JList List_StudentList;
     private javax.swing.JList List_TeachersList;
+    private javax.swing.JPanel Panel_AddingStudentEditPanel;
     private javax.swing.JPanel Panel_LessonsTab;
     private javax.swing.JPanel Panel_StudentEditPanel;
-    private javax.swing.JPanel Panel_StudentEditPanel1;
     private javax.swing.JPanel Panel_StudentsTab;
     private javax.swing.JPanel Panel_TeacherEditPanel;
     private javax.swing.JPanel Panel_TeachersTab;
-    private javax.swing.JScrollPane ScrollPane_TeachersList;
+    private javax.swing.JScrollPane ScrollPane_Lessons;
+    private javax.swing.JScrollPane ScrollPane_TeacherList;
     private javax.swing.JSplitPane SplitPane_StudentID;
     private javax.swing.JSplitPane SplitPane_StudentID1;
     private javax.swing.JSplitPane SplitPane_StudentName;
@@ -1089,11 +1144,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JSplitPane SplitPane_StudentRegion1;
     private javax.swing.JSplitPane SplitPane_StudentSkill;
     private javax.swing.JSplitPane SplitPane_StudentSkill1;
-    private javax.swing.JSplitPane SplitPane_StudentSkill2;
     private javax.swing.JSplitPane SplitPane_TeacherID;
     private javax.swing.JSplitPane SplitPane_TeacherName;
     private javax.swing.JSplitPane SplitPane_TeacherPrice;
     private javax.swing.JSplitPane SplitPane_TeacherRegion;
+    private javax.swing.JSplitPane SplitPane_TeacherSkill;
     private javax.swing.JLabel StudentID;
     private javax.swing.JLabel StudentID1;
     private javax.swing.JTextField TextField_StudentName;
@@ -1105,18 +1160,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JTextField TextField_TeacherName;
     private javax.swing.JTextField TextField_TeacherPrice;
     private javax.swing.JTextField TextField_TeacherSkill;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog_AddingNewStudent;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane_StudentList;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_lessons;
     // End of variables declaration//GEN-END:variables
 }

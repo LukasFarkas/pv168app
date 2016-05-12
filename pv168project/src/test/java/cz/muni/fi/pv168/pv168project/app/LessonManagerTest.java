@@ -230,7 +230,7 @@ public class LessonManagerTest {
     
     private void testUpdateLesson(Operation<Lesson> updateOperation) {
         Lesson l1 = new LessonBuilder().price(BigDecimal.valueOf(800.00).setScale(2)).skill(5).region(Region.NORTH_AMERICA).student(sAverage.getId()).teacher(tAverage.getId()).build();
-        Lesson l2 = new LessonBuilder().price(BigDecimal.valueOf(300.00).setScale(2)).skill(3).region(Region.RUSSIAN).student(sLowLevel.getId()).teacher(tLowLevel.getId()).build();
+        Lesson l2 = new LessonBuilder().price(BigDecimal.valueOf(300.00).setScale(2)).skill(3).region(Region.RUSSIA).student(sLowLevel.getId()).teacher(tLowLevel.getId()).build();
         manager.createLesson(l1);
         manager.createLesson(l2);
 

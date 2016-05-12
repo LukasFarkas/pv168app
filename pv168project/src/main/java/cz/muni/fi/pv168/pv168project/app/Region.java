@@ -11,7 +11,7 @@ package cz.muni.fi.pv168.pv168project.app;
  */
 public enum Region {
     INDIA,
-    RUSSIAN,
+    RUSSIA,
     ENGLAND,
     NORTH_AMERICA;     
 }
