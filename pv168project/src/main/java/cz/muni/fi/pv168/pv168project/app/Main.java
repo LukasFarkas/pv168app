@@ -22,6 +22,7 @@ public class Main {
 
     final static Logger log = LoggerFactory.getLogger(Main.class);
 
+    
     public static DataSource createMemoryDatabase() throws SQLException {
         BasicDataSource bds = new BasicDataSource();
         //set JDBC driver and URL
@@ -31,14 +32,27 @@ public class Main {
         
         DBUtils.executeSqlScript(bds,StudentManager.class.getResource("createTables.sql"));
         DBUtils.executeSqlScript(bds,StudentManager.class.getResource("test-data.sql"));
-        /*
-        new ResourceDatabasePopulator(
-                new ClassPathResource("createTables.sql"),
-                new ClassPathResource("test-data.sql"))
-                .execute(bds);*/
         return bds;
     }
-
+    
+    /*
+    public static DataSource createMemoryDatabase() throws SQLException {
+        BasicDataSource bds = new BasicDataSource();
+        //set JDBC driver and URL
+        bds.setDriverClassName(EmbeddedDriver.class.getName());
+        bds.setUrl("jdbc:derby:memory:studentsDB;create=true");
+        //populate db with tables and data
+        
+        DBUtils.executeSqlScript(bds,StudentManager.class.getResource("createTables.sql"));
+        DBUtils.executeSqlScript(bds,StudentManager.class.getResource("test-data.sql"));
+        
+//        new ResourceDatabasePopulator(
+//                new ClassPathResource("createTables.sql"),
+//                new ClassPathResource("test-data.sql"))
+//                .execute(bds);
+        return bds;
+    }
+*/
     public static void main(String[] args) {
 
         log.info("zaciname");
