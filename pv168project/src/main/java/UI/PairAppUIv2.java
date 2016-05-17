@@ -21,6 +21,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.derby.jdbc.EmbeddedDriver;
@@ -98,10 +99,18 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         
         private LessonTableModel (List<Lesson> lessons) {
             this.lessons = new ArrayList<Lesson>(lessons);
+            
         }
-        
+        Class[] types = new Class [] {
+            java.lang.Long.class, Student.class, Teacher.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+
         boolean[] canEdit = new boolean [] {
-            false, false, false, false, false
+            false, false, false, false, false, false
         };
         
         @Override
@@ -116,32 +125,34 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         @Override
         public int getColumnCount() {
-            return 5;
+            return 6;
         }
         
         @Override
-        public String getColumnName(int column) {
-            String[] columnNames = {"Student", "Teacher", "Skill", "Price", "Region"};
+        public String getColumnName(int column) { //need to rewrite to bunde.properties
+            String[] columnNames = {"LessonID", "Student", "Teacher", "Skill", "Price", "Region"};
             return columnNames[column];
         }
-
+        
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             Lesson lesson = lessons.get(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return lesson.getPrice(); 
+                    return lesson.getId();
                 case 1:
-                    return lesson.getRegion();
+                    Student student = sm.getStudent(lesson.getStudentId());
+                    return student.getFullName();
                 case 2:
-                    return lesson.getSkill();
-                case 3:
                     //resit v jinem vlakne!!!!
                     Teacher teacher = tm.getTeacher(lesson.getTeacherId());
                     return teacher.getFullName();
+                case 3:
+                    return lesson.getSkill();
                 case 4:
-                    Student student = sm.getStudent(lesson.getStudentId());
-                    return student.getFullName();
+                    return lesson.getPrice(); 
+                case 5:
+                    return lesson.getRegion();
                 default:
                     throw new IllegalArgumentException("Wrong column index");
             }
@@ -278,6 +289,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Button_StudentUpdate = new javax.swing.JButton();
         Button_StudentDisplayLessons = new javax.swing.JButton();
         Button_StudentAddLesson = new javax.swing.JButton();
+        Button_StudentDelete = new javax.swing.JButton();
         jScrollPane_StudentList = new javax.swing.JScrollPane();
         List_StudentList = new javax.swing.JList();
         Button_ShowAllStudents = new javax.swing.JButton();
@@ -304,6 +316,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Button_TeacherUpdate = new javax.swing.JButton();
         Button_TeacherDisplayLessons = new javax.swing.JButton();
         Button_TeacherAddLesson = new javax.swing.JButton();
+        Button_TeacherDelete = new javax.swing.JButton();
         ScrollPane_TeacherList = new javax.swing.JScrollPane();
         List_TeachersList = new javax.swing.JList();
         Button_ShowAllTeachers = new javax.swing.JButton();
@@ -313,7 +326,6 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         jTable_lessons = new javax.swing.JTable();
         Button_LessonDelete = new javax.swing.JButton();
         Button_LessonDisplayAll = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         Label_Teacher1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("UI/Bundle"); // NOI18N
@@ -382,7 +394,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_AddingTeacherEditPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(Panel_AddingTeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(SplitPane_TeacherName1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                            .addComponent(SplitPane_TeacherName1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(SplitPane_TeacherPrice1)
                             .addComponent(SplitPane_TeacherSkill1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(SplitPane_TeacherRegion1, javax.swing.GroupLayout.Alignment.LEADING)))
@@ -509,7 +521,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                             .addGroup(Panel_AddingStudentEditPanelLayout.createSequentialGroup()
                                 .addGap(158, 158, 158)
                                 .addComponent(Label_Student1)))
-                        .addGap(0, 129, Short.MAX_VALUE)))
+                        .addGap(0, 255, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         Panel_AddingStudentEditPanelLayout.setVerticalGroup(
@@ -637,6 +649,13 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             }
         });
 
+        Button_StudentDelete.setText(bundle.getString("PairAppUIv2.Button_StudentDelete.text")); // NOI18N
+        Button_StudentDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_StudentDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Panel_StudentEditPanelLayout = new javax.swing.GroupLayout(Panel_StudentEditPanel);
         Panel_StudentEditPanel.setLayout(Panel_StudentEditPanelLayout);
         Panel_StudentEditPanelLayout.setHorizontalGroup(
@@ -653,16 +672,19 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addComponent(Label_Student)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(Panel_StudentEditPanelLayout.createSequentialGroup()
-                        .addComponent(Button_StudentAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                        .addComponent(Button_StudentAddLesson)
-                        .addGap(18, 18, 18)
-                        .addComponent(Button_StudentDisplayLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Button_StudentAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Button_StudentDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+                        .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
+                                .addComponent(Button_StudentAddLesson)
+                                .addGap(18, 18, 18)
+                                .addComponent(Button_StudentDisplayLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
+                                .addComponent(Button_StudentUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(166, 166, 166)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Button_StudentUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(176, 176, 176))
         );
         Panel_StudentEditPanelLayout.setVerticalGroup(
             Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -680,7 +702,9 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(SplitPane_StudentRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Button_StudentUpdate)
+                .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Button_StudentUpdate)
+                    .addComponent(Button_StudentDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Button_StudentAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -821,6 +845,13 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         Button_TeacherAddLesson.setText(bundle.getString("PairAppUIv2.Button_TeacherAddLesson.text")); // NOI18N
 
+        Button_TeacherDelete.setText(bundle.getString("PairAppUIv2.Button_TeacherDelete.text")); // NOI18N
+        Button_TeacherDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_TeacherDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Panel_TeacherEditPanelLayout = new javax.swing.GroupLayout(Panel_TeacherEditPanel);
         Panel_TeacherEditPanel.setLayout(Panel_TeacherEditPanelLayout);
         Panel_TeacherEditPanelLayout.setHorizontalGroup(
@@ -836,17 +867,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(SplitPane_TeacherSkill, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SplitPane_TeacherRegion, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Panel_TeacherEditPanelLayout.createSequentialGroup()
-                        .addComponent(Button_TeacherAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
-                        .addComponent(Button_TeacherAddLesson)
-                        .addGap(18, 18, 18)
-                        .addComponent(Button_TeacherDisplayLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, Panel_TeacherEditPanelLayout.createSequentialGroup()
+                        .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Button_TeacherAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Button_TeacherDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+                        .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_TeacherEditPanelLayout.createSequentialGroup()
+                                .addComponent(Button_TeacherAddLesson)
+                                .addGap(18, 18, 18)
+                                .addComponent(Button_TeacherDisplayLessons, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_TeacherEditPanelLayout.createSequentialGroup()
+                                .addComponent(Button_TeacherUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(166, 166, 166)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_TeacherEditPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Button_TeacherUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(176, 176, 176))
         );
         Panel_TeacherEditPanelLayout.setVerticalGroup(
             Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -864,7 +898,9 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(SplitPane_TeacherRegion, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Button_TeacherUpdate)
+                .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Button_TeacherUpdate)
+                    .addComponent(Button_TeacherDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -931,20 +967,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         jTable_lessons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Student", "Teacher", "Skill", "Price", "Region"
+                "LessonID", "Student", "Teacher", "Skill", "Price", "Region"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Long.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -958,6 +994,15 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         jTable_lessons.setColumnSelectionAllowed(true);
         ScrollPane_Lessons.setViewportView(jTable_lessons);
         jTable_lessons.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTable_lessons.getColumnModel().getColumnCount() > 0) {
+            jTable_lessons.getColumnModel().getColumn(0).setResizable(false);
+            jTable_lessons.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title5")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title0")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title1")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title2")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title3")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title4")); // NOI18N
+        }
 
         Button_LessonDelete.setText(bundle.getString("PairAppUIv2.Button_LessonDelete.text")); // NOI18N
         Button_LessonDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -973,8 +1018,6 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText(bundle.getString("PairAppUIv2.jLabel1.text")); // NOI18N
-
         javax.swing.GroupLayout Panel_LessonsTabLayout = new javax.swing.GroupLayout(Panel_LessonsTab);
         Panel_LessonsTab.setLayout(Panel_LessonsTabLayout);
         Panel_LessonsTabLayout.setHorizontalGroup(
@@ -986,12 +1029,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
+                            .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 1023, Short.MAX_VALUE)
                             .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
                                 .addComponent(Button_LessonDisplayAll)
-                                .addGap(155, 155, 155)
-                                .addComponent(jLabel1)
-                                .addGap(238, 238, 238)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Button_LessonDelete)))))
                 .addContainerGap())
         );
@@ -1002,16 +1043,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addComponent(Label_LessonsList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_LessonsTabLayout.createSequentialGroup()
-                        .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Button_LessonDelete)
-                            .addComponent(Button_LessonDisplayAll))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_LessonsTabLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(26, 26, 26))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Button_LessonDelete)
+                    .addComponent(Button_LessonDisplayAll))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab(bundle.getString("PairAppUIv2.Panel_LessonsTab.TabConstraints.tabTitle"), Panel_LessonsTab); // NOI18N
@@ -1087,14 +1123,19 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_ShowAllTeachersActionPerformed
 
     private void Button_LessonDisplayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDisplayAllActionPerformed
-        // TODO add your handling code here:
-        
-            List<Lesson> ls = lm.findAllLessons();
-            LessonTableModel model = new LessonTableModel(ls);
+        List<Lesson> ls = lm.findAllLessons();
+        LessonTableModel model = new LessonTableModel(ls);
             
-            jTable_lessons.setModel(model);
-            //nastavime jinej model nez pri inicializaci, nejake nastaveni se muze zmenit (napr column selection)
+        jTable_lessons.setModel(model);
+        //nastavime jinej model nez pri inicializaci, nejake nastaveni se muze zmenit (napr column selection)
         
+        //jTable_lessons.setColumnSelectionAllowed(true);
+        
+        jTable_lessons.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable_lessons.setRowSelectionAllowed(true);
+        jTable_lessons.setCellSelectionEnabled(false);
+        
+        ScrollPane_Lessons.setViewportView(jTable_lessons);
     }//GEN-LAST:event_Button_LessonDisplayAllActionPerformed
 
     private void Button_TeacherAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddNewActionPerformed
@@ -1103,9 +1144,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_TeacherAddNewActionPerformed
 
     private void Button_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDeleteActionPerformed
-        // TODO add your handling code here:
+        Long lessonID = (Long) jTable_lessons.getValueAt(jTable_lessons.getSelectedRow() , 0);
+        Lesson lesson = lm.getLesson(lessonID);
         
-        //lm.deleteLesson(lesson);
+        lm.deleteLesson(lesson);
+        
+        for(ActionListener a : Button_LessonDisplayAll.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
     }//GEN-LAST:event_Button_LessonDeleteActionPerformed
 
     private void List_StudentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_StudentListValueChanged
@@ -1267,6 +1313,43 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Button_TeacherSaveNewActionPerformed
 
+    private void Button_StudentDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentDeleteActionPerformed
+        String id = Label_StudentIDValue.getText();
+        if(id.equals("IDValue_UNKNOWN")){
+            return;
+        }
+        Student st =  sm.getStudent(Long.valueOf(id)); //geting student from database, should be another thread
+        sm.deleteStudent(st);
+        
+        //aktualizovat vybranyho studenta
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("UI/Bundle");
+        Label_StudentIDValue.setText(bundle.getString("PairAppUIv2.Label_StudentIDValue.text"));
+        
+        //aktualizovani listu studentu
+        for(ActionListener a : Button_ShowAllStudents.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+    }//GEN-LAST:event_Button_StudentDeleteActionPerformed
+
+    private void Button_TeacherDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherDeleteActionPerformed
+        String id = Label_TeacherIDValue.getText();
+        if(id.equals("IDValue_UNKNOWN")){
+            return;
+        }
+        Teacher teacher =  tm.getTeacher(Long.valueOf(id)); //geting student from database, should be another thread
+        tm.deleteTeacher(teacher);
+        
+        //aktualizovat vybranyho teachera
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("UI/Bundle");
+        Label_TeacherIDValue.setText(bundle.getString("PairAppUIv2.Label_TeacherIDValue.text"));
+        
+        
+        //aktualizovani listu studentu
+        for(ActionListener a : Button_ShowAllTeachers.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+    }//GEN-LAST:event_Button_TeacherDeleteActionPerformed
+
     
     
     public static void main(String args[]) {
@@ -1331,11 +1414,13 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JButton Button_ShowAllTeachers;
     private javax.swing.JButton Button_StudentAddLesson;
     private javax.swing.JButton Button_StudentAddNew;
+    private javax.swing.JButton Button_StudentDelete;
     private javax.swing.JButton Button_StudentDisplayLessons;
     private javax.swing.JButton Button_StudentSaveNew;
     private javax.swing.JButton Button_StudentUpdate;
     private javax.swing.JButton Button_TeacherAddLesson;
     private javax.swing.JButton Button_TeacherAddNew;
+    private javax.swing.JButton Button_TeacherDelete;
     private javax.swing.JButton Button_TeacherDisplayLessons;
     private javax.swing.JButton Button_TeacherSaveNew;
     private javax.swing.JButton Button_TeacherUpdate;
@@ -1413,7 +1498,6 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JTextField TextField_TeacherSkill1;
     private javax.swing.JDialog jDialog_AddingNewStudent;
     private javax.swing.JDialog jDialog_AddingNewTeacher;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane_StudentList;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable_lessons;
