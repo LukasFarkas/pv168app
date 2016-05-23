@@ -97,6 +97,9 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     class LessonTableModel extends AbstractTableModel {
         private List<Lesson> lessons; 
         
+        private LessonTableModel () {    
+        }
+        
         private LessonTableModel (List<Lesson> lessons) {
             this.lessons = new ArrayList<Lesson>(lessons);
             
@@ -120,7 +123,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         @Override
         public int getRowCount() {
-            return lessons.size();
+            if (lessons != null){
+                return lessons.size();
+            }
+            return 0;
         }
 
         @Override
@@ -265,6 +271,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_StudentRegion1 = new javax.swing.JLabel();
         ComboBox_StudentRegion1 = new javax.swing.JComboBox();
         Button_StudentSaveNew = new javax.swing.JButton();
+        jDialog_AddingNewLesson = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList_AvailableEntities = new javax.swing.JList();
+        jButton_SaveNewLesson = new javax.swing.JButton();
+        jLabel_AvailableEntities = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Panel_StudentsTab = new javax.swing.JPanel();
         Label_StudentsList = new javax.swing.JLabel();
@@ -561,6 +572,49 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(Panel_AddingStudentEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
+        );
+
+        jList_AvailableEntities.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList_AvailableEntities);
+
+        jButton_SaveNewLesson.setText(bundle.getString("PairAppUIv2.jButton_SaveNewLesson.text")); // NOI18N
+        jButton_SaveNewLesson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SaveNewLessonActionPerformed(evt);
+            }
+        });
+
+        jLabel_AvailableEntities.setText(bundle.getString("PairAppUIv2.jLabel_AvailableEntities.text")); // NOI18N
+
+        javax.swing.GroupLayout jDialog_AddingNewLessonLayout = new javax.swing.GroupLayout(jDialog_AddingNewLesson.getContentPane());
+        jDialog_AddingNewLesson.getContentPane().setLayout(jDialog_AddingNewLessonLayout);
+        jDialog_AddingNewLessonLayout.setHorizontalGroup(
+            jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_SaveNewLesson, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_AvailableEntities)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jDialog_AddingNewLessonLayout.setVerticalGroup(
+            jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addComponent(jLabel_AvailableEntities)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                    .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
+                        .addComponent(jButton_SaveNewLesson)
+                        .addContainerGap())))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1097,11 +1151,26 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_TextField_TeacherSkillActionPerformed
 
     private void Button_StudentAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddLessonActionPerformed
-        // TODO add your handling code here:
+        Student st = (Student) List_StudentList.getSelectedValue();
+        if(st == null){
+            return;
+        }
+        List<Teacher> availableTeachers = lm.findMatchForStudent(st);
+        //vytvorim novy list a nastavim nejaky novy okno s nim a v nem zobrazim availableTeachers
+
+        DefaultListModel model = new DefaultListModel();
+        for (Teacher t : availableTeachers) {
+            model.addElement(t);
+        }
+        jList_AvailableEntities.setModel(model);
+        jList_AvailableEntities.setCellRenderer(new EntityListRenderer());
+        
+        jDialog_AddingNewLesson.setVisible(true);
+        jDialog_AddingNewLesson.pack();
+
     }//GEN-LAST:event_Button_StudentAddLessonActionPerformed
 
     private void Button_ShowAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllStudentsActionPerformed
-        // TODO add your handling code here:
         List<Student> list = sm.findAllStudents();
         DefaultListModel model = new DefaultListModel();
         for (Student t : list) {
@@ -1124,12 +1193,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
     private void Button_LessonDisplayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDisplayAllActionPerformed
         List<Lesson> ls = lm.findAllLessons();
-        LessonTableModel model = new LessonTableModel(ls);
-            
+        LessonTableModel model = new LessonTableModel(ls);   
         jTable_lessons.setModel(model);
-        //nastavime jinej model nez pri inicializaci, nejake nastaveni se muze zmenit (napr column selection)
-        
-        //jTable_lessons.setColumnSelectionAllowed(true);
         
         jTable_lessons.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jTable_lessons.setRowSelectionAllowed(true);
@@ -1144,7 +1209,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_TeacherAddNewActionPerformed
 
     private void Button_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDeleteActionPerformed
-        Long lessonID = (Long) jTable_lessons.getValueAt(jTable_lessons.getSelectedRow() , 0);
+        int row = jTable_lessons.getSelectedRow();
+        if (row == -1){ //pokud neni vybrany zadny radek
+            return;
+        }
+        Long lessonID = (Long) jTable_lessons.getValueAt(row , 0);
         Lesson lesson = lm.getLesson(lessonID);
         
         lm.deleteLesson(lesson);
@@ -1155,7 +1224,6 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_LessonDeleteActionPerformed
 
     private void List_StudentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_StudentListValueChanged
-        // TODO add your handling code here:
         Student st = (Student) List_StudentList.getSelectedValue();
         if(st == null){
             return;
@@ -1350,6 +1418,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_Button_TeacherDeleteActionPerformed
 
+    private void jButton_SaveNewLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveNewLessonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton_SaveNewLessonActionPerformed
+
     
     
     public static void main(String args[]) {
@@ -1496,8 +1568,13 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JTextField TextField_TeacherPrice1;
     private javax.swing.JTextField TextField_TeacherSkill;
     private javax.swing.JTextField TextField_TeacherSkill1;
+    private javax.swing.JButton jButton_SaveNewLesson;
+    private javax.swing.JDialog jDialog_AddingNewLesson;
     private javax.swing.JDialog jDialog_AddingNewStudent;
     private javax.swing.JDialog jDialog_AddingNewTeacher;
+    private javax.swing.JLabel jLabel_AvailableEntities;
+    private javax.swing.JList jList_AvailableEntities;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane_StudentList;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable_lessons;
