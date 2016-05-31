@@ -8,6 +8,7 @@ import cz.muni.fi.pv168.common.DBUtils;
 import cz.muni.fi.pv168.pv168project.app.*;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -275,7 +277,16 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList_AvailableEntities = new javax.swing.JList();
         jButton_SaveNewLesson = new javax.swing.JButton();
+        jLabel_SelectedEntityID = new javax.swing.JLabel();
         jLabel_AvailableEntities = new javax.swing.JLabel();
+        jLabel_TeacherOrStudent = new javax.swing.JLabel();
+        jDialog_Info = new javax.swing.JDialog();
+        jLabel_Info = new javax.swing.JLabel();
+        jButton_InfoOK = new javax.swing.JButton();
+        jDialog_NoEntityToMatch = new javax.swing.JDialog();
+        jLabel_Message = new javax.swing.JLabel();
+        jLabel_EntityName = new javax.swing.JLabel();
+        jButton_OK = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Panel_StudentsTab = new javax.swing.JPanel();
         Label_StudentsList = new javax.swing.JLabel();
@@ -337,6 +348,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         jTable_lessons = new javax.swing.JTable();
         Button_LessonDelete = new javax.swing.JButton();
         Button_LessonDisplayAll = new javax.swing.JButton();
+
+        jDialog_AddingNewTeacher.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         Label_Teacher1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("UI/Bundle"); // NOI18N
@@ -453,6 +466,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addComponent(Panel_AddingTeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jDialog_AddingNewStudent.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         Label_Student1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Label_Student1.setText(bundle.getString("PairAppUIv2.Label_Student1.text")); // NOI18N
@@ -574,6 +589,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
+        jDialog_AddingNewLesson.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
         jList_AvailableEntities.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -588,7 +605,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             }
         });
 
+        jLabel_SelectedEntityID.setText(bundle.getString("PairAppUIv2.jLabel_SelectedEntityID.text")); // NOI18N
+
         jLabel_AvailableEntities.setText(bundle.getString("PairAppUIv2.jLabel_AvailableEntities.text")); // NOI18N
+
+        jLabel_TeacherOrStudent.setText(bundle.getString("PairAppUIv2.jLabel_TeacherOrStudent.text")); // NOI18N
 
         javax.swing.GroupLayout jDialog_AddingNewLessonLayout = new javax.swing.GroupLayout(jDialog_AddingNewLesson.getContentPane());
         jDialog_AddingNewLesson.getContentPane().setLayout(jDialog_AddingNewLessonLayout);
@@ -597,24 +618,124 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_SaveNewLesson, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton_SaveNewLesson, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_AddingNewLessonLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel_SelectedEntityID)))
                 .addContainerGap())
             .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel_AvailableEntities)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_TeacherOrStudent)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jDialog_AddingNewLessonLayout.setVerticalGroup(
             jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(jLabel_AvailableEntities)
+                .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_AvailableEntities)
+                    .addComponent(jLabel_TeacherOrStudent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                     .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
                         .addComponent(jButton_SaveNewLesson)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel_SelectedEntityID)
                         .addContainerGap())))
+        );
+
+        jDialog_Info.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog_Info.setPreferredSize(new java.awt.Dimension(300, 150));
+        jDialog_Info.setResizable(false);
+
+        jLabel_Info.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_Info.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_Info.setText(bundle.getString("PairAppUIv2.jLabel_Info.text")); // NOI18N
+        jLabel_Info.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel_Info.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jButton_InfoOK.setText(bundle.getString("PairAppUIv2.jButton_InfoOK.text")); // NOI18N
+        jButton_InfoOK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton_InfoOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_InfoOKActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog_InfoLayout = new javax.swing.GroupLayout(jDialog_Info.getContentPane());
+        jDialog_Info.getContentPane().setLayout(jDialog_InfoLayout);
+        jDialog_InfoLayout.setHorizontalGroup(
+            jDialog_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_InfoLayout.createSequentialGroup()
+                .addContainerGap(79, Short.MAX_VALUE)
+                .addGroup(jDialog_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton_InfoOK, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jLabel_Info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(79, 79, 79))
+        );
+        jDialog_InfoLayout.setVerticalGroup(
+            jDialog_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_InfoLayout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(jLabel_Info, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_InfoOK)
+                .addGap(43, 43, 43))
+        );
+
+        jDialog_NoEntityToMatch.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog_NoEntityToMatch.setPreferredSize(new java.awt.Dimension(300, 150));
+        jDialog_NoEntityToMatch.setResizable(false);
+
+        jLabel_Message.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel_Message.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_Message.setText(bundle.getString("PairAppUIv2.jLabel_Message.text")); // NOI18N
+        jLabel_Message.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel_Message.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jLabel_EntityName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_EntityName.setText(bundle.getString("PairAppUIv2.jLabel_EntityName.text")); // NOI18N
+        jLabel_EntityName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jButton_OK.setText(bundle.getString("PairAppUIv2.jButton_OK.text")); // NOI18N
+        jButton_OK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton_OK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_OKActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog_NoEntityToMatchLayout = new javax.swing.GroupLayout(jDialog_NoEntityToMatch.getContentPane());
+        jDialog_NoEntityToMatch.getContentPane().setLayout(jDialog_NoEntityToMatchLayout);
+        jDialog_NoEntityToMatchLayout.setHorizontalGroup(
+            jDialog_NoEntityToMatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_NoEntityToMatchLayout.createSequentialGroup()
+                .addGroup(jDialog_NoEntityToMatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_NoEntityToMatchLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel_Message, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
+                    .addGroup(jDialog_NoEntityToMatchLayout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addGroup(jDialog_NoEntityToMatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton_OK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel_EntityName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jDialog_NoEntityToMatchLayout.setVerticalGroup(
+            jDialog_NoEntityToMatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_NoEntityToMatchLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_Message, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_EntityName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton_OK)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -898,6 +1019,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Button_TeacherDisplayLessons.setText(bundle.getString("PairAppUIv2.Button_TeacherDisplayLessons.text")); // NOI18N
 
         Button_TeacherAddLesson.setText(bundle.getString("PairAppUIv2.Button_TeacherAddLesson.text")); // NOI18N
+        Button_TeacherAddLesson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_TeacherAddLessonActionPerformed(evt);
+            }
+        });
 
         Button_TeacherDelete.setText(bundle.getString("PairAppUIv2.Button_TeacherDelete.text")); // NOI18N
         Button_TeacherDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -1133,7 +1259,6 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_TextField_StudentSkillActionPerformed
 
     private void Button_StudentAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddNewActionPerformed
-        // TODO add your handling code here:
         jDialog_AddingNewStudent.setVisible(true);
         jDialog_AddingNewStudent.pack();
     }//GEN-LAST:event_Button_StudentAddNewActionPerformed
@@ -1156,6 +1281,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             return;
         }
         List<Teacher> availableTeachers = lm.findMatchForStudent(st);
+        
+        if (availableTeachers.isEmpty()){ //pokud neni zadny nabidnuty teacher
+            jLabel_EntityName.setText("Student " + st.getFullName());
+            jDialog_NoEntityToMatch.setVisible(true);
+            jDialog_NoEntityToMatch.pack();
+            return;
+        }
+        
         //vytvorim novy list a nastavim nejaky novy okno s nim a v nem zobrazim availableTeachers
 
         DefaultListModel model = new DefaultListModel();
@@ -1167,6 +1300,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         
         jDialog_AddingNewLesson.setVisible(true);
         jDialog_AddingNewLesson.pack();
+        
+        jLabel_SelectedEntityID.setText(st.getId().toString());
+        jLabel_TeacherOrStudent.setText("teachers");
+        
 
     }//GEN-LAST:event_Button_StudentAddLessonActionPerformed
 
@@ -1299,6 +1436,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         for(ActionListener a : Button_ShowAllTeachers.getActionListeners()){
             a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
         }
+        
+        jLabel_Info.setText("Succesfully updated");
+        jDialog_Info.pack();
+        jDialog_Info.setVisible(true);
     }//GEN-LAST:event_Button_TeacherUpdateActionPerformed
 
     private void List_TeachersListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_TeachersListValueChanged
@@ -1342,6 +1483,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         for(ActionListener a : Button_ShowAllStudents.getActionListeners()){
             a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
         }
+        
+        jLabel_Info.setText("Succesfully updated");
+        jDialog_Info.pack();
+        jDialog_Info.setVisible(true);
     }//GEN-LAST:event_Button_StudentUpdateActionPerformed
 
     private void TextField_TeacherName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherName1ActionPerformed
@@ -1419,8 +1564,66 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Button_TeacherDeleteActionPerformed
 
     private void jButton_SaveNewLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveNewLessonActionPerformed
-        // TODO add your handling code here:
+        switch (jLabel_TeacherOrStudent.getText()) {
+            case "teachers":
+                //searching for teacher for student
+                Teacher teacher = (Teacher) jList_AvailableEntities.getSelectedValue();
+                if(teacher == null){
+                    return;
+                }   
+                lm.makeMatch(teacher, sm.getStudent(Long.valueOf(jLabel_SelectedEntityID.getText())));
+                break;
+            case "students":
+                //searching for new student for teacher
+                Student student = (Student) jList_AvailableEntities.getSelectedValue();
+                if(student == null){
+                    return; 
+                }   
+                lm.makeMatch(tm.getTeacher(Long.valueOf(jLabel_SelectedEntityID.getText())), student);
+                break;
+        }
+        jDialog_AddingNewLesson.dispose();
     }//GEN-LAST:event_jButton_SaveNewLessonActionPerformed
+
+    private void Button_TeacherAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddLessonActionPerformed
+        Teacher t = (Teacher) List_TeachersList.getSelectedValue();
+        if(t == null){
+            return;
+        }
+        List<Student> availableStudents = lm.findMatchForTeacher(t);
+        
+        if (availableStudents.isEmpty()){ //pokud neni zadny nabidnuty student
+            jLabel_EntityName.setText("Teacher " + t.getFullName());
+            jDialog_NoEntityToMatch.setVisible(true);
+            jDialog_NoEntityToMatch.pack();
+            return;
+        }
+        
+        //vytvorim novy list a nastavim nejaky novy okno s nim a v nem zobrazim availableTeachers
+
+        DefaultListModel model = new DefaultListModel();
+        for (Student st : availableStudents) {
+            model.addElement(st);
+        }
+        jList_AvailableEntities.setModel(model);
+        jList_AvailableEntities.setCellRenderer(new EntityListRenderer());
+        
+        jDialog_AddingNewLesson.setVisible(true);
+        jDialog_AddingNewLesson.pack();
+        
+        jLabel_SelectedEntityID.setText(t.getId().toString()); //abych mel nekde napevno ulozeny to koho mam vybrany
+        jLabel_TeacherOrStudent.setText("students");
+        
+        
+    }//GEN-LAST:event_Button_TeacherAddLessonActionPerformed
+
+    private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
+        jDialog_NoEntityToMatch.dispose();
+    }//GEN-LAST:event_jButton_OKActionPerformed
+
+    private void jButton_InfoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InfoOKActionPerformed
+        jDialog_Info.dispose();
+    }//GEN-LAST:event_jButton_InfoOKActionPerformed
 
     
     
@@ -1568,11 +1771,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JTextField TextField_TeacherPrice1;
     private javax.swing.JTextField TextField_TeacherSkill;
     private javax.swing.JTextField TextField_TeacherSkill1;
+    private javax.swing.JButton jButton_InfoOK;
+    private javax.swing.JButton jButton_OK;
     private javax.swing.JButton jButton_SaveNewLesson;
     private javax.swing.JDialog jDialog_AddingNewLesson;
     private javax.swing.JDialog jDialog_AddingNewStudent;
     private javax.swing.JDialog jDialog_AddingNewTeacher;
+    private javax.swing.JDialog jDialog_Info;
+    private javax.swing.JDialog jDialog_NoEntityToMatch;
     private javax.swing.JLabel jLabel_AvailableEntities;
+    private javax.swing.JLabel jLabel_EntityName;
+    private javax.swing.JLabel jLabel_Info;
+    private javax.swing.JLabel jLabel_Message;
+    private javax.swing.JLabel jLabel_SelectedEntityID;
+    private javax.swing.JLabel jLabel_TeacherOrStudent;
     private javax.swing.JList jList_AvailableEntities;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane_StudentList;
