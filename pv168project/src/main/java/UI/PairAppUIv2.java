@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
@@ -56,6 +57,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         locale = Locale.getDefault();
         // uncaught exception for getting ResourceBundle
         realBundle = ResourceBundle.getBundle("UI/Bundle", locale);
+        
         initComponents();
     }
 
@@ -101,7 +103,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         ComboBox_StudentRegion1 = new javax.swing.JComboBox();
         Button_StudentSaveNew = new javax.swing.JButton();
         jDialog_AddingNewLesson = new javax.swing.JDialog();
-        jScrollPaneAvailableEntities = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jList_AvailableEntities = new javax.swing.JList();
         jButton_SaveNewLesson = new javax.swing.JButton();
         jLabel_SelectedEntityID = new javax.swing.JLabel();
@@ -231,7 +233,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_TeacherRegion1.setText(bundle.getString("PairAppUIv2.Label_TeacherRegion1.text_1")); // NOI18N
         SplitPane_TeacherRegion1.setLeftComponent(Label_TeacherRegion1);
 
-        ComboBox_TeacherRegion1.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
+        javax.swing.DefaultComboBoxModel comboBox_model3 = new javax.swing.DefaultComboBoxModel();
+        comboBox_model3.addElement(realBundle.getString("INDIA"));
+        comboBox_model3.addElement(realBundle.getString("CZECH_REPUBLIC"));
+        comboBox_model3.addElement(realBundle.getString("SLOVAKIA"));
+        comboBox_model3.addElement(realBundle.getString("RUSSIA"));
+        comboBox_model3.addElement(realBundle.getString("ENGLAND"));
+        comboBox_model3.addElement(realBundle.getString("NORTH_AMERICA"));
+        ComboBox_TeacherRegion1.setModel(comboBox_model3);
         SplitPane_TeacherRegion1.setRightComponent(ComboBox_TeacherRegion1);
 
         Button_TeacherSaveNew.setText(bundle.getString("PairAppUIv2.Button_TeacherSaveNew.text_1")); // NOI18N
@@ -349,7 +358,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_StudentRegion1.setText(bundle.getString("PairAppUIv2.Label_StudentRegion1.text_1")); // NOI18N
         SplitPane_StudentRegion1.setLeftComponent(Label_StudentRegion1);
 
-        ComboBox_StudentRegion1.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
+        javax.swing.DefaultComboBoxModel comboBox_model4 = new javax.swing.DefaultComboBoxModel();
+        comboBox_model4.addElement(realBundle.getString("INDIA"));
+        comboBox_model4.addElement(realBundle.getString("CZECH_REPUBLIC"));
+        comboBox_model4.addElement(realBundle.getString("SLOVAKIA"));
+        comboBox_model4.addElement(realBundle.getString("RUSSIA"));
+        comboBox_model4.addElement(realBundle.getString("ENGLAND"));
+        comboBox_model4.addElement(realBundle.getString("NORTH_AMERICA"));
+        ComboBox_StudentRegion1.setModel(comboBox_model4);
         SplitPane_StudentRegion1.setRightComponent(ComboBox_StudentRegion1);
 
         Button_StudentSaveNew.setText(bundle.getString("PairAppUIv2.Button_StudentSaveNew.text_1")); // NOI18N
@@ -429,7 +445,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPaneAvailableEntities.setViewportView(jList_AvailableEntities);
+        jScrollPane1.setViewportView(jList_AvailableEntities);
 
         jButton_SaveNewLesson.setText(bundle.getString("PairAppUIv2.jButton_SaveNewLesson.text_1")); // NOI18N
         jButton_SaveNewLesson.addActionListener(new java.awt.event.ActionListener() {
@@ -447,7 +463,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         jDialog_AddingNewLessonLayout.setHorizontalGroup(
             jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
-                .addComponent(jScrollPaneAvailableEntities, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton_SaveNewLesson, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
@@ -471,7 +487,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addComponent(jLabel_TeacherOrStudent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneAvailableEntities, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                     .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
                         .addComponent(jButton_SaveNewLesson)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -672,10 +688,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_StudentRegion.setText(bundle.getString("PairAppUIv2.Label_StudentRegion.text_1")); // NOI18N
         SplitPane_StudentRegion.setLeftComponent(Label_StudentRegion);
 
-        javax.swing.DefaultComboBoxModel comboBox_model = new javax.swing.DefaultComboBoxModel();
-        comboBox_model.addElement(bundle.getString("Region.England"));
-        comboBox_model.addElement(bundle.getString("Region.India"));
-        ComboBox_StudentRegion.setModel(comboBox_model);
+        javax.swing.DefaultComboBoxModel comboBox_model1 = new javax.swing.DefaultComboBoxModel();
+        comboBox_model1.addElement(realBundle.getString("INDIA"));
+        comboBox_model1.addElement(realBundle.getString("CZECH_REPUBLIC"));
+        comboBox_model1.addElement(realBundle.getString("SLOVAKIA"));
+        comboBox_model1.addElement(realBundle.getString("RUSSIA"));
+        comboBox_model1.addElement(realBundle.getString("ENGLAND"));
+        comboBox_model1.addElement(realBundle.getString("NORTH_AMERICA"));
+        ComboBox_StudentRegion.setModel(comboBox_model1);
         SplitPane_StudentRegion.setRightComponent(ComboBox_StudentRegion);
 
         Button_StudentAddNew.setText(bundle.getString("PairAppUIv2.Button_StudentAddNew.text_1")); // NOI18N
@@ -732,7 +752,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Button_StudentAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Button_StudentDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
                         .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
                                 .addComponent(Button_StudentAddLesson)
@@ -817,11 +837,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(Panel_StudentsTabLayout.createSequentialGroup()
                         .addComponent(jScrollPane_StudentList, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Button_ShowAllStudents, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)))
+                        .addComponent(Button_ShowAllStudents, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Students", Panel_StudentsTab);
+        jTabbedPane1.addTab(bundle.getString("PairAppUIv2.Panel_StudentsTab.TabConstraints.tabTitle_1"), Panel_StudentsTab); // NOI18N
 
         Label_TeachersList.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Label_TeachersList.setText(bundle.getString("PairAppUIv2.Label_TeachersList.text_1")); // NOI18N
@@ -883,7 +903,14 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_TeacherRegion.setText(bundle.getString("PairAppUIv2.Label_TeacherRegion.text_1")); // NOI18N
         SplitPane_TeacherRegion.setLeftComponent(Label_TeacherRegion);
 
-        ComboBox_TeacherRegion.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
+        javax.swing.DefaultComboBoxModel comboBox_model2 = new javax.swing.DefaultComboBoxModel();
+        comboBox_model2.addElement(realBundle.getString("INDIA"));
+        comboBox_model2.addElement(realBundle.getString("CZECH_REPUBLIC"));
+        comboBox_model2.addElement(realBundle.getString("SLOVAKIA"));
+        comboBox_model2.addElement(realBundle.getString("RUSSIA"));
+        comboBox_model2.addElement(realBundle.getString("ENGLAND"));
+        comboBox_model2.addElement(realBundle.getString("NORTH_AMERICA"));
+        ComboBox_TeacherRegion.setModel(comboBox_model2);
         SplitPane_TeacherRegion.setRightComponent(ComboBox_TeacherRegion);
 
         Button_TeacherAddNew.setText(bundle.getString("PairAppUIv2.Button_TeacherAddNew.text_1")); // NOI18N
@@ -940,7 +967,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Button_TeacherAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Button_TeacherDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
                         .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_TeacherEditPanelLayout.createSequentialGroup()
                                 .addComponent(Button_TeacherAddLesson)
@@ -1024,42 +1051,17 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(Panel_TeachersTabLayout.createSequentialGroup()
                         .addComponent(ScrollPane_TeacherList, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Button_ShowAllTeachers, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                        .addComponent(Button_ShowAllTeachers, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                     .addComponent(Panel_TeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Teachers", Panel_TeachersTab);
+        jTabbedPane1.addTab(bundle.getString("PairAppUIv2.Panel_TeachersTab.TabConstraints.tabTitle_1"), Panel_TeachersTab); // NOI18N
 
         Label_LessonsList.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         Label_LessonsList.setText(bundle.getString("PairAppUIv2.Label_LessonsList.text_1")); // NOI18N
 
-        jTable_lessons.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "LessonID", "Student", "Teacher", "Skill", "Price", "Region"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        jTable_lessons.setModel(new LessonTableModel(new ArrayList<Lesson>(), new ArrayList<Student>(), new ArrayList<Teacher>(), dataSource, realBundle));
         jTable_lessons.setColumnSelectionAllowed(true);
         ScrollPane_Lessons.setViewportView(jTable_lessons);
 
@@ -1087,7 +1089,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
                         .addComponent(Label_LessonsList)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+                    .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 1023, Short.MAX_VALUE)
                     .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
                         .addComponent(Button_ShowAllLessons)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1100,15 +1102,15 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(Label_LessonsList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_LessonDelete)
                     .addComponent(Button_ShowAllLessons))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Lessons", Panel_LessonsTab);
+        jTabbedPane1.addTab(bundle.getString("PairAppUIv2.Panel_LessonsTab.TabConstraints.tabTitle_1"), Panel_LessonsTab); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1124,40 +1126,94 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TextField_TeacherName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherName1ActionPerformed
+    private void TextField_StudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_TeacherName1ActionPerformed
+    }//GEN-LAST:event_TextField_StudentNameActionPerformed
 
-    private void TextField_TeacherPrice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherPrice1ActionPerformed
+    private void TextField_StudentPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentPriceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_TeacherPrice1ActionPerformed
+    }//GEN-LAST:event_TextField_StudentPriceActionPerformed
 
-    private void TextField_TeacherSkill1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherSkill1ActionPerformed
+    private void TextField_StudentSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentSkillActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_TeacherSkill1ActionPerformed
+    }//GEN-LAST:event_TextField_StudentSkillActionPerformed
 
-    private void Button_TeacherSaveNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherSaveNewActionPerformed
-        Teacher teacher = new Teacher();
-        teacher.setFullName(TextField_TeacherName1.getText());
-        try {
-            teacher.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_TeacherPrice1.getText())).setScale(2));
-        } catch (NumberFormatException numberFormatException) {
-            //TextField_TeacherPrice1.setText("Wrong format");
-            TextField_TeacherPrice1.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
+    private void Button_StudentAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddNewActionPerformed
+        TextField_StudentName1.setText("");
+        TextField_StudentPrice1.setText("");
+        TextField_StudentSkill1.setText("");
+        jDialog_AddingNewStudent.setVisible(true);
+        jDialog_AddingNewStudent.pack();
+    }//GEN-LAST:event_Button_StudentAddNewActionPerformed
+
+    private void TextField_TeacherNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherNameActionPerformed
+
+    private void TextField_TeacherPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherPriceActionPerformed
+
+    private void TextField_TeacherSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherSkillActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherSkillActionPerformed
+
+    private void Button_StudentAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddLessonActionPerformed
+        Student student = (Student) List_StudentList.getSelectedValue();
+        if(student == null){
             return;
         }
-        try {
-            teacher.setSkill(Integer.parseInt(TextField_TeacherSkill1.getText()));
-        } catch (NumberFormatException numberFormatException) {
-            //TextField_TeacherSkill1.setText("Wrong format");
-            TextField_TeacherSkill1.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
-            return;
-        }
-        teacher.setRegion((Region) ComboBox_TeacherRegion1.getSelectedItem());
-        AddEntitySwingWorker worker =
-        new AddEntitySwingWorker(teacher);
+        
+        AddLessonSwingWorker worker = 
+                new AddLessonSwingWorker(student);
         worker.execute();
-    }//GEN-LAST:event_Button_TeacherSaveNewActionPerformed
+    }//GEN-LAST:event_Button_StudentAddLessonActionPerformed
+
+    private void Button_ShowAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllStudentsActionPerformed
+        ShowEntitiesSwingWorker worker = 
+                new ShowEntitiesSwingWorker(true);
+        worker.execute();
+    }//GEN-LAST:event_Button_ShowAllStudentsActionPerformed
+
+    private void Button_ShowAllTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllTeachersActionPerformed
+        ShowEntitiesSwingWorker worker = 
+                new ShowEntitiesSwingWorker(false);
+        worker.execute();
+    }//GEN-LAST:event_Button_ShowAllTeachersActionPerformed
+
+    private void Button_ShowAllLessonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllLessonsActionPerformed
+        ShowLessonsSwingWorker worker = 
+                new ShowLessonsSwingWorker();
+        worker.execute();
+    }//GEN-LAST:event_Button_ShowAllLessonsActionPerformed
+
+    private void Button_TeacherAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddNewActionPerformed
+        TextField_TeacherName1.setText("");
+        TextField_TeacherPrice1.setText("");
+        TextField_TeacherSkill1.setText("");
+        jDialog_AddingNewTeacher.setVisible(true);
+        jDialog_AddingNewTeacher.pack();
+    }//GEN-LAST:event_Button_TeacherAddNewActionPerformed
+
+    private void Button_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDeleteActionPerformed
+        DeleteLessonSwingWorker worker = 
+                new DeleteLessonSwingWorker();
+        worker.execute();
+    }//GEN-LAST:event_Button_LessonDeleteActionPerformed
+
+    private void List_StudentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_StudentListValueChanged
+        Student st = (Student) List_StudentList.getSelectedValue();
+        if(st == null){
+            return;
+        }
+        Label_StudentIDValue.setText(st.getId().toString());
+        TextField_StudentName.setText(st.getFullName());
+        TextField_StudentPrice.setText(st.getPrice().toString());
+        TextField_StudentSkill.setText(String.valueOf(st.getSkill()));
+        //ComboBox_StudentRegion.setSelectedItem(st.getRegion().toString());
+        ComboBox_StudentRegion.setSelectedItem(realBundle.getString(st.getRegion().toString()));
+        Button_StudentAddLesson.setEnabled(true);
+    }//GEN-LAST:event_List_StudentListValueChanged
 
     private void TextField_StudentName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentName1ActionPerformed
         // TODO add your handling code here:
@@ -1188,187 +1244,44 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             TextField_StudentSkill1.setText(realBundle.getString("PairAppUIv2.NumberFormatException.text"));
             return;
         }
-        student.setRegion((Region) ComboBox_StudentRegion1.getSelectedItem());
-
-        AddEntitySwingWorker worker =
-        new AddEntitySwingWorker(student);
+        //student.setRegion((Region) ComboBox_StudentRegion1.getSelectedItem());
+        student.setRegion(Region.getByIndex(ComboBox_StudentRegion1.getSelectedIndex()));
+        
+        AddEntitySwingWorker worker = 
+                new AddEntitySwingWorker(student);
         worker.execute();
     }//GEN-LAST:event_Button_StudentSaveNewActionPerformed
-
-    private void jButton_SaveNewLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveNewLessonActionPerformed
-        SaveNewLessonSwingWorker worker =
-        new SaveNewLessonSwingWorker();
-        worker.execute();
-    }//GEN-LAST:event_jButton_SaveNewLessonActionPerformed
-
-    private void jButton_InfoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InfoOKActionPerformed
-        jDialog_Info.dispose();
-    }//GEN-LAST:event_jButton_InfoOKActionPerformed
-
-    private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
-        jDialog_NoEntityToMatch.dispose();
-    }//GEN-LAST:event_jButton_OKActionPerformed
-
-    private void jButton_ErrorOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ErrorOKActionPerformed
-        jDialog_Error.dispose();
-    }//GEN-LAST:event_jButton_ErrorOKActionPerformed
-
-    private void TextField_StudentNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_StudentNameActionPerformed
-
-    private void TextField_StudentPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_StudentPriceActionPerformed
-
-    private void TextField_StudentSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentSkillActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_StudentSkillActionPerformed
-
-    private void Button_StudentAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddNewActionPerformed
-        jDialog_AddingNewStudent.setVisible(true);
-        jDialog_AddingNewStudent.pack();
-    }//GEN-LAST:event_Button_StudentAddNewActionPerformed
-
-    private void Button_StudentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentUpdateActionPerformed
-        String id = Label_StudentIDValue.getText();
-        //if(id.equals("IDValue_UNKNOWN")){
-            if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
-                return;
-            }
-
-            UpdateEntitySwingWorker worker =
-            new UpdateEntitySwingWorker( Long.valueOf(id), true);
-            worker.execute();
-    }//GEN-LAST:event_Button_StudentUpdateActionPerformed
-
-    private void Button_StudentDisplayLessonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentDisplayLessonsActionPerformed
-        String id = Label_StudentIDValue.getText();
-        //if(id.equals("IDValue_UNKNOWN")){
-            if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
-                return;
-            }
-
-            DisplayLessonsForEntitySwingWorker worker =
-            new DisplayLessonsForEntitySwingWorker(Long.valueOf(id), true);
-            worker.execute();
-    }//GEN-LAST:event_Button_StudentDisplayLessonsActionPerformed
-
-    private void Button_StudentAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddLessonActionPerformed
-        Student student = (Student) List_StudentList.getSelectedValue();
-        if(student == null){
-            return;
-        }
-
-        AddLessonSwingWorker worker =
-        new AddLessonSwingWorker(student);
-        worker.execute();
-    }//GEN-LAST:event_Button_StudentAddLessonActionPerformed
-
-    private void Button_StudentDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentDeleteActionPerformed
-        String id = Label_StudentIDValue.getText();
-        //if(id.equals("IDValue_UNKNOWN")){
-            if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
-                return;
-            }
-
-            //Label_StudentIDValue.setText(realBundle.getString("PairAppUIv2.UnknownID.text"));
-
-            DeleteEntitySwingWorker worker =
-            new DeleteEntitySwingWorker(Long.valueOf(id), true);
-            worker.execute();
-            TextField_StudentName.setText("");
-            TextField_StudentPrice.setText("");
-            TextField_StudentSkill.setText("");
-    }//GEN-LAST:event_Button_StudentDeleteActionPerformed
-
-    private void List_StudentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_StudentListValueChanged
-        Student st = (Student) List_StudentList.getSelectedValue();
-        if(st == null){
-            return;
-        }
-        Label_StudentIDValue.setText(st.getId().toString());
-        TextField_StudentName.setText(st.getFullName());
-        TextField_StudentPrice.setText(st.getPrice().toString());
-        TextField_StudentSkill.setText(String.valueOf(st.getSkill()));
-        ComboBox_StudentRegion.setSelectedItem(st.getRegion());
-        Button_StudentAddLesson.setEnabled(true);
-    }//GEN-LAST:event_List_StudentListValueChanged
-
-    private void Button_ShowAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllStudentsActionPerformed
-        ShowEntitiesSwingWorker worker =
-        new ShowEntitiesSwingWorker(true);
-        worker.execute();
-    }//GEN-LAST:event_Button_ShowAllStudentsActionPerformed
-
-    private void TextField_TeacherNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_TeacherNameActionPerformed
-
-    private void TextField_TeacherPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherPriceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_TeacherPriceActionPerformed
-
-    private void TextField_TeacherSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherSkillActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextField_TeacherSkillActionPerformed
-
-    private void Button_TeacherAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddNewActionPerformed
-        jDialog_AddingNewTeacher.setVisible(true);
-        jDialog_AddingNewTeacher.pack();
-    }//GEN-LAST:event_Button_TeacherAddNewActionPerformed
 
     private void Button_TeacherUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherUpdateActionPerformed
         String id = Label_TeacherIDValue.getText();
         //if(id.equals("IDValue_UNKNOWN")){
-            if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
-                return;
-            }
-
-            UpdateEntitySwingWorker worker =
-            new UpdateEntitySwingWorker(Long.valueOf(id), false);
-            worker.execute();
-    }//GEN-LAST:event_Button_TeacherUpdateActionPerformed
-
-    private void Button_TeacherDisplayLessonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherDisplayLessonsActionPerformed
-        String id = Label_TeacherIDValue.getText();
-        //if(id.equals("IDValue_UNKNOWN")){
-            if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
-                return;
-            }
-
-            DisplayLessonsForEntitySwingWorker worker =
-            new DisplayLessonsForEntitySwingWorker(Long.valueOf(id),false);
-            worker.execute();
-    }//GEN-LAST:event_Button_TeacherDisplayLessonsActionPerformed
-
-    private void Button_TeacherAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddLessonActionPerformed
-        Teacher teacher = (Teacher) List_TeachersList.getSelectedValue();
-        if(teacher == null){
+        if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
             return;
         }
+        
+        Teacher teacher = new Teacher();
+        teacher.setFullName(TextField_TeacherName.getText());
+        try {
+            teacher.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_TeacherPrice.getText())).setScale(2));
+        } catch (NumberFormatException numberFormatException) {
+            //price.setText("Wrong format");
+            TextField_TeacherPrice.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
+            return;
+        }
+        try {
+            teacher.setSkill(Integer.parseInt(TextField_TeacherSkill.getText()));
+        } catch (NumberFormatException numberFormatException) {
+            //skill.setText("Wrong format");
+            TextField_TeacherSkill.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
+            return;
+        }
+        //teach.setRegion((Region) ComboBox_TeacherRegion.getSelectedItem());
+        teacher.setRegion(Region.getByIndex(ComboBox_TeacherRegion.getSelectedIndex()));
 
-        AddLessonSwingWorker worker =
-        new AddLessonSwingWorker(teacher);
-        worker.execute();
-    }//GEN-LAST:event_Button_TeacherAddLessonActionPerformed
-
-    private void Button_TeacherDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherDeleteActionPerformed
-        String id = Label_TeacherIDValue.getText();
-        //if(id.equals("IDValue_UNKNOWN")){
-            if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
-                return;
-            }
-
-            //Label_TeacherIDValue.setText(realBundle.getString("PairAppUIv2.UnknownID.text"));
-
-            DeleteEntitySwingWorker worker =
-            new DeleteEntitySwingWorker(Long.valueOf(id), false);
-            worker.execute();
-            TextField_TeacherName.setText("");
-            TextField_TeacherSkill.setText("");
-            TextField_TeacherPrice.setText("");
-    }//GEN-LAST:event_Button_TeacherDeleteActionPerformed
+        UpdateEntitySwingWorker worker = 
+                new UpdateEntitySwingWorker(Long.valueOf(id), teacher);
+        worker.execute();       
+    }//GEN-LAST:event_Button_TeacherUpdateActionPerformed
 
     private void List_TeachersListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_TeachersListValueChanged
         Teacher teacher = (Teacher) List_TeachersList.getSelectedValue();
@@ -1379,31 +1292,171 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Label_TeacherIDValue.setText(teacher.getId().toString());
         TextField_TeacherPrice.setText(teacher.getPrice().toString());
         TextField_TeacherSkill.setText(String.valueOf(teacher.getSkill()));
-        ComboBox_TeacherRegion.setSelectedItem(teacher.getRegion());
+        //ComboBox_TeacherRegion.setSelectedItem(teacher.getRegion().toString());
+        ComboBox_TeacherRegion.setSelectedItem(realBundle.getString(teacher.getRegion().toString()));
     }//GEN-LAST:event_List_TeachersListValueChanged
 
-    private void Button_ShowAllTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllTeachersActionPerformed
-        ShowEntitiesSwingWorker worker =
-        new ShowEntitiesSwingWorker(false);
-        worker.execute();
-    }//GEN-LAST:event_Button_ShowAllTeachersActionPerformed
+    private void Button_StudentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentUpdateActionPerformed
+        String id = Label_StudentIDValue.getText();
+        //if(id.equals("IDValue_UNKNOWN")){
+        if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
+            return;
+        }
+        
+        Student student = new Student();
+        student.setFullName(TextField_StudentName.getText());
+        try {
+            student.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_StudentPrice.getText())).setScale(2));
+        } catch (NumberFormatException numberFormatException) {
+            //price.setText("Wrong format");
+            TextField_StudentPrice.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
+            return;
+        }
+        try {
+            student.setSkill(Integer.parseInt(TextField_StudentSkill.getText()));
+        } catch (NumberFormatException numberFormatException) {
+            //skill.setText("Wrong format");
+            TextField_StudentSkill.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
+            return;
+        }
+        //st.setRegion((Region) ComboBox_StudentRegion.getSelectedItem());
+        student.setRegion(Region.getByIndex(ComboBox_StudentRegion.getSelectedIndex()));
 
-    private void Button_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDeleteActionPerformed
-        DeleteLessonSwingWorker worker =
-        new DeleteLessonSwingWorker();
+        UpdateEntitySwingWorker worker = 
+                new UpdateEntitySwingWorker( Long.valueOf(id), student);
         worker.execute();
-    }//GEN-LAST:event_Button_LessonDeleteActionPerformed
+    }//GEN-LAST:event_Button_StudentUpdateActionPerformed
 
-    private void Button_ShowAllLessonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllLessonsActionPerformed
-        ShowLessonsSwingWorker worker =
-        new ShowLessonsSwingWorker();
+    private void TextField_TeacherName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherName1ActionPerformed
+
+    private void TextField_TeacherPrice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherPrice1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherPrice1ActionPerformed
+
+    private void TextField_TeacherSkill1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherSkill1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherSkill1ActionPerformed
+
+    private void Button_TeacherSaveNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherSaveNewActionPerformed
+        Teacher teacher = new Teacher();
+        teacher.setFullName(TextField_TeacherName1.getText());
+        try {
+            teacher.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_TeacherPrice1.getText())).setScale(2));
+        } catch (NumberFormatException numberFormatException) {
+            //TextField_TeacherPrice1.setText("Wrong format");
+            TextField_TeacherPrice1.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
+            return;
+        }
+        try {
+            teacher.setSkill(Integer.parseInt(TextField_TeacherSkill1.getText()));
+        } catch (NumberFormatException numberFormatException) {
+            //TextField_TeacherSkill1.setText("Wrong format");
+            TextField_TeacherSkill1.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
+            return;
+        }
+        //teacher.setRegion((Region) ComboBox_TeacherRegion1.getSelectedItem());
+        teacher.setRegion(Region.getByIndex(ComboBox_TeacherRegion1.getSelectedIndex()));
+        
+        AddEntitySwingWorker worker = 
+                new AddEntitySwingWorker(teacher);
         worker.execute();
-    }//GEN-LAST:event_Button_ShowAllLessonsActionPerformed
+    }//GEN-LAST:event_Button_TeacherSaveNewActionPerformed
 
+    private void Button_StudentDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentDeleteActionPerformed
+        String id = Label_StudentIDValue.getText();
+        //if(id.equals("IDValue_UNKNOWN")){
+        if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
+            return;
+        }
+        
+        //Label_StudentIDValue.setText(realBundle.getString("PairAppUIv2.UnknownID.text"));
+        
+        DeleteEntitySwingWorker worker = 
+                new DeleteEntitySwingWorker(Long.valueOf(id), true);
+        worker.execute();
+        TextField_StudentName.setText("");
+        TextField_StudentPrice.setText("");
+        TextField_StudentSkill.setText("");
+    }//GEN-LAST:event_Button_StudentDeleteActionPerformed
+
+    private void Button_TeacherDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherDeleteActionPerformed
+        String id = Label_TeacherIDValue.getText();
+        //if(id.equals("IDValue_UNKNOWN")){
+        if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
+            return;
+        }
+        
+        //Label_TeacherIDValue.setText(realBundle.getString("PairAppUIv2.UnknownID.text"));
+        
+        DeleteEntitySwingWorker worker = 
+                new DeleteEntitySwingWorker(Long.valueOf(id), false);
+        worker.execute();
+        TextField_TeacherName.setText("");
+        TextField_TeacherSkill.setText("");
+        TextField_TeacherPrice.setText("");
+    }//GEN-LAST:event_Button_TeacherDeleteActionPerformed
+
+    private void jButton_SaveNewLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveNewLessonActionPerformed
+        SaveNewLessonSwingWorker worker = 
+                new SaveNewLessonSwingWorker();
+        worker.execute();
+    }//GEN-LAST:event_jButton_SaveNewLessonActionPerformed
+
+    private void Button_TeacherAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddLessonActionPerformed
+        Teacher teacher = (Teacher) List_TeachersList.getSelectedValue();
+        if(teacher == null){
+            return;
+        }
+        
+        AddLessonSwingWorker worker = 
+                new AddLessonSwingWorker(teacher);
+        worker.execute();
+    }//GEN-LAST:event_Button_TeacherAddLessonActionPerformed
+
+    private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
+        jDialog_NoEntityToMatch.dispose();
+    }//GEN-LAST:event_jButton_OKActionPerformed
+
+    private void jButton_InfoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InfoOKActionPerformed
+        jDialog_Info.dispose();
+    }//GEN-LAST:event_jButton_InfoOKActionPerformed
+
+    private void Button_StudentDisplayLessonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentDisplayLessonsActionPerformed
+        String id = Label_StudentIDValue.getText();
+        //if(id.equals("IDValue_UNKNOWN")){
+        if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
+            return;
+        }
+        
+        DisplayLessonsForEntitySwingWorker worker = 
+                new DisplayLessonsForEntitySwingWorker(Long.valueOf(id), true);
+        worker.execute();
+    }//GEN-LAST:event_Button_StudentDisplayLessonsActionPerformed
+
+    private void Button_TeacherDisplayLessonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherDisplayLessonsActionPerformed
+        String id = Label_TeacherIDValue.getText();
+        //if(id.equals("IDValue_UNKNOWN")){
+        if(id.equals(realBundle.getString("PairAppUIv2.UnknownID.text"))){
+            return;
+        }
+        
+        DisplayLessonsForEntitySwingWorker worker = 
+                new DisplayLessonsForEntitySwingWorker(Long.valueOf(id),false);
+        worker.execute();
+    }//GEN-LAST:event_Button_TeacherDisplayLessonsActionPerformed
+
+    private void jButton_ErrorOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ErrorOKActionPerformed
+        jDialog_Error.dispose();
+    }//GEN-LAST:event_jButton_ErrorOKActionPerformed
+
+    
+    
     public static void main(String args[]) {
         
         try {
-            dataSource = createMemoryDatabase(); // delat v jinym vlakne
+            dataSource = createMemoryDatabase();
         } catch (SQLException ex) {
             Logger.getLogger(PairAppUIv2.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1480,30 +1533,27 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         @Override
         protected Void doInBackground() {
             if (Boolean.TRUE.equals(isStudent)) {
-                try {
-                    sm.createStudent(student);
-                    opSuccess = true;
-                } catch (ServiceFailureException | IllegalEntityException | ValidationException | DataSourceException e) {
-                    errorHelper(e);
-                    opSuccess = false;
-                }
+                sm.createStudent(student);
+                opSuccess = true;
             } else if (Boolean.FALSE.equals(isStudent)) {
-                try {
-                    tm.createTeacher(teacher);
-                    opSuccess = true;
-                } catch (ServiceFailureException | IllegalEntityException | ValidationException | DataSourceException e) {
-                    errorHelper(e);
-                    opSuccess = false;
-                }
-            } else {
-                opSuccess = false;
-                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
-            }
+                tm.createTeacher(teacher);
+                opSuccess = true;
+            }   
             return null;
         }
 
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 JButton entityButton;
                 JDialog entityDialog;
@@ -1521,6 +1571,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 }
                 jDialog_Info.pack();
                 jDialog_Info.setVisible(true);
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
     }
@@ -1552,31 +1604,27 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         @Override
         protected Void doInBackground() {
             if (Boolean.TRUE.equals(isStudent)) {
-                try {
-                    availableTeachers = lm.findMatchForStudent(student);
-                    opSuccess = true;
-                } catch (IllegalArgumentException | DataSourceException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
-                }
-
+                availableTeachers = lm.findMatchForStudent(student);
+                opSuccess = true;
             } else if (Boolean.FALSE.equals(isStudent)) {
-                try {
-                    availableStudents = lm.findMatchForTeacher(teacher);
-                    opSuccess = true;
-                } catch (IllegalArgumentException | DataSourceException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
-                }
-            } else {
-                opSuccess = false;
-                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
+                availableStudents = lm.findMatchForTeacher(teacher);
+                opSuccess = true;
             }
             return null;
         }
         
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 if (Boolean.TRUE.equals(isStudent)) {
                     if (availableTeachers.isEmpty()) {
@@ -1621,6 +1669,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     //teacherOrStudent.setText("students");
                     jLabel_TeacherOrStudent.setText(realBundle.getString("PairAppUIv2.students"));
                 }
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
     }
@@ -1650,41 +1700,38 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         @Override
         protected Void doInBackground() {
             if (Boolean.TRUE.equals(isStudent)) {
-                try {
-                    Student student = sm.getStudent(id);
-                    List<Lesson> lessons = lm.getLesson(student);
-                    for (int i = 0; i < lessons.size(); i++) {
-                        lm.deleteLesson(lessons.get(i));
-                    }
-                    sm.deleteStudent(student);
-                    opSuccess = true;
-                } catch (DataSourceException | IllegalArgumentException | IllegalEntityException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
+                Student student = sm.getStudent(id);
+                List<Lesson> lessons = lm.getLesson(student);
+                for (int i = 0; i < lessons.size(); i++) {
+                    lm.deleteLesson(lessons.get(i));
                 }
+                sm.deleteStudent(student);
+                opSuccess = true;
 
             } else if (Boolean.FALSE.equals(isStudent)) {
-                try {
-                    Teacher teacher = tm.getTeacher(id);
-                    List<Lesson> lessons = lm.getLesson(teacher);
-                    for (int i = 0; i < lessons.size(); i++) {
-                        lm.deleteLesson(lessons.get(i));
-                    }
-                    tm.deleteTeacher(teacher);
-                    opSuccess = true;
-                } catch (DataSourceException | IllegalArgumentException | IllegalEntityException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
+                Teacher teacher = tm.getTeacher(id);
+                List<Lesson> lessons = lm.getLesson(teacher);
+                for (int i = 0; i < lessons.size(); i++) {
+                    lm.deleteLesson(lessons.get(i));
                 }
-            } else {
-                opSuccess = false;
-                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
+                tm.deleteTeacher(teacher);
+                opSuccess = true;
             }
             return null;
         }
         
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 JLabel entityID;
                 JButton showAllEntities;
@@ -1710,9 +1757,10 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 }
                 jDialog_Info.pack();
                 jDialog_Info.setVisible(true);
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
-
-        }
+        } 
     }
     
     private class DeleteLessonSwingWorker extends SwingWorker<Void, Void> {
@@ -1727,24 +1775,29 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         @Override
         protected Void doInBackground() {
-            try {
-                int row = jTable_lessons.getSelectedRow();
-                if (row == -1) { //pokud neni vybrany zadny radek
-                    return null;
-                }
-                Long lessonID = (Long) jTable_lessons.getValueAt(row, 0);
-                Lesson lesson = lm.getLesson(lessonID);
-                lm.deleteLesson(lesson);
-                opSuccess = true;
-            } catch (DataSourceException | IllegalArgumentException | IllegalEntityException | ServiceFailureException e) {
-                errorHelper(e);
-                opSuccess = false;
+            int row = jTable_lessons.getSelectedRow();
+            if (row == -1) { //pokud neni vybrany zadny radek
+                return null;
             }
+            Long lessonID = (Long) jTable_lessons.getValueAt(row, 0);
+            Lesson lesson = lm.getLesson(lessonID);
+            lm.deleteLesson(lesson);
+            opSuccess = true;
             return null;
         }
 
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 for (ActionListener a : Button_ShowAllLessons.getActionListeners()) {
                     a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {
@@ -1752,6 +1805,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 }
                 jDialog_Info.pack();
                 jDialog_Info.setVisible(true);
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
     }
@@ -1782,44 +1837,41 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         @Override
         protected Void doInBackground() {
             if (Boolean.TRUE.equals(isStudent)) {
-                try {
-                    Student st = sm.getStudent(Long.valueOf(id));
-                    lessons = lm.getLesson(st);
-                    students = new ArrayList<Student>();
-                    students.add(st);
-                    teachers = new ArrayList<Teacher>();
-                    for (Lesson l : lessons) {
-                        teachers.add(tm.getTeacher(l.getTeacherId()));
-                    }
-                    opSuccess = true;
-                } catch (DataSourceException | IllegalArgumentException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
+                Student st = sm.getStudent(Long.valueOf(id));
+                lessons = lm.getLesson(st);
+                students = new ArrayList<Student>();
+                students.add(st);
+                teachers = new ArrayList<Teacher>();
+                for (Lesson l : lessons) {
+                    teachers.add(tm.getTeacher(l.getTeacherId()));
                 }
+                opSuccess = true;
             } else if (Boolean.FALSE.equals(isStudent)) {
-                try {
-                    Teacher teach = tm.getTeacher(Long.valueOf(id));
-                    lessons = lm.getLesson(teach);
-                    teachers = new ArrayList<Teacher>();
-                    teachers.add(teach);
-                    students = new ArrayList<Student>();
-                    for (Lesson l : lessons) {
-                        students.add(sm.getStudent(l.getStudentId()));
-                    }
-                    opSuccess = true;
-                } catch (DataSourceException | IllegalArgumentException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
+                Teacher teach = tm.getTeacher(Long.valueOf(id));
+                lessons = lm.getLesson(teach);
+                teachers = new ArrayList<Teacher>();
+                teachers.add(teach);
+                students = new ArrayList<Student>();
+                for (Lesson l : lessons) {
+                    students.add(sm.getStudent(l.getStudentId()));
                 }
-            } else {
-                opSuccess = false;
-                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
+                opSuccess = true;
             }
             return null;
         }
         
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 LessonTableModel model = new LessonTableModel(lessons, students, teachers, dataSource, realBundle);
                 jTabbedPane1.setSelectedComponent(Panel_LessonsTab);
@@ -1828,6 +1880,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 jTable_lessons.setRowSelectionAllowed(true);
                 jTable_lessons.setCellSelectionEnabled(false);
                 ScrollPane_Lessons.setViewportView(jTable_lessons);
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
     }
@@ -1856,37 +1910,39 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         @Override
         protected Void doInBackground() {
-            try {
-                if (Boolean.TRUE.equals(isStudent)) {
-                    //searching for teacher for student
-                    Teacher teacher = (Teacher) jList_AvailableEntities.getSelectedValue();
-                    if (teacher == null) {
-                        return null;
-                    }
-                    Student studentToMatch = sm.getStudent(Long.valueOf(jLabel_SelectedEntityID.getText()));
-                    lm.makeMatch(teacher, studentToMatch);
-                    opSuccess = true;
-                } else if (Boolean.FALSE.equals(isStudent)) {
-                    Student student = (Student) jList_AvailableEntities.getSelectedValue();
-                    if (student == null) {
-                        return null;
-                    }
-                    Teacher teacherToMatch = tm.getTeacher(Long.valueOf(jLabel_SelectedEntityID.getText()));
-                    lm.makeMatch(teacherToMatch, student);
-                    opSuccess = true;
-                } else {
-                    opSuccess = false;
-                    errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
+            if (Boolean.TRUE.equals(isStudent)) {
+                //searching for teacher for student
+                Teacher teacher = (Teacher) jList_AvailableEntities.getSelectedValue();
+                if (teacher == null) {
+                    return null;
                 }
-            } catch (DataSourceException | IllegalArgumentException | ServiceFailureException e) {
-                errorHelper(e);
-                opSuccess = false;
+                Student studentToMatch = sm.getStudent(Long.valueOf(jLabel_SelectedEntityID.getText()));
+                lm.makeMatch(teacher, studentToMatch);
+                opSuccess = true;
+            } else if (Boolean.FALSE.equals(isStudent)) {
+                Student student = (Student) jList_AvailableEntities.getSelectedValue();
+                if (student == null) {
+                    return null;
+                }
+                Teacher teacherToMatch = tm.getTeacher(Long.valueOf(jLabel_SelectedEntityID.getText()));
+                lm.makeMatch(teacherToMatch, student);
+                opSuccess = true;
             }
             return null;
         }
         
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 if (Boolean.TRUE.equals(isStudent)) {
                     for (ActionListener a : Button_StudentDisplayLessons.getActionListeners()) {
@@ -1902,6 +1958,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 jDialog_AddingNewLesson.dispose();
                 jDialog_Info.pack();
                 jDialog_Info.setVisible(true);
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
     }
@@ -1930,31 +1988,27 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         @Override
         protected Void doInBackground() {
             if (Boolean.TRUE.equals(isStudent)) {
-                try {
-                    students = sm.findAllStudents();
-                    opSuccess = true;
-                } catch (DataSourceException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
-                }
-
+                students = sm.findAllStudents();
+                opSuccess = true;
             } else if (Boolean.FALSE.equals(isStudent)) {
-                try {
-                    teachers = tm.findAllTeachers();
-                    opSuccess = true;
-                } catch (DataSourceException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
-                }
-            } else {
-                opSuccess = false;
-                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
+                teachers = tm.findAllTeachers();
+                opSuccess = true;
             }
             return null;
         }
 
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 model = new DefaultListModel();
                 if (tm == null) {
@@ -1973,6 +2027,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     List_TeachersList.setModel(model);
                     List_TeachersList.setCellRenderer(new EntityListRenderer());
                 }
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
 
@@ -1999,20 +2055,25 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         @Override
         protected Void doInBackground() {
-            try {
-                lessons = lm.findAllLessons();
-                students = sm.findAllStudents();
-                teachers = tm.findAllTeachers();
-                opSuccess = true;
-            } catch (DataSourceException | ServiceFailureException e) {
-                errorHelper(e);
-                opSuccess = false;
-            }
+            lessons = lm.findAllLessons();
+            students = sm.findAllStudents();
+            teachers = tm.findAllTeachers();
+            opSuccess = true;
             return null;
         }
 
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 LessonTableModel model = new LessonTableModel(lessons, students, teachers, dataSource, realBundle);
                 jTable_lessons.setModel(model);
@@ -2020,6 +2081,8 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 jTable_lessons.setRowSelectionAllowed(true);
                 jTable_lessons.setCellSelectionEnabled(false);
                 ScrollPane_Lessons.setViewportView(jTable_lessons);
+            } else {
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
     }
@@ -2032,124 +2095,109 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         private Long id;
         private boolean isStudent;
         private boolean opSuccess = false;
+        private Student studentForm;
+        private Teacher teacherForm;
 
-        public UpdateEntitySwingWorker(Long id, boolean isStudent) {
+        public UpdateEntitySwingWorker(Long id, Student student) {
             sm = new StudentManager(dataSource);
             //sm.setDataSource(ds);
             tm = new TeacherManager(dataSource);
             //tm.setDataSource(ds);
             lm = new LessonManager(dataSource);
             //lm.setDataSource(ds);
-            this.isStudent = isStudent;
+            this.isStudent = true;
+            this.studentForm = student;
+            this.id = id;
+        }
+        
+        public UpdateEntitySwingWorker(Long id, Teacher teacher) {
+            sm = new StudentManager(dataSource);
+            //sm.setDataSource(ds);
+            tm = new TeacherManager(dataSource);
+            //tm.setDataSource(ds);
+            lm = new LessonManager(dataSource);
+            //lm.setDataSource(ds);
+            this.isStudent = false;
+            this.teacherForm = teacher;
             this.id = id;
         }
 
         @Override
         protected Void doInBackground() {
             if (Boolean.TRUE.equals(isStudent)) {
-                try {
-                    Student st = sm.getStudent(Long.valueOf(id));
-                    st.setFullName(TextField_StudentName.getText());
-                    try {
-                        st.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_StudentPrice.getText())).setScale(2));
-                    } catch (NumberFormatException numberFormatException) {
-                        //price.setText("Wrong format");
-                        TextField_StudentPrice.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
-                        return null;
-                    }
-                    try {
-                        st.setSkill(Integer.parseInt(TextField_StudentSkill.getText()));
-                    } catch (NumberFormatException numberFormatException) {
-                        //skill.setText("Wrong format");
-                        TextField_StudentSkill.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
-                        return null;
-                    }
-                    st.setRegion((Region) ComboBox_StudentRegion.getSelectedItem());
+                Student st = sm.getStudent(Long.valueOf(id));
+                st.setFullName(studentForm.getFullName());
+                st.setPrice(studentForm.getPrice());
+                st.setSkill(studentForm.getSkill());
+                st.setRegion(studentForm.getRegion());
 
-                    List<Lesson> lessons = lm.getLesson(st);
-                    //  go through all lessons associated with student
-                    for (int i = 0; i < lessons.size(); i++) {
-                        Lesson l = lessons.get(i);
-                        try {
-                            // get teacher from current lesson
-                            Teacher teach = tm.getTeacher(l.getTeacherId());
-                            // validate all of them - if fail, go to CATCH block
-                            lm.matchValidation(teach, st);
-                            // if OK - update lessons
-                            l.setSkill(st.getSkill());
-                    // price is determined by teacher, else validation fail
-                            // region must be the same - else validation fails
-                            lm.updateLesson(l);
-                        } catch (ValidationException e) {
-                    //Lesson lsds = lm.getLesson(l.getId());
-                            // if validation fails - delete appropriate lessons
-                            lm.deleteLesson(l);
-                        }
+                List<Lesson> lessons = lm.getLesson(st);
+                //  go through all lessons associated with student
+                for (int i = 0; i < lessons.size(); i++) {
+                    Lesson l = lessons.get(i);
+                    try {
+                        // get teacher from current lesson
+                        Teacher teach = tm.getTeacher(l.getTeacherId());
+                        // validate all of them - if fail, go to CATCH block
+                        lm.matchValidation(teach, st);
+                        // if OK - update lessons
+                        l.setSkill(st.getSkill());
+                        // price is determined by teacher, else validation fail
+                        // region must be the same - else validation fails
+                        lm.updateLesson(l);
+                    } catch (ValidationException e) {
+                        //Lesson lsds = lm.getLesson(l.getId());
+                        // if validation fails - delete appropriate lessons
+                        lm.deleteLesson(l);
                     }
-                    sm.updateStudent(st);
-                    opSuccess = true;
-                } catch (DataSourceException | IllegalArgumentException | IllegalEntityException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
                 }
+                sm.updateStudent(st);
+                opSuccess = true;
 
             } else if (Boolean.FALSE.equals(isStudent)) {
-                try {
-                    Teacher teach = tm.getTeacher(Long.valueOf(id));
-                    teach.setFullName(TextField_TeacherName.getText());
-                    try {
-                        teach.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_TeacherPrice.getText())).setScale(2));
-                    } catch (NumberFormatException numberFormatException) {
-                        //price.setText("Wrong format");
-                        TextField_TeacherPrice.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
-                        return null;
-                    }
-                    try {
-                        teach.setSkill(Integer.parseInt(TextField_TeacherSkill.getText()));
-                    } catch (NumberFormatException numberFormatException) {
-                        //skill.setText("Wrong format");
-                        TextField_TeacherSkill.setText(realBundle.getString("PairAppUIv2.jTextField_Invalid.text"));
-                        return null;
-                    }
-                    teach.setRegion((Region) ComboBox_TeacherRegion.getSelectedItem());
+                Teacher teach = tm.getTeacher(Long.valueOf(id));
+                teach.setFullName(teacherForm.getFullName());
+                teach.setPrice(teacherForm.getPrice());
+                teach.setSkill(teacherForm.getSkill());
+                teach.setRegion(teacherForm.getRegion());
 
-                    List<Lesson> lessons = lm.getLesson(teach);
-                    //  go through all lessons associated with student
-                    for (int i = 0; i < lessons.size(); i++) {
-                        Lesson l = lessons.get(i);
-                        try {
-                            // get teacher from current lesson
-                            Student student = sm.getStudent(l.getStudentId());
-                            // validate all of them - if fail, go to CATCH block
-                            lm.matchValidation(teach, student);
-                    // if OK - update lessons
-                            // skill is determined by student, else validation fail
-                            l.setPrice(teach.getPrice());
-                            // region must be the same - else validation fails
-                            lm.updateLesson(l);
-                        } catch (ValidationException e) {
-                    //Lesson lsds = lm.getLesson(l.getId());
-                            // if validation fails - delete appropriate lessons
-                            lm.deleteLesson(l);
-                        }
+                List<Lesson> lessons = lm.getLesson(teach);
+                //  go through all lessons associated with student
+                for (int i = 0; i < lessons.size(); i++) {
+                    Lesson l = lessons.get(i);
+                    try {
+                        // get teacher from current lesson
+                        Student student = sm.getStudent(l.getStudentId());
+                        // validate all of them - if fail, go to CATCH block
+                        lm.matchValidation(teach, student);
+                        // if OK - update lessons
+                        // skill is determined by student, else validation fail
+                        l.setPrice(teach.getPrice());
+                        // region must be the same - else validation fails
+                        lm.updateLesson(l);
+                    } catch (ValidationException e) {
+                        // if validation fails - delete appropriate lessons
+                        lm.deleteLesson(l);
                     }
-                    tm.updateTeacher(teach);
-                    opSuccess = true;
-                } catch (DataSourceException | IllegalArgumentException | IllegalEntityException | ServiceFailureException e) {
-                    errorHelper(e);
-                    opSuccess = false;
                 }
-
-            } else {
-                opSuccess = false;
-                //labelError.setText("Something went wrong. This should not happen.");
-                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
+                tm.updateTeacher(teach);
+                opSuccess = true;
             }
             return null;
         }
         
         @Override
         protected void done() {
+            try {
+                get();
+            } catch (ExecutionException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+            } catch (InterruptedException e) {
+                errorHelper(e.getCause());
+                opSuccess = false;
+                throw new RuntimeException("Operation interrupted");
+            }
             if (opSuccess) {
                 JButton buttonEntity;
                 if (Boolean.TRUE.equals(isStudent)){
@@ -2164,14 +2212,17 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 for (ActionListener a : Button_ShowAllLessons.getActionListeners()) {
                     a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {
                     });
-                }
+                } 
                 jDialog_Info.pack();
                 jDialog_Info.setVisible(true);
+            } else {
+                //labelError.setText("Something went wrong. This should not happen.");
+                errorHelper(new IllegalEntityException(realBundle.getString("PairAppUIv2.jLabel_Error_Default.text")));
             }
         }
     }
     
-    private void errorHelper(Exception ex) {
+    private void errorHelper(Throwable ex) {
         //labelError.setText("Something went wrong. This should not happen.");
         jLabel_ErrorMessage.setText(ex.getMessage());
         jDialog_Error.pack();
@@ -2179,7 +2230,6 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         Logger.getLogger(PairAppUIv2.class.getName()).log(Level.SEVERE, null, ex);
     }
     
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_LessonDelete;
     private javax.swing.JButton Button_ShowAllLessons;
@@ -2288,7 +2338,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_SelectedEntityID;
     private javax.swing.JLabel jLabel_TeacherOrStudent;
     private javax.swing.JList jList_AvailableEntities;
-    private javax.swing.JScrollPane jScrollPaneAvailableEntities;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane_StudentList;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable_lessons;

@@ -329,6 +329,10 @@ public class LessonManager {
      *  Match between student-teacher: 
      *  one student can have one pairing with one specific teacher (and vice versa) 
      *  one student can have unlimited number of pairings with different teachers (and v.v.)
+     *  student - lesson - teacher
+     *  price        >       price
+     *  skill        <       skill
+     *  region       =      region
      */
     
     public List<Teacher> findMatchForStudent (Student student) throws IllegalArgumentException, ServiceFailureException, DataSourceException {
