@@ -33,11 +33,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                   <Group type="102" alignment="0" attributes="0">
-=======
-                  <Group type="102" attributes="0">
->>>>>>> origin/master
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
@@ -48,17 +44,10 @@
                                   <Component id="SplitPane_TeacherRegion1" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-<<<<<<< HEAD
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
                               <Component id="Button_TeacherSaveNew" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="279" max="32767" attributes="0"/>
-=======
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
-                              <Component id="Button_TeacherSaveNew" min="-2" pref="120" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
->>>>>>> origin/master
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -85,11 +74,7 @@
                       <Component id="SplitPane_TeacherRegion1" min="-2" pref="32" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="Button_TeacherSaveNew" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
                       <EmptySpace pref="64" max="32767" attributes="0"/>
-=======
-                      <EmptySpace pref="52" max="32767" attributes="0"/>
->>>>>>> origin/master
                   </Group>
               </Group>
             </DimensionLayout>
@@ -101,61 +86,17 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_Teacher1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_Teacher1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
             </Component>
             <Container class="javax.swing.JSplitPane" name="SplitPane_TeacherName1">
-<<<<<<< HEAD
-=======
               <Properties>
                 <Property name="dividerLocation" type="int" value="200"/>
               </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextField" name="TextField_TeacherName1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_TeacherName1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherName1ActionPerformed"/>
-                  </Events>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                      <JSplitPaneConstraints position="right"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-                <Component class="javax.swing.JLabel" name="Label_TeacherName1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherName1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                      <JSplitPaneConstraints position="left"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JSplitPane" name="SplitPane_TeacherPrice1">
->>>>>>> origin/master
-              <Properties>
-                <Property name="dividerLocation" type="int" value="200"/>
-              </Properties>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
-              <SubComponents>
-<<<<<<< HEAD
                 <Component class="javax.swing.JTextField" name="TextField_TeacherName1">
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherName1ActionPerformed"/>
@@ -171,17 +112,8 @@
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherName1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                <Component class="javax.swing.JTextField" name="TextField_TeacherPrice1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_TeacherPrice1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherPrice1ActionPerformed"/>
-                  </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
                       <JSplitPaneConstraints position="left"/>
@@ -209,13 +141,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="Label_TeacherPrice1">
                   <Properties>
-<<<<<<< HEAD
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherPrice1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherPrice1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Constraints>
@@ -234,11 +162,6 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="TextField_TeacherSkill1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_TeacherSkill1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
-                  </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherSkill1ActionPerformed"/>
                   </Events>
@@ -250,194 +173,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="Label_TeacherSkill1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherSkill1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                      <JSplitPaneConstraints position="left"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JSplitPane" name="SplitPane_TeacherRegion1">
-              <Properties>
-                <Property name="dividerLocation" type="int" value="200"/>
-              </Properties>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="Label_TeacherRegion1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherRegion1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
-                    </Property>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                      <JSplitPaneConstraints position="left"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="ComboBox_TeacherRegion1">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new javax.swing.DefaultComboBoxModel(Region.values())" type="code"/>
-                    </Property>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                      <JSplitPaneConstraints position="right"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-              </SubComponents>
-            </Container>
-<<<<<<< HEAD
-            <Container class="javax.swing.JSplitPane" name="SplitPane_TeacherSkill1">
-=======
-            <Component class="javax.swing.JButton" name="Button_TeacherSaveNew">
-              <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherSaveNew.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_TeacherSaveNewActionPerformed"/>
-              </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JDialog" name="jDialog_AddingNewStudent">
-      <Properties>
-        <Property name="defaultCloseOperation" type="int" value="2"/>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="420" max="32767" attributes="0"/>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Panel_AddingStudentEditPanel" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="360" max="32767" attributes="0"/>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Panel_AddingStudentEditPanel" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="javax.swing.JPanel" name="Panel_AddingStudentEditPanel">
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="SplitPane_StudentName1" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="SplitPane_StudentPrice1" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="SplitPane_StudentSkill1" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="SplitPane_StudentRegion1" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
-                                      <Component id="Button_StudentSaveNew" min="-2" pref="120" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="158" max="-2" attributes="0"/>
-                                      <Component id="Label_Student1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="0" pref="255" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Label_Student1" min="-2" pref="15" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="SplitPane_StudentName1" min="-2" pref="34" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="SplitPane_StudentPrice1" min="-2" pref="30" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="SplitPane_StudentSkill1" min="-2" pref="31" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="SplitPane_StudentRegion1" min="-2" pref="32" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="Button_StudentSaveNew" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="53" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="Label_Student1">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_Student1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Container class="javax.swing.JSplitPane" name="SplitPane_StudentName1">
->>>>>>> origin/master
-              <Properties>
-                <Property name="dividerLocation" type="int" value="200"/>
-              </Properties>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTextField" name="TextField_TeacherSkill1">
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherSkill1ActionPerformed"/>
-                  </Events>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout$JSplitPaneConstraintsDescription">
-                      <JSplitPaneConstraints position="right"/>
-                    </Constraint>
-                  </Constraints>
-                </Component>
-                <Component class="javax.swing.JLabel" name="Label_TeacherSkill1">
-                  <Properties>
-<<<<<<< HEAD
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherSkill1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_StudentName1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Constraints>
@@ -612,14 +350,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="Label_StudentName1">
                   <Properties>
-<<<<<<< HEAD
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentName1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentName1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Constraints>
@@ -638,14 +371,6 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="TextField_StudentPrice1">
-<<<<<<< HEAD
-=======
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_StudentPrice1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
-                  </Properties>
->>>>>>> origin/master
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_StudentPrice1ActionPerformed"/>
                   </Events>
@@ -657,14 +382,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="Label_StudentPrice1">
                   <Properties>
-<<<<<<< HEAD
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentPrice1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentPrice1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Constraints>
@@ -683,14 +403,6 @@
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="TextField_StudentSkill1">
-<<<<<<< HEAD
-=======
-                  <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_StudentSkill1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
-                  </Properties>
->>>>>>> origin/master
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_StudentSkill1ActionPerformed"/>
                   </Events>
@@ -702,14 +414,9 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="Label_StudentSkill1">
                   <Properties>
-<<<<<<< HEAD
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentSkill1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentSkill1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Constraints>
@@ -729,14 +436,9 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="Label_StudentRegion1">
                   <Properties>
-<<<<<<< HEAD
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentRegion1.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentRegion1.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Constraints>
@@ -762,11 +464,7 @@
             <Component class="javax.swing.JButton" name="Button_StudentSaveNew">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentSaveNew.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentSaveNew.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
               <Events>
@@ -786,17 +484,10 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-<<<<<<< HEAD
                   <Component id="jScrollPaneAvailableEntities" min="-2" pref="248" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButton_SaveNewLesson" alignment="0" pref="136" max="32767" attributes="0"/>
-=======
-                  <Component id="jScrollPane1" min="-2" pref="248" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jButton_SaveNewLesson" pref="136" max="32767" attributes="0"/>
->>>>>>> origin/master
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="jLabel_SelectedEntityID" min="-2" max="-2" attributes="0"/>
@@ -823,11 +514,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                       <Component id="jScrollPaneAvailableEntities" alignment="1" pref="270" max="32767" attributes="0"/>
-=======
-                      <Component id="jScrollPane1" alignment="1" pref="270" max="32767" attributes="0"/>
->>>>>>> origin/master
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jButton_SaveNewLesson" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -840,11 +527,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-<<<<<<< HEAD
         <Container class="javax.swing.JScrollPane" name="jScrollPaneAvailableEntities">
-=======
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
->>>>>>> origin/master
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
@@ -866,11 +549,7 @@
         <Component class="javax.swing.JButton" name="jButton_SaveNewLesson">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jButton_SaveNewLesson.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jButton_SaveNewLesson.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
           </Properties>
           <Events>
@@ -878,34 +557,18 @@
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_SelectedEntityID">
-<<<<<<< HEAD
-=======
-          <Properties>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_SelectedEntityID.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-            </Property>
-          </Properties>
->>>>>>> origin/master
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_AvailableEntities">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_AvailableEntities.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_AvailableEntities.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_TeacherOrStudent">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_TeacherOrStudent.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_TeacherOrStudent.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
           </Properties>
         </Component>
@@ -914,12 +577,6 @@
     <Container class="javax.swing.JDialog" name="jDialog_Info">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
-<<<<<<< HEAD
-=======
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[300, 150]"/>
-        </Property>
->>>>>>> origin/master
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
 
@@ -929,13 +586,8 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="79" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-<<<<<<< HEAD
                       <Component id="jButton_InfoOK" alignment="1" max="32767" attributes="0"/>
                       <Component id="jLabel_Info" alignment="1" max="32767" attributes="0"/>
-=======
-                      <Component id="jButton_InfoOK" pref="142" max="32767" attributes="0"/>
-                      <Component id="jLabel_Info" max="32767" attributes="0"/>
->>>>>>> origin/master
                   </Group>
                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
               </Group>
@@ -961,11 +613,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_Info.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_Info.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Default Cursor"/>
@@ -976,11 +624,7 @@
         <Component class="javax.swing.JButton" name="jButton_InfoOK">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jButton_InfoOK.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jButton_InfoOK.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
@@ -995,42 +639,23 @@
     <Container class="javax.swing.JDialog" name="jDialog_NoEntityToMatch">
       <Properties>
         <Property name="defaultCloseOperation" type="int" value="2"/>
-<<<<<<< HEAD
-=======
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[300, 150]"/>
-        </Property>
->>>>>>> origin/master
         <Property name="resizable" type="boolean" value="false"/>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel_Message" pref="250" max="32767" attributes="0"/>
-=======
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel_Message" pref="216" max="32767" attributes="0"/>
->>>>>>> origin/master
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-<<<<<<< HEAD
                               <Component id="jButton_OK" alignment="0" max="32767" attributes="0"/>
                               <Component id="jLabel_EntityName" alignment="0" max="32767" attributes="0"/>
-=======
-                              <Component id="jButton_OK" max="32767" attributes="0"/>
-                              <Component id="jLabel_EntityName" max="32767" attributes="0"/>
->>>>>>> origin/master
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
@@ -1048,11 +673,7 @@
                   <Component id="jLabel_EntityName" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton_OK" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
                   <EmptySpace pref="45" max="32767" attributes="0"/>
-=======
-                  <EmptySpace max="32767" attributes="0"/>
->>>>>>> origin/master
               </Group>
           </Group>
         </DimensionLayout>
@@ -1065,11 +686,7 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_Message.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_Message.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Default Cursor"/>
@@ -1081,11 +698,7 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_EntityName.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jLabel_EntityName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
@@ -1093,11 +706,7 @@
         <Component class="javax.swing.JButton" name="jButton_OK">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
               <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jButton_OK.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-              <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jButton_OK.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Hand Cursor"/>
@@ -1109,7 +718,6 @@
         </Component>
       </SubComponents>
     </Container>
-<<<<<<< HEAD
     <Container class="javax.swing.JDialog" name="jDialog_Error">
 
       <Layout>
@@ -1180,8 +788,6 @@
         </Component>
       </SubComponents>
     </Container>
-=======
->>>>>>> origin/master
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -1191,11 +797,11 @@
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
     <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
@@ -1223,9 +829,7 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Students">
-                <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Panel_StudentsTab.TabConstraints.tabTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
+                <Property name="tabTitle" type="java.lang.String" value="Students"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1236,21 +840,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jScrollPane_StudentList" alignment="0" pref="280" max="32767" attributes="0"/>
                                   <Component id="Button_ShowAllStudents" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-=======
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jScrollPane_StudentList" pref="280" max="32767" attributes="0"/>
-                                  <Component id="Button_ShowAllStudents" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
->>>>>>> origin/master
                               <Component id="Panel_StudentEditPanel" max="32767" attributes="0"/>
                           </Group>
                           <Component id="Label_StudentsList" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1266,19 +861,11 @@
                       <Component id="Label_StudentsList" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                           <Component id="Panel_StudentEditPanel" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jScrollPane_StudentList" min="-2" pref="456" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="Button_ShowAllStudents" pref="27" max="32767" attributes="0"/>
-=======
-                          <Component id="Panel_StudentEditPanel" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="jScrollPane_StudentList" min="-2" pref="456" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Button_ShowAllStudents" pref="35" max="32767" attributes="0"/>
->>>>>>> origin/master
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -1293,11 +880,7 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentsList.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentsList.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
             </Component>
@@ -1320,17 +903,10 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-<<<<<<< HEAD
                                       <Component id="Button_StudentAddNew" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
                                       <Component id="Button_StudentDelete" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace pref="52" max="32767" attributes="0"/>
-=======
-                                      <Component id="Button_StudentAddNew" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <Component id="Button_StudentDelete" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="290" max="32767" attributes="0"/>
->>>>>>> origin/master
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="Button_StudentAddLesson" min="-2" max="-2" attributes="0"/>
@@ -1370,13 +946,8 @@
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-<<<<<<< HEAD
                               <Component id="Button_StudentAddNew" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-=======
-                              <Component id="Button_StudentAddNew" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
->>>>>>> origin/master
                                   <Component id="Button_StudentDisplayLessons" alignment="3" max="32767" attributes="0"/>
                                   <Component id="Button_StudentAddLesson" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -1393,11 +964,7 @@
                       <Font name="Tahoma" size="12" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_Student.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_Student.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                 </Component>
@@ -1422,14 +989,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_StudentID">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentID.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentID.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1448,14 +1010,6 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="TextField_StudentName">
-<<<<<<< HEAD
-=======
-                      <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_StudentName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                      </Properties>
->>>>>>> origin/master
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_StudentNameActionPerformed"/>
                       </Events>
@@ -1467,14 +1021,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_StudentName">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentName.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1493,14 +1042,6 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="TextField_StudentPrice">
-<<<<<<< HEAD
-=======
-                      <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_StudentPrice.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                      </Properties>
->>>>>>> origin/master
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_StudentPriceActionPerformed"/>
                       </Events>
@@ -1512,14 +1053,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_StudentPrice">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentPrice.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentPrice.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1538,14 +1074,6 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="TextField_StudentSkill">
-<<<<<<< HEAD
-=======
-                      <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_StudentSkill.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                      </Properties>
->>>>>>> origin/master
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_StudentSkillActionPerformed"/>
                       </Events>
@@ -1557,14 +1085,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_StudentSkill">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentSkill.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentSkill.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1584,14 +1107,9 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="Label_StudentRegion">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentRegion.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_StudentRegion.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1617,11 +1135,7 @@
                 <Component class="javax.swing.JButton" name="Button_StudentAddNew">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentAddNew.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentAddNew.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -1631,11 +1145,7 @@
                 <Component class="javax.swing.JButton" name="Button_StudentUpdate">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentUpdate.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentUpdate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -1645,11 +1155,7 @@
                 <Component class="javax.swing.JButton" name="Button_StudentDisplayLessons">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentDisplayLessons.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentDisplayLessons.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -1659,11 +1165,7 @@
                 <Component class="javax.swing.JButton" name="Button_StudentAddLesson">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentAddLesson.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentAddLesson.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -1673,11 +1175,7 @@
                 <Component class="javax.swing.JButton" name="Button_StudentDelete">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentDelete.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_StudentDelete.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -1708,11 +1206,7 @@
             <Component class="javax.swing.JButton" name="Button_ShowAllStudents">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_ShowAllStudents.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_ShowAllStudents.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
               <Events>
@@ -1725,9 +1219,7 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Teachers">
-                <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Panel_TeachersTab.TabConstraints.tabTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
+                <Property name="tabTitle" type="java.lang.String" value="Teachers"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -1738,17 +1230,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="ScrollPane_TeacherList" alignment="0" pref="280" max="32767" attributes="0"/>
                                   <Component id="Button_ShowAllTeachers" alignment="0" max="32767" attributes="0"/>
-=======
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="ScrollPane_TeacherList" pref="280" max="32767" attributes="0"/>
-                                  <Component id="Button_ShowAllTeachers" max="32767" attributes="0"/>
->>>>>>> origin/master
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="Panel_TeacherEditPanel" max="32767" attributes="0"/>
@@ -1766,21 +1251,12 @@
                       <Component id="Label_TeachersList" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="ScrollPane_TeacherList" min="-2" pref="456" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="Button_ShowAllTeachers" pref="27" max="32767" attributes="0"/>
                           </Group>
                           <Component id="Panel_TeacherEditPanel" alignment="0" max="32767" attributes="0"/>
-=======
-                          <Group type="102" attributes="0">
-                              <Component id="ScrollPane_TeacherList" min="-2" pref="456" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Button_ShowAllTeachers" pref="35" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="Panel_TeacherEditPanel" max="32767" attributes="0"/>
->>>>>>> origin/master
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -1794,11 +1270,7 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeachersList.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeachersList.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
             </Component>
@@ -1821,17 +1293,10 @@
                               <Component id="SplitPane_TeacherRegion" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-<<<<<<< HEAD
                                       <Component id="Button_TeacherAddNew" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
                                       <Component id="Button_TeacherDelete" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace pref="63" max="32767" attributes="0"/>
-=======
-                                      <Component id="Button_TeacherAddNew" min="-2" pref="130" max="-2" attributes="0"/>
-                                      <Component id="Button_TeacherDelete" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="290" max="32767" attributes="0"/>
->>>>>>> origin/master
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="Button_TeacherAddLesson" min="-2" max="-2" attributes="0"/>
@@ -1871,19 +1336,11 @@
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-<<<<<<< HEAD
                               <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="Button_TeacherAddNew" alignment="0" max="32767" attributes="0"/>
                                   <Component id="Button_TeacherAddLesson" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="Button_TeacherDisplayLessons" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
-=======
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Button_TeacherAddNew" max="32767" attributes="0"/>
-                                  <Component id="Button_TeacherAddLesson" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="Button_TeacherDisplayLessons" min="-2" pref="23" max="-2" attributes="0"/>
->>>>>>> origin/master
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -1897,11 +1354,7 @@
                       <Font name="Tahoma" size="12" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_Teacher.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_Teacher.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                 </Component>
@@ -1926,14 +1379,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_TeacherID">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherID.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherID.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1952,14 +1400,6 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="TextField_TeacherName">
-<<<<<<< HEAD
-=======
-                      <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_TeacherName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                      </Properties>
->>>>>>> origin/master
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherNameActionPerformed"/>
                       </Events>
@@ -1971,14 +1411,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_TeacherName">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherName.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherName.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1997,14 +1432,6 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="TextField_TeacherPrice">
-<<<<<<< HEAD
-=======
-                      <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_TeacherPrice.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                      </Properties>
->>>>>>> origin/master
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherPriceActionPerformed"/>
                       </Events>
@@ -2016,14 +1443,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_TeacherPrice">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherPrice.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherPrice.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -2042,14 +1464,6 @@
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JSplitPaneSupportLayout"/>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="TextField_TeacherSkill">
-<<<<<<< HEAD
-=======
-                      <Properties>
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.TextField_TeacherSkill.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                        </Property>
-                      </Properties>
->>>>>>> origin/master
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextField_TeacherSkillActionPerformed"/>
                       </Events>
@@ -2061,14 +1475,9 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="Label_TeacherSkill">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherSkill.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherSkill.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -2088,14 +1497,9 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="Label_TeacherRegion">
                       <Properties>
-<<<<<<< HEAD
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                           <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherRegion.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_TeacherRegion.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                         </Property>
                       </Properties>
                       <Constraints>
@@ -2121,11 +1525,7 @@
                 <Component class="javax.swing.JButton" name="Button_TeacherAddNew">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherAddNew.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherAddNew.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -2135,11 +1535,7 @@
                 <Component class="javax.swing.JButton" name="Button_TeacherUpdate">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherUpdate.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherUpdate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -2149,11 +1545,7 @@
                 <Component class="javax.swing.JButton" name="Button_TeacherDisplayLessons">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherDisplayLessons.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherDisplayLessons.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -2163,11 +1555,7 @@
                 <Component class="javax.swing.JButton" name="Button_TeacherAddLesson">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherAddLesson.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherAddLesson.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -2177,11 +1565,7 @@
                 <Component class="javax.swing.JButton" name="Button_TeacherDelete">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                       <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherDelete.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                      <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_TeacherDelete.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                     </Property>
                   </Properties>
                   <Events>
@@ -2209,11 +1593,7 @@
             <Component class="javax.swing.JButton" name="Button_ShowAllTeachers">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_ShowAllTeachers.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_ShowAllTeachers.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
               <Events>
@@ -2226,9 +1606,7 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Lessons">
-                <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Panel_LessonsTab.TabConstraints.tabTitle" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
+                <Property name="tabTitle" type="java.lang.String" value="Lessons"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -2240,7 +1618,6 @@
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-<<<<<<< HEAD
                               <Component id="Label_LessonsList" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -2249,17 +1626,6 @@
                               <Component id="Button_ShowAllLessons" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="Button_LessonDelete" min="-2" max="-2" attributes="0"/>
-=======
-                              <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="ScrollPane_Lessons" pref="1023" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="Button_LessonDisplayAll" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="Button_LessonDelete" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
->>>>>>> origin/master
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -2272,19 +1638,11 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="Label_LessonsList" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-<<<<<<< HEAD
                       <Component id="ScrollPane_Lessons" pref="452" max="32767" attributes="0"/>
                       <EmptySpace pref="9" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="Button_LessonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="Button_ShowAllLessons" alignment="3" min="-2" max="-2" attributes="0"/>
-=======
-                      <Component id="ScrollPane_Lessons" pref="456" max="32767" attributes="0"/>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="Button_LessonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Button_LessonDisplayAll" alignment="3" min="-2" max="-2" attributes="0"/>
->>>>>>> origin/master
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -2298,11 +1656,7 @@
                   <Font name="Tahoma" size="18" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_LessonsList.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Label_LessonsList.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
             </Component>
@@ -2325,55 +1679,6 @@
                         <Column editable="false" title="Region" type="java.lang.String"/>
                       </Table>
                     </Property>
-<<<<<<< HEAD
-=======
-                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                      <TableColumnModel selectionModel="1">
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
-                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jTable_lessons.columnModel.title5" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                          </Title>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jTable_lessons.columnModel.title0" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                          </Title>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jTable_lessons.columnModel.title1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                          </Title>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jTable_lessons.columnModel.title2" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                          </Title>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jTable_lessons.columnModel.title3" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                          </Title>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                          <Title editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                            <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.jTable_lessons.columnModel.title4" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                          </Title>
-                          <Editor/>
-                          <Renderer/>
-                        </Column>
-                      </TableColumnModel>
-                    </Property>
->>>>>>> origin/master
                     <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -2385,18 +1690,13 @@
             <Component class="javax.swing.JButton" name="Button_LessonDelete">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-<<<<<<< HEAD
                   <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_LessonDelete.text_1" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-=======
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_LessonDelete.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
->>>>>>> origin/master
                 </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_LessonDeleteActionPerformed"/>
               </Events>
             </Component>
-<<<<<<< HEAD
             <Component class="javax.swing.JButton" name="Button_ShowAllLessons">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -2405,16 +1705,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_ShowAllLessonsActionPerformed"/>
-=======
-            <Component class="javax.swing.JButton" name="Button_LessonDisplayAll">
-              <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="UI/Bundle.properties" key="PairAppUIv2.Button_LessonDisplayAll.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Button_LessonDisplayAllActionPerformed"/>
->>>>>>> origin/master
               </Events>
             </Component>
           </SubComponents>
