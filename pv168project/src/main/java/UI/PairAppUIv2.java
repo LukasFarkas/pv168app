@@ -5,28 +5,47 @@
  */
 package UI;
 import cz.muni.fi.pv168.common.DBUtils;
+<<<<<<< HEAD
 import cz.muni.fi.pv168.common.DataSourceException;
 import cz.muni.fi.pv168.common.IllegalEntityException;
 import cz.muni.fi.pv168.common.ServiceFailureException;
 import cz.muni.fi.pv168.common.ValidationException;
 import cz.muni.fi.pv168.pv168project.app.*;
+=======
+import cz.muni.fi.pv168.pv168project.app.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dialog;
+>>>>>>> origin/master
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Locale;
 import java.util.ResourceBundle;
+=======
+>>>>>>> origin/master
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
 import javax.swing.DefaultListModel;
+<<<<<<< HEAD
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
+=======
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.AbstractTableModel;
+>>>>>>> origin/master
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.derby.jdbc.EmbeddedDriver;
 
@@ -39,6 +58,7 @@ import org.apache.derby.jdbc.EmbeddedDriver;
 
 public class PairAppUIv2 extends javax.swing.JFrame { 
     
+<<<<<<< HEAD
     private static DataSource dataSource;
     private Locale locale;
     private ResourceBundle realBundle;
@@ -46,6 +66,132 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     //public String user_country = System.getProperty("user.country"); 
     //public String user_language = System.getProperty("user.language");
     //public Map<String, String> sysenv = System.getenv();
+=======
+    /**
+     * List renderer for teacher and student
+     */
+    public class EntityListRenderer extends JLabel implements ListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList jlist, Object e, int index, boolean isSelected, boolean cellHasFocus) {
+            
+            if (e.getClass().equals(Student.class) ) {
+                Student student = (Student) e;
+                setText(student.getFullName());
+            }
+            else if (e.getClass().equals(Teacher.class)) {
+                Teacher teacher = (Teacher) e;
+                setText(teacher.getFullName());   
+            }
+            else  {
+                throw new IllegalArgumentException();
+            }
+
+            Color background;
+            Color foreground;
+
+//            // check if this cell represents the current DnD drop location
+//            if (jlist.getDropLocation() != null
+//                && !jlist.getDropLocation().isInsert()
+//                && jlist.getDropLocation().getIndex() == index) {
+//
+//                background = Color.WHITE;
+//                foreground = Color.BLUE;
+//
+//            // check if this cell is selected
+//            } else 
+            if (isSelected) {
+                background = Color.WHITE;
+                foreground = Color.RED;
+
+            // unselected, and not the DnD drop location
+            } else {
+                background = Color.WHITE;
+                foreground = Color.BLACK;
+            }
+
+            setBackground(background);
+            setForeground(foreground);
+            
+            return this;
+        }
+
+
+    }
+    
+    /**
+     * Table model for lessons
+     */
+    class LessonTableModel extends AbstractTableModel {
+        private List<Lesson> lessons; 
+        
+        private LessonTableModel () {    
+        }
+        
+        private LessonTableModel (List<Lesson> lessons) {
+            this.lessons = new ArrayList<Lesson>(lessons);
+            
+        }
+        Class[] types = new Class [] {
+            java.lang.Long.class, Student.class, Teacher.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+
+        boolean[] canEdit = new boolean [] {
+            false, false, false, false, false, false
+        };
+        
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit [columnIndex];
+        }
+
+        @Override
+        public int getRowCount() {
+            if (lessons != null){
+                return lessons.size();
+            }
+            return 0;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 6;
+        }
+        
+        @Override
+        public String getColumnName(int column) { //need to rewrite to bunde.properties
+            String[] columnNames = {"LessonID", "Student", "Teacher", "Skill", "Price", "Region"};
+            return columnNames[column];
+        }
+        
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Lesson lesson = lessons.get(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return lesson.getId();
+                case 1:
+                    Student student = sm.getStudent(lesson.getStudentId());
+                    return student.getFullName();
+                case 2:
+                    //resit v jinem vlakne!!!!
+                    Teacher teacher = tm.getTeacher(lesson.getTeacherId());
+                    return teacher.getFullName();
+                case 3:
+                    return lesson.getSkill();
+                case 4:
+                    return lesson.getPrice(); 
+                case 5:
+                    return lesson.getRegion();
+                default:
+                    throw new IllegalArgumentException("Wrong column index");
+            }
+        }
+    }
+>>>>>>> origin/master
     
     /**
      * Creates new form PairAppUIv2
@@ -58,7 +204,68 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         realBundle = ResourceBundle.getBundle("UI/Bundle", locale);
         initComponents();
     }
+<<<<<<< HEAD
+=======
+    
+    
+    
+    //nasledujici tri metody reseny pres managery:
+    
+//    public DefaultListModel populateJList (DataSource dataSource) throws SQLException {
+//        DefaultListModel model = new DefaultListModel();
+//        Connection conn = null;
+//        PreparedStatement st = null;
+//        ResultSet rs;
+//        
+//        try {
+//            conn = dataSource.getConnection();
+//            st = conn.prepareStatement(
+//                    "SELECT fullName FROM Student");
+//            rs = st.executeQuery();
+//            
+//            while (rs.next()) {
+//                String name = rs.getString ("fullName");
+//                model.addElement(name);
+//            }
+//            return model;
+//            
+//        } catch (SQLException ex) {
+//            String msg = "Error when getting all students from DB - list";
+//            //logger.log(Level.SEVERE, msg, ex);
+//            throw new ServiceFailureException(msg, ex);
+//        } finally {
+//            DBUtils.closeQuietly(conn, st);
+//        }
+//    }
+//    
+//    public void pop (DefaultListModel model, JList list) {
+//        list.setModel(model);
+//    }
+//    
+//    public DefaultTableModel popjTable () {
+//        Connection conn = null;
+//        PreparedStatement st = null;
+//        try {
+//            conn = dataSource.getConnection();
+//            st = conn.prepareStatement(
+//                    "SELECT id,price,skill,region,teacherid,studentid FROM Lesson");
+//            ResultSet rs = st.executeQuery();
+//            return null;
+//        } catch (SQLException ex) {
+//            String msg = "Error when getting all lessons from DB";
+//            //logger.log(Level.SEVERE, msg, ex);
+//            throw new ServiceFailureException(msg, ex);
+//        } finally {
+//            DBUtils.closeQuietly(conn, st);
+//        }
+//    }
+>>>>>>> origin/master
 
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +308,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         ComboBox_StudentRegion1 = new javax.swing.JComboBox();
         Button_StudentSaveNew = new javax.swing.JButton();
         jDialog_AddingNewLesson = new javax.swing.JDialog();
+<<<<<<< HEAD
         jScrollPaneAvailableEntities = new javax.swing.JScrollPane();
+=======
+        jScrollPane1 = new javax.swing.JScrollPane();
+>>>>>>> origin/master
         jList_AvailableEntities = new javax.swing.JList();
         jButton_SaveNewLesson = new javax.swing.JButton();
         jLabel_SelectedEntityID = new javax.swing.JLabel();
@@ -114,10 +325,13 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         jLabel_Message = new javax.swing.JLabel();
         jLabel_EntityName = new javax.swing.JLabel();
         jButton_OK = new javax.swing.JButton();
+<<<<<<< HEAD
         jDialog_Error = new javax.swing.JDialog();
         jLabel_ErrorMessage = new javax.swing.JLabel();
         jButton_ErrorOK = new javax.swing.JButton();
         jLabel_ErrorHeader = new javax.swing.JLabel();
+=======
+>>>>>>> origin/master
         jTabbedPane1 = new javax.swing.JTabbedPane();
         Panel_StudentsTab = new javax.swing.JPanel();
         Label_StudentsList = new javax.swing.JLabel();
@@ -178,16 +392,28 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         ScrollPane_Lessons = new javax.swing.JScrollPane();
         jTable_lessons = new javax.swing.JTable();
         Button_LessonDelete = new javax.swing.JButton();
+<<<<<<< HEAD
         Button_ShowAllLessons = new javax.swing.JButton();
+=======
+        Button_LessonDisplayAll = new javax.swing.JButton();
+>>>>>>> origin/master
 
         jDialog_AddingNewTeacher.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         Label_Teacher1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("UI/Bundle"); // NOI18N
+<<<<<<< HEAD
         Label_Teacher1.setText(bundle.getString("PairAppUIv2.Label_Teacher1.text_1")); // NOI18N
 
         SplitPane_TeacherName1.setDividerLocation(200);
 
+=======
+        Label_Teacher1.setText(bundle.getString("PairAppUIv2.Label_Teacher1.text")); // NOI18N
+
+        SplitPane_TeacherName1.setDividerLocation(200);
+
+        TextField_TeacherName1.setText(bundle.getString("PairAppUIv2.TextField_TeacherName1.text")); // NOI18N
+>>>>>>> origin/master
         TextField_TeacherName1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_TeacherName1ActionPerformed(evt);
@@ -195,12 +421,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_TeacherName1.setRightComponent(TextField_TeacherName1);
 
+<<<<<<< HEAD
         Label_TeacherName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherName1.setText(bundle.getString("PairAppUIv2.Label_TeacherName1.text_1")); // NOI18N
+=======
+        Label_TeacherName1.setText(bundle.getString("PairAppUIv2.Label_TeacherName1.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_TeacherName1.setLeftComponent(Label_TeacherName1);
 
         SplitPane_TeacherPrice1.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_TeacherPrice1.setText(bundle.getString("PairAppUIv2.TextField_TeacherPrice1.text")); // NOI18N
+>>>>>>> origin/master
         TextField_TeacherPrice1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_TeacherPrice1ActionPerformed(evt);
@@ -208,18 +442,27 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_TeacherPrice1.setRightComponent(TextField_TeacherPrice1);
 
+<<<<<<< HEAD
         Label_TeacherPrice1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherPrice1.setText(bundle.getString("PairAppUIv2.Label_TeacherPrice1.text_1")); // NOI18N
+=======
+        Label_TeacherPrice1.setText(bundle.getString("PairAppUIv2.Label_TeacherPrice1.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_TeacherPrice1.setLeftComponent(Label_TeacherPrice1);
 
         SplitPane_TeacherSkill1.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_TeacherSkill1.setText(bundle.getString("PairAppUIv2.TextField_TeacherSkill1.text")); // NOI18N
+>>>>>>> origin/master
         TextField_TeacherSkill1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_TeacherSkill1ActionPerformed(evt);
             }
         });
         SplitPane_TeacherSkill1.setRightComponent(TextField_TeacherSkill1);
+<<<<<<< HEAD
 
         Label_TeacherSkill1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherSkill1.setText(bundle.getString("PairAppUIv2.Label_TeacherSkill1.text_1")); // NOI18N
@@ -306,6 +549,93 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
         SplitPane_StudentName1.setDividerLocation(200);
 
+=======
+
+        Label_TeacherSkill1.setText(bundle.getString("PairAppUIv2.Label_TeacherSkill1.text")); // NOI18N
+        SplitPane_TeacherSkill1.setLeftComponent(Label_TeacherSkill1);
+
+        SplitPane_TeacherRegion1.setDividerLocation(200);
+
+        Label_TeacherRegion1.setText(bundle.getString("PairAppUIv2.Label_TeacherRegion1.text")); // NOI18N
+        SplitPane_TeacherRegion1.setLeftComponent(Label_TeacherRegion1);
+
+        ComboBox_TeacherRegion1.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
+        SplitPane_TeacherRegion1.setRightComponent(ComboBox_TeacherRegion1);
+
+        Button_TeacherSaveNew.setText(bundle.getString("PairAppUIv2.Button_TeacherSaveNew.text")); // NOI18N
+        Button_TeacherSaveNew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_TeacherSaveNewActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout Panel_AddingTeacherEditPanelLayout = new javax.swing.GroupLayout(Panel_AddingTeacherEditPanel);
+        Panel_AddingTeacherEditPanel.setLayout(Panel_AddingTeacherEditPanelLayout);
+        Panel_AddingTeacherEditPanelLayout.setHorizontalGroup(
+            Panel_AddingTeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Panel_AddingTeacherEditPanelLayout.createSequentialGroup()
+                .addGroup(Panel_AddingTeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_AddingTeacherEditPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(Panel_AddingTeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(SplitPane_TeacherName1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(SplitPane_TeacherPrice1)
+                            .addComponent(SplitPane_TeacherSkill1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(SplitPane_TeacherRegion1, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(Panel_AddingTeacherEditPanelLayout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(Button_TeacherSaveNew, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(Panel_AddingTeacherEditPanelLayout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addComponent(Label_Teacher1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Panel_AddingTeacherEditPanelLayout.setVerticalGroup(
+            Panel_AddingTeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Panel_AddingTeacherEditPanelLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(Label_Teacher1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SplitPane_TeacherName1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(SplitPane_TeacherPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(SplitPane_TeacherSkill1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(SplitPane_TeacherRegion1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(Button_TeacherSaveNew)
+                .addContainerGap(52, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jDialog_AddingNewTeacherLayout = new javax.swing.GroupLayout(jDialog_AddingNewTeacher.getContentPane());
+        jDialog_AddingNewTeacher.getContentPane().setLayout(jDialog_AddingNewTeacherLayout);
+        jDialog_AddingNewTeacherLayout.setHorizontalGroup(
+            jDialog_AddingNewTeacherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddingNewTeacherLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Panel_AddingTeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jDialog_AddingNewTeacherLayout.setVerticalGroup(
+            jDialog_AddingNewTeacherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog_AddingNewTeacherLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Panel_AddingTeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jDialog_AddingNewStudent.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        Label_Student1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Label_Student1.setText(bundle.getString("PairAppUIv2.Label_Student1.text")); // NOI18N
+
+        SplitPane_StudentName1.setDividerLocation(200);
+
+        TextField_StudentName1.setText(bundle.getString("PairAppUIv2.TextField_StudentName1.text")); // NOI18N
+>>>>>>> origin/master
         TextField_StudentName1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_StudentName1ActionPerformed(evt);
@@ -313,12 +643,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_StudentName1.setRightComponent(TextField_StudentName1);
 
+<<<<<<< HEAD
         Label_StudentName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentName1.setText(bundle.getString("PairAppUIv2.Label_StudentName1.text_1")); // NOI18N
+=======
+        Label_StudentName1.setText(bundle.getString("PairAppUIv2.Label_StudentName1.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentName1.setLeftComponent(Label_StudentName1);
 
         SplitPane_StudentPrice1.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_StudentPrice1.setText(bundle.getString("PairAppUIv2.TextField_StudentPrice1.text")); // NOI18N
+>>>>>>> origin/master
         TextField_StudentPrice1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_StudentPrice1ActionPerformed(evt);
@@ -326,12 +664,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_StudentPrice1.setRightComponent(TextField_StudentPrice1);
 
+<<<<<<< HEAD
         Label_StudentPrice1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentPrice1.setText(bundle.getString("PairAppUIv2.Label_StudentPrice1.text_1")); // NOI18N
+=======
+        Label_StudentPrice1.setText(bundle.getString("PairAppUIv2.Label_StudentPrice1.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentPrice1.setLeftComponent(Label_StudentPrice1);
 
         SplitPane_StudentSkill1.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_StudentSkill1.setText(bundle.getString("PairAppUIv2.TextField_StudentSkill1.text")); // NOI18N
+>>>>>>> origin/master
         TextField_StudentSkill1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_StudentSkill1ActionPerformed(evt);
@@ -339,20 +685,32 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_StudentSkill1.setRightComponent(TextField_StudentSkill1);
 
+<<<<<<< HEAD
         Label_StudentSkill1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentSkill1.setText(bundle.getString("PairAppUIv2.Label_StudentSkill1.text_1")); // NOI18N
+=======
+        Label_StudentSkill1.setText(bundle.getString("PairAppUIv2.Label_StudentSkill1.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentSkill1.setLeftComponent(Label_StudentSkill1);
 
         SplitPane_StudentRegion1.setDividerLocation(200);
 
+<<<<<<< HEAD
         Label_StudentRegion1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentRegion1.setText(bundle.getString("PairAppUIv2.Label_StudentRegion1.text_1")); // NOI18N
+=======
+        Label_StudentRegion1.setText(bundle.getString("PairAppUIv2.Label_StudentRegion1.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentRegion1.setLeftComponent(Label_StudentRegion1);
 
         ComboBox_StudentRegion1.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
         SplitPane_StudentRegion1.setRightComponent(ComboBox_StudentRegion1);
 
+<<<<<<< HEAD
         Button_StudentSaveNew.setText(bundle.getString("PairAppUIv2.Button_StudentSaveNew.text_1")); // NOI18N
+=======
+        Button_StudentSaveNew.setText(bundle.getString("PairAppUIv2.Button_StudentSaveNew.text")); // NOI18N
+>>>>>>> origin/master
         Button_StudentSaveNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StudentSaveNewActionPerformed(evt);
@@ -380,7 +738,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                             .addGroup(Panel_AddingStudentEditPanelLayout.createSequentialGroup()
                                 .addGap(158, 158, 158)
                                 .addComponent(Label_Student1)))
+<<<<<<< HEAD
                         .addGap(0, 259, Short.MAX_VALUE)))
+=======
+                        .addGap(0, 255, Short.MAX_VALUE)))
+>>>>>>> origin/master
                 .addContainerGap())
         );
         Panel_AddingStudentEditPanelLayout.setVerticalGroup(
@@ -398,14 +760,22 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addComponent(SplitPane_StudentRegion1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Button_StudentSaveNew)
+<<<<<<< HEAD
                 .addContainerGap(43, Short.MAX_VALUE))
+=======
+                .addContainerGap(53, Short.MAX_VALUE))
+>>>>>>> origin/master
         );
 
         javax.swing.GroupLayout jDialog_AddingNewStudentLayout = new javax.swing.GroupLayout(jDialog_AddingNewStudent.getContentPane());
         jDialog_AddingNewStudent.getContentPane().setLayout(jDialog_AddingNewStudentLayout);
         jDialog_AddingNewStudentLayout.setHorizontalGroup(
             jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addGap(0, 550, Short.MAX_VALUE)
+=======
+            .addGap(0, 420, Short.MAX_VALUE)
+>>>>>>> origin/master
             .addGroup(jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jDialog_AddingNewStudentLayout.createSequentialGroup()
                     .addContainerGap()
@@ -414,7 +784,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         );
         jDialog_AddingNewStudentLayout.setVerticalGroup(
             jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
             .addGap(0, 350, Short.MAX_VALUE)
+=======
+            .addGap(0, 360, Short.MAX_VALUE)
+>>>>>>> origin/master
             .addGroup(jDialog_AddingNewStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jDialog_AddingNewStudentLayout.createSequentialGroup()
                     .addContainerGap()
@@ -429,25 +803,43 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+<<<<<<< HEAD
         jScrollPaneAvailableEntities.setViewportView(jList_AvailableEntities);
 
         jButton_SaveNewLesson.setText(bundle.getString("PairAppUIv2.jButton_SaveNewLesson.text_1")); // NOI18N
+=======
+        jScrollPane1.setViewportView(jList_AvailableEntities);
+
+        jButton_SaveNewLesson.setText(bundle.getString("PairAppUIv2.jButton_SaveNewLesson.text")); // NOI18N
+>>>>>>> origin/master
         jButton_SaveNewLesson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_SaveNewLessonActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         jLabel_AvailableEntities.setText(bundle.getString("PairAppUIv2.jLabel_AvailableEntities.text_1")); // NOI18N
 
         jLabel_TeacherOrStudent.setText(bundle.getString("PairAppUIv2.jLabel_TeacherOrStudent.text_1")); // NOI18N
+=======
+        jLabel_SelectedEntityID.setText(bundle.getString("PairAppUIv2.jLabel_SelectedEntityID.text")); // NOI18N
+
+        jLabel_AvailableEntities.setText(bundle.getString("PairAppUIv2.jLabel_AvailableEntities.text")); // NOI18N
+
+        jLabel_TeacherOrStudent.setText(bundle.getString("PairAppUIv2.jLabel_TeacherOrStudent.text")); // NOI18N
+>>>>>>> origin/master
 
         javax.swing.GroupLayout jDialog_AddingNewLessonLayout = new javax.swing.GroupLayout(jDialog_AddingNewLesson.getContentPane());
         jDialog_AddingNewLesson.getContentPane().setLayout(jDialog_AddingNewLessonLayout);
         jDialog_AddingNewLessonLayout.setHorizontalGroup(
             jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
+<<<<<<< HEAD
                 .addComponent(jScrollPaneAvailableEntities, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+=======
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+>>>>>>> origin/master
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton_SaveNewLesson, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
@@ -471,7 +863,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addComponent(jLabel_TeacherOrStudent))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jDialog_AddingNewLessonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
                     .addComponent(jScrollPaneAvailableEntities, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+=======
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+>>>>>>> origin/master
                     .addGroup(jDialog_AddingNewLessonLayout.createSequentialGroup()
                         .addComponent(jButton_SaveNewLesson)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -480,15 +876,27 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         );
 
         jDialog_Info.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+<<<<<<< HEAD
+=======
+        jDialog_Info.setPreferredSize(new java.awt.Dimension(300, 150));
+>>>>>>> origin/master
         jDialog_Info.setResizable(false);
 
         jLabel_Info.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_Info.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+<<<<<<< HEAD
         jLabel_Info.setText(bundle.getString("PairAppUIv2.jLabel_Info.text_1")); // NOI18N
         jLabel_Info.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel_Info.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jButton_InfoOK.setText(bundle.getString("PairAppUIv2.jButton_InfoOK.text_1")); // NOI18N
+=======
+        jLabel_Info.setText(bundle.getString("PairAppUIv2.jLabel_Info.text")); // NOI18N
+        jLabel_Info.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabel_Info.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jButton_InfoOK.setText(bundle.getString("PairAppUIv2.jButton_InfoOK.text")); // NOI18N
+>>>>>>> origin/master
         jButton_InfoOK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton_InfoOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -503,7 +911,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_InfoLayout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
                 .addGroup(jDialog_InfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+<<<<<<< HEAD
                     .addComponent(jButton_InfoOK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+=======
+                    .addComponent(jButton_InfoOK, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+>>>>>>> origin/master
                     .addComponent(jLabel_Info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(79, 79, 79))
         );
@@ -518,19 +930,34 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         );
 
         jDialog_NoEntityToMatch.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+<<<<<<< HEAD
+=======
+        jDialog_NoEntityToMatch.setPreferredSize(new java.awt.Dimension(300, 150));
+>>>>>>> origin/master
         jDialog_NoEntityToMatch.setResizable(false);
 
         jLabel_Message.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel_Message.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+<<<<<<< HEAD
         jLabel_Message.setText(bundle.getString("PairAppUIv2.jLabel_Message.text_1")); // NOI18N
+=======
+        jLabel_Message.setText(bundle.getString("PairAppUIv2.jLabel_Message.text")); // NOI18N
+>>>>>>> origin/master
         jLabel_Message.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel_Message.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel_EntityName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+<<<<<<< HEAD
         jLabel_EntityName.setText(bundle.getString("PairAppUIv2.jLabel_EntityName.text_1")); // NOI18N
         jLabel_EntityName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jButton_OK.setText(bundle.getString("PairAppUIv2.jButton_OK.text_1")); // NOI18N
+=======
+        jLabel_EntityName.setText(bundle.getString("PairAppUIv2.jLabel_EntityName.text")); // NOI18N
+        jLabel_EntityName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jButton_OK.setText(bundle.getString("PairAppUIv2.jButton_OK.text")); // NOI18N
+>>>>>>> origin/master
         jButton_OK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton_OK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -546,7 +973,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addGroup(jDialog_NoEntityToMatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog_NoEntityToMatchLayout.createSequentialGroup()
                         .addContainerGap()
+<<<<<<< HEAD
                         .addComponent(jLabel_Message, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+=======
+                        .addComponent(jLabel_Message, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE))
+>>>>>>> origin/master
                     .addGroup(jDialog_NoEntityToMatchLayout.createSequentialGroup()
                         .addGap(84, 84, 84)
                         .addGroup(jDialog_NoEntityToMatchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -564,6 +995,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addComponent(jLabel_EntityName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_OK)
+<<<<<<< HEAD
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -608,27 +1040,45 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton_ErrorOK)
                 .addGap(41, 41, 41))
+=======
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+>>>>>>> origin/master
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Label_StudentsList.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+<<<<<<< HEAD
         Label_StudentsList.setText(bundle.getString("PairAppUIv2.Label_StudentsList.text_1")); // NOI18N
 
         Label_Student.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Label_Student.setText(bundle.getString("PairAppUIv2.Label_Student.text_1")); // NOI18N
+=======
+        Label_StudentsList.setText(bundle.getString("PairAppUIv2.Label_StudentsList.text")); // NOI18N
+
+        Label_Student.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Label_Student.setText(bundle.getString("PairAppUIv2.Label_Student.text")); // NOI18N
+>>>>>>> origin/master
 
         SplitPane_StudentID.setDividerLocation(200);
 
         Label_StudentIDValue.setText(bundle.getString("PairAppUIv2.Label_StudentIDValue.text")); // NOI18N
         SplitPane_StudentID.setRightComponent(Label_StudentIDValue);
 
+<<<<<<< HEAD
         Label_StudentID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentID.setText(bundle.getString("PairAppUIv2.Label_StudentID.text_1")); // NOI18N
+=======
+        Label_StudentID.setText(bundle.getString("PairAppUIv2.Label_StudentID.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentID.setLeftComponent(Label_StudentID);
 
         SplitPane_StudentName.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_StudentName.setText(bundle.getString("PairAppUIv2.TextField_StudentName.text")); // NOI18N
+>>>>>>> origin/master
         TextField_StudentName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_StudentNameActionPerformed(evt);
@@ -636,12 +1086,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_StudentName.setRightComponent(TextField_StudentName);
 
+<<<<<<< HEAD
         Label_StudentName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentName.setText(bundle.getString("PairAppUIv2.Label_StudentName.text_1")); // NOI18N
+=======
+        Label_StudentName.setText(bundle.getString("PairAppUIv2.Label_StudentName.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentName.setLeftComponent(Label_StudentName);
 
         SplitPane_StudentPrice.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_StudentPrice.setText(bundle.getString("PairAppUIv2.TextField_StudentPrice.text")); // NOI18N
+>>>>>>> origin/master
         TextField_StudentPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_StudentPriceActionPerformed(evt);
@@ -649,12 +1107,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_StudentPrice.setRightComponent(TextField_StudentPrice);
 
+<<<<<<< HEAD
         Label_StudentPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentPrice.setText(bundle.getString("PairAppUIv2.Label_StudentPrice.text_1")); // NOI18N
+=======
+        Label_StudentPrice.setText(bundle.getString("PairAppUIv2.Label_StudentPrice.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentPrice.setLeftComponent(Label_StudentPrice);
 
         SplitPane_StudentSkill.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_StudentSkill.setText(bundle.getString("PairAppUIv2.TextField_StudentSkill.text")); // NOI18N
+>>>>>>> origin/master
         TextField_StudentSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_StudentSkillActionPerformed(evt);
@@ -662,14 +1128,22 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_StudentSkill.setRightComponent(TextField_StudentSkill);
 
+<<<<<<< HEAD
         Label_StudentSkill.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentSkill.setText(bundle.getString("PairAppUIv2.Label_StudentSkill.text_1")); // NOI18N
+=======
+        Label_StudentSkill.setText(bundle.getString("PairAppUIv2.Label_StudentSkill.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentSkill.setLeftComponent(Label_StudentSkill);
 
         SplitPane_StudentRegion.setDividerLocation(200);
 
+<<<<<<< HEAD
         Label_StudentRegion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_StudentRegion.setText(bundle.getString("PairAppUIv2.Label_StudentRegion.text_1")); // NOI18N
+=======
+        Label_StudentRegion.setText(bundle.getString("PairAppUIv2.Label_StudentRegion.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_StudentRegion.setLeftComponent(Label_StudentRegion);
 
         javax.swing.DefaultComboBoxModel comboBox_model = new javax.swing.DefaultComboBoxModel();
@@ -678,20 +1152,29 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         ComboBox_StudentRegion.setModel(comboBox_model);
         SplitPane_StudentRegion.setRightComponent(ComboBox_StudentRegion);
 
+<<<<<<< HEAD
         Button_StudentAddNew.setText(bundle.getString("PairAppUIv2.Button_StudentAddNew.text_1")); // NOI18N
+=======
+        Button_StudentAddNew.setText(bundle.getString("PairAppUIv2.Button_StudentAddNew.text")); // NOI18N
+>>>>>>> origin/master
         Button_StudentAddNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StudentAddNewActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         Button_StudentUpdate.setText(bundle.getString("PairAppUIv2.Button_StudentUpdate.text_1")); // NOI18N
+=======
+        Button_StudentUpdate.setText(bundle.getString("PairAppUIv2.Button_StudentUpdate.text")); // NOI18N
+>>>>>>> origin/master
         Button_StudentUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StudentUpdateActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         Button_StudentDisplayLessons.setText(bundle.getString("PairAppUIv2.Button_StudentDisplayLessons.text_1")); // NOI18N
         Button_StudentDisplayLessons.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -700,13 +1183,22 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
 
         Button_StudentAddLesson.setText(bundle.getString("PairAppUIv2.Button_StudentAddLesson.text_1")); // NOI18N
+=======
+        Button_StudentDisplayLessons.setText(bundle.getString("PairAppUIv2.Button_StudentDisplayLessons.text")); // NOI18N
+
+        Button_StudentAddLesson.setText(bundle.getString("PairAppUIv2.Button_StudentAddLesson.text")); // NOI18N
+>>>>>>> origin/master
         Button_StudentAddLesson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StudentAddLessonActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         Button_StudentDelete.setText(bundle.getString("PairAppUIv2.Button_StudentDelete.text_1")); // NOI18N
+=======
+        Button_StudentDelete.setText(bundle.getString("PairAppUIv2.Button_StudentDelete.text")); // NOI18N
+>>>>>>> origin/master
         Button_StudentDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_StudentDeleteActionPerformed(evt);
@@ -732,7 +1224,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Button_StudentAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Button_StudentDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+<<<<<<< HEAD
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+=======
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+>>>>>>> origin/master
                         .addGroup(Panel_StudentEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_StudentEditPanelLayout.createSequentialGroup()
                                 .addComponent(Button_StudentAddLesson)
@@ -783,7 +1279,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         jScrollPane_StudentList.setViewportView(List_StudentList);
 
+<<<<<<< HEAD
         Button_ShowAllStudents.setText(bundle.getString("PairAppUIv2.Button_ShowAllStudents.text_1")); // NOI18N
+=======
+        Button_ShowAllStudents.setText(bundle.getString("PairAppUIv2.Button_ShowAllStudents.text")); // NOI18N
+>>>>>>> origin/master
         Button_ShowAllStudents.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_ShowAllStudentsActionPerformed(evt);
@@ -801,7 +1301,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addGroup(Panel_StudentsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane_StudentList, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                             .addComponent(Button_ShowAllStudents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+<<<<<<< HEAD
                         .addGap(18, 18, 18)
+=======
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+>>>>>>> origin/master
                         .addComponent(Panel_StudentEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(Label_StudentsList))
                 .addContainerGap())
@@ -817,29 +1321,48 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(Panel_StudentsTabLayout.createSequentialGroup()
                         .addComponent(jScrollPane_StudentList, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                         .addComponent(Button_ShowAllStudents, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)))
+=======
+                        .addComponent(Button_ShowAllStudents, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)))
+>>>>>>> origin/master
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Students", Panel_StudentsTab);
+        jTabbedPane1.addTab(bundle.getString("PairAppUIv2.Panel_StudentsTab.TabConstraints.tabTitle"), Panel_StudentsTab); // NOI18N
 
         Label_TeachersList.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+<<<<<<< HEAD
         Label_TeachersList.setText(bundle.getString("PairAppUIv2.Label_TeachersList.text_1")); // NOI18N
 
         Label_Teacher.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         Label_Teacher.setText(bundle.getString("PairAppUIv2.Label_Teacher.text_1")); // NOI18N
+=======
+        Label_TeachersList.setText(bundle.getString("PairAppUIv2.Label_TeachersList.text")); // NOI18N
+
+        Label_Teacher.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        Label_Teacher.setText(bundle.getString("PairAppUIv2.Label_Teacher.text")); // NOI18N
+>>>>>>> origin/master
 
         SplitPane_TeacherID.setDividerLocation(200);
 
         Label_TeacherIDValue.setText(bundle.getString("PairAppUIv2.Label_TeacherIDValue.text")); // NOI18N
         SplitPane_TeacherID.setRightComponent(Label_TeacherIDValue);
 
+<<<<<<< HEAD
         Label_TeacherID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherID.setText(bundle.getString("PairAppUIv2.Label_TeacherID.text_1")); // NOI18N
+=======
+        Label_TeacherID.setText(bundle.getString("PairAppUIv2.Label_TeacherID.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_TeacherID.setLeftComponent(Label_TeacherID);
 
         SplitPane_TeacherName.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_TeacherName.setText(bundle.getString("PairAppUIv2.TextField_TeacherName.text")); // NOI18N
+>>>>>>> origin/master
         TextField_TeacherName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_TeacherNameActionPerformed(evt);
@@ -847,12 +1370,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_TeacherName.setRightComponent(TextField_TeacherName);
 
+<<<<<<< HEAD
         Label_TeacherName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherName.setText(bundle.getString("PairAppUIv2.Label_TeacherName.text_1")); // NOI18N
+=======
+        Label_TeacherName.setText(bundle.getString("PairAppUIv2.Label_TeacherName.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_TeacherName.setLeftComponent(Label_TeacherName);
 
         SplitPane_TeacherPrice.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_TeacherPrice.setText(bundle.getString("PairAppUIv2.TextField_TeacherPrice.text")); // NOI18N
+>>>>>>> origin/master
         TextField_TeacherPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_TeacherPriceActionPerformed(evt);
@@ -860,12 +1391,20 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_TeacherPrice.setRightComponent(TextField_TeacherPrice);
 
+<<<<<<< HEAD
         Label_TeacherPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherPrice.setText(bundle.getString("PairAppUIv2.Label_TeacherPrice.text_1")); // NOI18N
+=======
+        Label_TeacherPrice.setText(bundle.getString("PairAppUIv2.Label_TeacherPrice.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_TeacherPrice.setLeftComponent(Label_TeacherPrice);
 
         SplitPane_TeacherSkill.setDividerLocation(200);
 
+<<<<<<< HEAD
+=======
+        TextField_TeacherSkill.setText(bundle.getString("PairAppUIv2.TextField_TeacherSkill.text")); // NOI18N
+>>>>>>> origin/master
         TextField_TeacherSkill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextField_TeacherSkillActionPerformed(evt);
@@ -873,33 +1412,50 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         SplitPane_TeacherSkill.setRightComponent(TextField_TeacherSkill);
 
+<<<<<<< HEAD
         Label_TeacherSkill.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherSkill.setText(bundle.getString("PairAppUIv2.Label_TeacherSkill.text_1")); // NOI18N
+=======
+        Label_TeacherSkill.setText(bundle.getString("PairAppUIv2.Label_TeacherSkill.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_TeacherSkill.setLeftComponent(Label_TeacherSkill);
 
         SplitPane_TeacherRegion.setDividerLocation(200);
 
+<<<<<<< HEAD
         Label_TeacherRegion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Label_TeacherRegion.setText(bundle.getString("PairAppUIv2.Label_TeacherRegion.text_1")); // NOI18N
+=======
+        Label_TeacherRegion.setText(bundle.getString("PairAppUIv2.Label_TeacherRegion.text")); // NOI18N
+>>>>>>> origin/master
         SplitPane_TeacherRegion.setLeftComponent(Label_TeacherRegion);
 
         ComboBox_TeacherRegion.setModel(new javax.swing.DefaultComboBoxModel(Region.values()));
         SplitPane_TeacherRegion.setRightComponent(ComboBox_TeacherRegion);
 
+<<<<<<< HEAD
         Button_TeacherAddNew.setText(bundle.getString("PairAppUIv2.Button_TeacherAddNew.text_1")); // NOI18N
+=======
+        Button_TeacherAddNew.setText(bundle.getString("PairAppUIv2.Button_TeacherAddNew.text")); // NOI18N
+>>>>>>> origin/master
         Button_TeacherAddNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_TeacherAddNewActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         Button_TeacherUpdate.setText(bundle.getString("PairAppUIv2.Button_TeacherUpdate.text_1")); // NOI18N
+=======
+        Button_TeacherUpdate.setText(bundle.getString("PairAppUIv2.Button_TeacherUpdate.text")); // NOI18N
+>>>>>>> origin/master
         Button_TeacherUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_TeacherUpdateActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         Button_TeacherDisplayLessons.setText(bundle.getString("PairAppUIv2.Button_TeacherDisplayLessons.text_1")); // NOI18N
         Button_TeacherDisplayLessons.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -908,13 +1464,22 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
 
         Button_TeacherAddLesson.setText(bundle.getString("PairAppUIv2.Button_TeacherAddLesson.text_1")); // NOI18N
+=======
+        Button_TeacherDisplayLessons.setText(bundle.getString("PairAppUIv2.Button_TeacherDisplayLessons.text")); // NOI18N
+
+        Button_TeacherAddLesson.setText(bundle.getString("PairAppUIv2.Button_TeacherAddLesson.text")); // NOI18N
+>>>>>>> origin/master
         Button_TeacherAddLesson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_TeacherAddLessonActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         Button_TeacherDelete.setText(bundle.getString("PairAppUIv2.Button_TeacherDelete.text_1")); // NOI18N
+=======
+        Button_TeacherDelete.setText(bundle.getString("PairAppUIv2.Button_TeacherDelete.text")); // NOI18N
+>>>>>>> origin/master
         Button_TeacherDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_TeacherDeleteActionPerformed(evt);
@@ -940,7 +1505,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Button_TeacherAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Button_TeacherDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+<<<<<<< HEAD
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+=======
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+>>>>>>> origin/master
                         .addGroup(Panel_TeacherEditPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_TeacherEditPanelLayout.createSequentialGroup()
                                 .addComponent(Button_TeacherAddLesson)
@@ -991,7 +1560,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         ScrollPane_TeacherList.setViewportView(List_TeachersList);
 
+<<<<<<< HEAD
         Button_ShowAllTeachers.setText(bundle.getString("PairAppUIv2.Button_ShowAllTeachers.text_1")); // NOI18N
+=======
+        Button_ShowAllTeachers.setText(bundle.getString("PairAppUIv2.Button_ShowAllTeachers.text")); // NOI18N
+>>>>>>> origin/master
         Button_ShowAllTeachers.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_ShowAllTeachersActionPerformed(evt);
@@ -1024,15 +1597,23 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                     .addGroup(Panel_TeachersTabLayout.createSequentialGroup()
                         .addComponent(ScrollPane_TeacherList, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                         .addComponent(Button_ShowAllTeachers, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+=======
+                        .addComponent(Button_ShowAllTeachers, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+>>>>>>> origin/master
                     .addComponent(Panel_TeacherEditPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Teachers", Panel_TeachersTab);
+        jTabbedPane1.addTab(bundle.getString("PairAppUIv2.Panel_TeachersTab.TabConstraints.tabTitle"), Panel_TeachersTab); // NOI18N
 
         Label_LessonsList.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+<<<<<<< HEAD
         Label_LessonsList.setText(bundle.getString("PairAppUIv2.Label_LessonsList.text_1")); // NOI18N
+=======
+        Label_LessonsList.setText(bundle.getString("PairAppUIv2.Label_LessonsList.text")); // NOI18N
+>>>>>>> origin/master
 
         jTable_lessons.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1062,18 +1643,40 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         });
         jTable_lessons.setColumnSelectionAllowed(true);
         ScrollPane_Lessons.setViewportView(jTable_lessons);
+<<<<<<< HEAD
 
         Button_LessonDelete.setText(bundle.getString("PairAppUIv2.Button_LessonDelete.text_1")); // NOI18N
+=======
+        jTable_lessons.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (jTable_lessons.getColumnModel().getColumnCount() > 0) {
+            jTable_lessons.getColumnModel().getColumn(0).setResizable(false);
+            jTable_lessons.getColumnModel().getColumn(0).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title5")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(1).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title0")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(2).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title1")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(3).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title2")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(4).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title3")); // NOI18N
+            jTable_lessons.getColumnModel().getColumn(5).setHeaderValue(bundle.getString("PairAppUIv2.jTable_lessons.columnModel.title4")); // NOI18N
+        }
+
+        Button_LessonDelete.setText(bundle.getString("PairAppUIv2.Button_LessonDelete.text")); // NOI18N
+>>>>>>> origin/master
         Button_LessonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_LessonDeleteActionPerformed(evt);
             }
         });
 
+<<<<<<< HEAD
         Button_ShowAllLessons.setText(bundle.getString("PairAppUIv2.Button_ShowAllLessons.text")); // NOI18N
         Button_ShowAllLessons.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Button_ShowAllLessonsActionPerformed(evt);
+=======
+        Button_LessonDisplayAll.setText(bundle.getString("PairAppUIv2.Button_LessonDisplayAll.text")); // NOI18N
+        Button_LessonDisplayAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_LessonDisplayAllActionPerformed(evt);
+>>>>>>> origin/master
             }
         });
 
@@ -1085,6 +1688,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
+<<<<<<< HEAD
                         .addComponent(Label_LessonsList)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
@@ -1092,6 +1696,15 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                         .addComponent(Button_ShowAllLessons)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Button_LessonDelete)))
+=======
+                        .addGap(10, 10, 10)
+                        .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 1023, Short.MAX_VALUE)
+                            .addGroup(Panel_LessonsTabLayout.createSequentialGroup()
+                                .addComponent(Button_LessonDisplayAll)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Button_LessonDelete)))))
+>>>>>>> origin/master
                 .addContainerGap())
         );
         Panel_LessonsTabLayout.setVerticalGroup(
@@ -1100,15 +1713,23 @@ public class PairAppUIv2 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(Label_LessonsList)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+<<<<<<< HEAD
                 .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Button_LessonDelete)
                     .addComponent(Button_ShowAllLessons))
+=======
+                .addComponent(ScrollPane_Lessons, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(Panel_LessonsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Button_LessonDelete)
+                    .addComponent(Button_LessonDisplayAll))
+>>>>>>> origin/master
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Lessons", Panel_LessonsTab);
+        jTabbedPane1.addTab(bundle.getString("PairAppUIv2.Panel_LessonsTab.TabConstraints.tabTitle"), Panel_LessonsTab); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1136,6 +1757,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_TeacherSkill1ActionPerformed
 
+<<<<<<< HEAD
     private void Button_TeacherSaveNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherSaveNewActionPerformed
         Teacher teacher = new Teacher();
         teacher.setFullName(TextField_TeacherName1.getText());
@@ -1158,6 +1780,12 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         new AddEntitySwingWorker(teacher);
         worker.execute();
     }//GEN-LAST:event_Button_TeacherSaveNewActionPerformed
+=======
+    private void Button_StudentAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddNewActionPerformed
+        jDialog_AddingNewStudent.setVisible(true);
+        jDialog_AddingNewStudent.pack();
+    }//GEN-LAST:event_Button_StudentAddNewActionPerformed
+>>>>>>> origin/master
 
     private void TextField_StudentName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_StudentName1ActionPerformed
         // TODO add your handling code here:
@@ -1171,6 +1799,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_StudentSkill1ActionPerformed
 
+<<<<<<< HEAD
     private void Button_StudentSaveNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentSaveNewActionPerformed
         Student student = new Student();
         student.setFullName(TextField_StudentName1.getText());
@@ -1281,18 +1910,114 @@ public class PairAppUIv2 extends javax.swing.JFrame {
             TextField_StudentPrice.setText("");
             TextField_StudentSkill.setText("");
     }//GEN-LAST:event_Button_StudentDeleteActionPerformed
+=======
+    private void Button_StudentAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentAddLessonActionPerformed
+        Student st = (Student) List_StudentList.getSelectedValue();
+        if(st == null){
+            return;
+        }
+        List<Teacher> availableTeachers = lm.findMatchForStudent(st);
+        
+        if (availableTeachers.isEmpty()){ //pokud neni zadny nabidnuty teacher
+            jLabel_EntityName.setText("Student " + st.getFullName());
+            jDialog_NoEntityToMatch.setVisible(true);
+            jDialog_NoEntityToMatch.pack();
+            return;
+        }
+        
+        //vytvorim novy list a nastavim nejaky novy okno s nim a v nem zobrazim availableTeachers
+
+        DefaultListModel model = new DefaultListModel();
+        for (Teacher t : availableTeachers) {
+            model.addElement(t);
+        }
+        jList_AvailableEntities.setModel(model);
+        jList_AvailableEntities.setCellRenderer(new EntityListRenderer());
+        
+        jDialog_AddingNewLesson.setVisible(true);
+        jDialog_AddingNewLesson.pack();
+        
+        jLabel_SelectedEntityID.setText(st.getId().toString());
+        jLabel_TeacherOrStudent.setText("teachers");
+        
+
+    }//GEN-LAST:event_Button_StudentAddLessonActionPerformed
+
+    private void Button_ShowAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllStudentsActionPerformed
+        List<Student> list = sm.findAllStudents();
+        DefaultListModel model = new DefaultListModel();
+        for (Student t : list) {
+            model.addElement(t);
+        }
+        List_StudentList.setModel(model);
+        List_StudentList.setCellRenderer(new EntityListRenderer());
+    }//GEN-LAST:event_Button_ShowAllStudentsActionPerformed
+
+    private void Button_ShowAllTeachersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllTeachersActionPerformed
+        // TODO add your handling code here:
+        List<Teacher> list = tm.findAllTeachers();
+        DefaultListModel model = new DefaultListModel();
+        for (Teacher t : list) {
+            model.addElement(t);
+        }
+        List_TeachersList.setModel(model);
+        List_TeachersList.setCellRenderer(new EntityListRenderer());
+    }//GEN-LAST:event_Button_ShowAllTeachersActionPerformed
+
+    private void Button_LessonDisplayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDisplayAllActionPerformed
+        List<Lesson> ls = lm.findAllLessons();
+        LessonTableModel model = new LessonTableModel(ls);   
+        jTable_lessons.setModel(model);
+        
+        jTable_lessons.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        jTable_lessons.setRowSelectionAllowed(true);
+        jTable_lessons.setCellSelectionEnabled(false);
+        
+        ScrollPane_Lessons.setViewportView(jTable_lessons);
+    }//GEN-LAST:event_Button_LessonDisplayAllActionPerformed
+
+    private void Button_TeacherAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddNewActionPerformed
+        jDialog_AddingNewTeacher.setVisible(true);
+        jDialog_AddingNewTeacher.pack();
+    }//GEN-LAST:event_Button_TeacherAddNewActionPerformed
+
+    private void Button_LessonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_LessonDeleteActionPerformed
+        int row = jTable_lessons.getSelectedRow();
+        if (row == -1){ //pokud neni vybrany zadny radek
+            return;
+        }
+        Long lessonID = (Long) jTable_lessons.getValueAt(row , 0);
+        Lesson lesson = lm.getLesson(lessonID);
+        
+        lm.deleteLesson(lesson);
+        
+        for(ActionListener a : Button_LessonDisplayAll.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+    }//GEN-LAST:event_Button_LessonDeleteActionPerformed
+>>>>>>> origin/master
 
     private void List_StudentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_StudentListValueChanged
         Student st = (Student) List_StudentList.getSelectedValue();
         if(st == null){
             return;
         }
+<<<<<<< HEAD
         Label_StudentIDValue.setText(st.getId().toString());
         TextField_StudentName.setText(st.getFullName());
         TextField_StudentPrice.setText(st.getPrice().toString());
         TextField_StudentSkill.setText(String.valueOf(st.getSkill()));
         ComboBox_StudentRegion.setSelectedItem(st.getRegion());
         Button_StudentAddLesson.setEnabled(true);
+=======
+        TextField_StudentName.setText(st.getFullName());
+        Label_StudentIDValue.setText(st.getId().toString());
+        TextField_StudentPrice.setText(st.getPrice().toString());
+        TextField_StudentSkill.setText(String.valueOf(st.getSkill()));
+        
+        ComboBox_StudentRegion.setSelectedItem(st.getRegion());
+        
+>>>>>>> origin/master
     }//GEN-LAST:event_List_StudentListValueChanged
 
     private void Button_ShowAllStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_ShowAllStudentsActionPerformed
@@ -1309,6 +2034,7 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_TeacherPriceActionPerformed
 
+<<<<<<< HEAD
     private void TextField_TeacherSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherSkillActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TextField_TeacherSkillActionPerformed
@@ -1404,6 +2130,259 @@ public class PairAppUIv2 extends javax.swing.JFrame {
         
         try {
             dataSource = createMemoryDatabase(); // delat v jinym vlakne
+=======
+    private void Button_StudentSaveNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentSaveNewActionPerformed
+        
+        //need to check valid data!!
+        Student student = new Student();
+        student.setFullName(TextField_StudentName1.getText());
+        try {
+            student.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_StudentPrice1.getText())).setScale(2));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_StudentPrice1.setText("Wrong format");
+            return;
+        }
+        try {
+            student.setSkill(Integer.parseInt(TextField_StudentSkill1.getText()));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_StudentSkill1.setText("Wrong format");
+            return;
+        }
+        student.setRegion((Region) ComboBox_StudentRegion1.getSelectedItem());
+        sm.createStudent(student);
+        jDialog_AddingNewStudent.dispose();
+        
+        for(ActionListener a : Button_ShowAllStudents.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+    }//GEN-LAST:event_Button_StudentSaveNewActionPerformed
+
+    private void Button_TeacherUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherUpdateActionPerformed
+        String id = Label_TeacherIDValue.getText();
+        if(id.equals("IDValue_UNKNOWN")){
+            return;
+        }
+        Teacher teacher =  tm.getTeacher(Long.valueOf(id)); //geting student from database
+        teacher.setFullName(TextField_TeacherName.getText());
+        try {
+            teacher.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_TeacherPrice.getText())).setScale(2));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_TeacherPrice.setText("Wrong format");
+            return;
+        }
+        try {
+            teacher.setSkill(Integer.parseInt(TextField_TeacherSkill.getText()));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_TeacherSkill.setText("Wrong format");
+            return;
+        }
+        teacher.setRegion((Region) ComboBox_TeacherRegion.getSelectedItem());
+        tm.updateTeacher(teacher);
+        for(ActionListener a : Button_ShowAllTeachers.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+        
+        jLabel_Info.setText("Succesfully updated");
+        jDialog_Info.pack();
+        jDialog_Info.setVisible(true);
+    }//GEN-LAST:event_Button_TeacherUpdateActionPerformed
+
+    private void List_TeachersListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_List_TeachersListValueChanged
+        Teacher teacher = (Teacher) List_TeachersList.getSelectedValue();
+        if(teacher == null){
+            return;
+        }
+        TextField_TeacherName.setText(teacher.getFullName());
+        Label_TeacherIDValue.setText(teacher.getId().toString());
+        TextField_TeacherPrice.setText(teacher.getPrice().toString());
+        TextField_TeacherSkill.setText(String.valueOf(teacher.getSkill()));
+        ComboBox_TeacherRegion.setSelectedItem(teacher.getRegion());
+    }//GEN-LAST:event_List_TeachersListValueChanged
+
+    private void Button_StudentUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentUpdateActionPerformed
+        String id = Label_StudentIDValue.getText();
+        if(id.equals("IDValue_UNKNOWN")){
+            return;
+        }
+        Student st =  sm.getStudent(Long.valueOf(id)); //geting student from database, should be another thread
+        
+        st.setFullName(TextField_StudentName.getText());
+        try {
+            st.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_StudentPrice.getText())).setScale(2));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_StudentPrice.setText("Wrong format");
+            return;
+        }
+        try {
+            st.setSkill(Integer.parseInt(TextField_StudentSkill.getText()));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_StudentSkill.setText("Wrong format");
+            return;
+        }
+        st.setRegion((Region) ComboBox_StudentRegion.getSelectedItem());
+        
+        sm.updateStudent(st); //try a taky bude muset byt v jinym vlakne
+        
+        
+        //aktualizovani listu studentu
+        for(ActionListener a : Button_ShowAllStudents.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+        
+        jLabel_Info.setText("Succesfully updated");
+        jDialog_Info.pack();
+        jDialog_Info.setVisible(true);
+    }//GEN-LAST:event_Button_StudentUpdateActionPerformed
+
+    private void TextField_TeacherName1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherName1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherName1ActionPerformed
+
+    private void TextField_TeacherPrice1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherPrice1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherPrice1ActionPerformed
+
+    private void TextField_TeacherSkill1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextField_TeacherSkill1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextField_TeacherSkill1ActionPerformed
+
+    private void Button_TeacherSaveNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherSaveNewActionPerformed
+        //need to check valid data
+        Teacher teacher = new Teacher();
+        teacher.setFullName(TextField_TeacherName1.getText());
+        try {
+            teacher.setPrice(BigDecimal.valueOf(Double.valueOf(TextField_TeacherPrice1.getText())).setScale(2));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_TeacherPrice1.setText("Wrong format");
+            return;
+        }
+        try {
+            teacher.setSkill(Integer.parseInt(TextField_TeacherSkill1.getText()));
+        } catch (NumberFormatException numberFormatException) {
+            TextField_TeacherSkill1.setText("Wrong format");
+            return;
+        }
+        teacher.setRegion((Region) ComboBox_TeacherRegion1.getSelectedItem());
+        tm.createTeacher(teacher);
+        jDialog_AddingNewTeacher.dispose();
+        
+        for(ActionListener a : Button_ShowAllTeachers.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+    }//GEN-LAST:event_Button_TeacherSaveNewActionPerformed
+
+    private void Button_StudentDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_StudentDeleteActionPerformed
+        String id = Label_StudentIDValue.getText();
+        if(id.equals("IDValue_UNKNOWN")){
+            return;
+        }
+        Student st =  sm.getStudent(Long.valueOf(id)); //geting student from database, should be another thread
+        sm.deleteStudent(st);
+        
+        //aktualizovat vybranyho studenta
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("UI/Bundle");
+        Label_StudentIDValue.setText(bundle.getString("PairAppUIv2.Label_StudentIDValue.text"));
+        
+        //aktualizovani listu studentu
+        for(ActionListener a : Button_ShowAllStudents.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+    }//GEN-LAST:event_Button_StudentDeleteActionPerformed
+
+    private void Button_TeacherDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherDeleteActionPerformed
+        String id = Label_TeacherIDValue.getText();
+        if(id.equals("IDValue_UNKNOWN")){
+            return;
+        }
+        Teacher teacher =  tm.getTeacher(Long.valueOf(id)); //geting student from database, should be another thread
+        tm.deleteTeacher(teacher);
+        
+        //aktualizovat vybranyho teachera
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("UI/Bundle");
+        Label_TeacherIDValue.setText(bundle.getString("PairAppUIv2.Label_TeacherIDValue.text"));
+        
+        
+        //aktualizovani listu studentu
+        for(ActionListener a : Button_ShowAllTeachers.getActionListeners()){
+            a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {});
+        }
+    }//GEN-LAST:event_Button_TeacherDeleteActionPerformed
+
+    private void jButton_SaveNewLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveNewLessonActionPerformed
+        switch (jLabel_TeacherOrStudent.getText()) {
+            case "teachers":
+                //searching for teacher for student
+                Teacher teacher = (Teacher) jList_AvailableEntities.getSelectedValue();
+                if(teacher == null){
+                    return;
+                }   
+                lm.makeMatch(teacher, sm.getStudent(Long.valueOf(jLabel_SelectedEntityID.getText())));
+                break;
+            case "students":
+                //searching for new student for teacher
+                Student student = (Student) jList_AvailableEntities.getSelectedValue();
+                if(student == null){
+                    return; 
+                }   
+                lm.makeMatch(tm.getTeacher(Long.valueOf(jLabel_SelectedEntityID.getText())), student);
+                break;
+        }
+        jDialog_AddingNewLesson.dispose();
+    }//GEN-LAST:event_jButton_SaveNewLessonActionPerformed
+
+    private void Button_TeacherAddLessonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_TeacherAddLessonActionPerformed
+        Teacher t = (Teacher) List_TeachersList.getSelectedValue();
+        if(t == null){
+            return;
+        }
+        List<Student> availableStudents = lm.findMatchForTeacher(t);
+        
+        if (availableStudents.isEmpty()){ //pokud neni zadny nabidnuty student
+            jLabel_EntityName.setText("Teacher " + t.getFullName());
+            jDialog_NoEntityToMatch.setVisible(true);
+            jDialog_NoEntityToMatch.pack();
+            return;
+        }
+        
+        //vytvorim novy list a nastavim nejaky novy okno s nim a v nem zobrazim availableTeachers
+
+        DefaultListModel model = new DefaultListModel();
+        for (Student st : availableStudents) {
+            model.addElement(st);
+        }
+        jList_AvailableEntities.setModel(model);
+        jList_AvailableEntities.setCellRenderer(new EntityListRenderer());
+        
+        jDialog_AddingNewLesson.setVisible(true);
+        jDialog_AddingNewLesson.pack();
+        
+        jLabel_SelectedEntityID.setText(t.getId().toString()); //abych mel nekde napevno ulozeny to koho mam vybrany
+        jLabel_TeacherOrStudent.setText("students");
+        
+        
+    }//GEN-LAST:event_Button_TeacherAddLessonActionPerformed
+
+    private void jButton_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OKActionPerformed
+        jDialog_NoEntityToMatch.dispose();
+    }//GEN-LAST:event_jButton_OKActionPerformed
+
+    private void jButton_InfoOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InfoOKActionPerformed
+        jDialog_Info.dispose();
+    }//GEN-LAST:event_jButton_InfoOKActionPerformed
+
+    
+    
+    public static void main(String args[]) {
+        
+        try {
+            dataSource = Main.createMemoryDatabase(); // delat v jinym vlakne
+            lm = new LessonManager();
+            lm.setDataSource(dataSource);
+            tm = new TeacherManager();
+            tm.setDataSource(dataSource);
+            sm = new StudentManager();
+            sm.setDataSource(dataSource);
+>>>>>>> origin/master
         } catch (SQLException ex) {
             Logger.getLogger(PairAppUIv2.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -2182,7 +3161,11 @@ public class PairAppUIv2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_LessonDelete;
+<<<<<<< HEAD
     private javax.swing.JButton Button_ShowAllLessons;
+=======
+    private javax.swing.JButton Button_LessonDisplayAll;
+>>>>>>> origin/master
     private javax.swing.JButton Button_ShowAllStudents;
     private javax.swing.JButton Button_ShowAllTeachers;
     private javax.swing.JButton Button_StudentAddLesson;
@@ -2269,26 +3252,39 @@ public class PairAppUIv2 extends javax.swing.JFrame {
     private javax.swing.JTextField TextField_TeacherPrice1;
     private javax.swing.JTextField TextField_TeacherSkill;
     private javax.swing.JTextField TextField_TeacherSkill1;
+<<<<<<< HEAD
     private javax.swing.JButton jButton_ErrorOK;
+=======
+>>>>>>> origin/master
     private javax.swing.JButton jButton_InfoOK;
     private javax.swing.JButton jButton_OK;
     private javax.swing.JButton jButton_SaveNewLesson;
     private javax.swing.JDialog jDialog_AddingNewLesson;
     private javax.swing.JDialog jDialog_AddingNewStudent;
     private javax.swing.JDialog jDialog_AddingNewTeacher;
+<<<<<<< HEAD
     private javax.swing.JDialog jDialog_Error;
+=======
+>>>>>>> origin/master
     private javax.swing.JDialog jDialog_Info;
     private javax.swing.JDialog jDialog_NoEntityToMatch;
     private javax.swing.JLabel jLabel_AvailableEntities;
     private javax.swing.JLabel jLabel_EntityName;
+<<<<<<< HEAD
     private javax.swing.JLabel jLabel_ErrorHeader;
     private javax.swing.JLabel jLabel_ErrorMessage;
+=======
+>>>>>>> origin/master
     private javax.swing.JLabel jLabel_Info;
     private javax.swing.JLabel jLabel_Message;
     private javax.swing.JLabel jLabel_SelectedEntityID;
     private javax.swing.JLabel jLabel_TeacherOrStudent;
     private javax.swing.JList jList_AvailableEntities;
+<<<<<<< HEAD
     private javax.swing.JScrollPane jScrollPaneAvailableEntities;
+=======
+    private javax.swing.JScrollPane jScrollPane1;
+>>>>>>> origin/master
     private javax.swing.JScrollPane jScrollPane_StudentList;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable_lessons;

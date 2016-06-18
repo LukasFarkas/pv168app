@@ -1,4 +1,5 @@
 ----------------------------------------------------------------
+<<<<<<< HEAD
 Fri Jun 17 04:39:27 CEST 2016:
 Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-5c3a-3902-0000069a25d0 
 on database directory memory:C:\Users\tomf\Documents\NetBeansProjects\pv168app-master\pv168project\studentsDB with class loader sun.misc.Launcher$AppClassLoader@73d16e93 
@@ -9,5 +10,17 @@ user.dir=C:\Users\tomf\Documents\NetBeansProjects\pv168app-master\pv168project
 os.name=Windows 8
 os.arch=amd64
 os.version=6.2
+=======
+Tue Jun 07 09:44:17 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0155-29d1-b3bd-000005f5f4b0 
+on database directory memory:C:\Users\Vojta_2\Documents\GitHub\pv168app\pv168project\studentsDB with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Loaded from file:/C:/Users/Vojta_2/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_60-b27
+user.dir=C:\Users\Vojta_2\Documents\GitHub\pv168app\pv168project
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+>>>>>>> origin/master
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
