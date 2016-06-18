@@ -123,7 +123,7 @@ public class TeacherManagerTest {
     // Test exception with expected parameter of @Test annotation
     // it does not allow to specify exact place where the exception
     // is expected, therefor it is suitable only for simple single line tests
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = ValidationException.class)
     public void createNullTeacher() {
         manager.createTeacher(null);
     }
@@ -227,7 +227,7 @@ public class TeacherManagerTest {
     
     @Test
     public void updateTeacherRegion() {
-        testUpdateTeacher((grave) -> grave.setRegion(Region.RUSSIAN));
+        testUpdateTeacher((grave) -> grave.setRegion(Region.RUSSIA));
     }
 
     @Test
@@ -249,7 +249,7 @@ public class TeacherManagerTest {
     // Test also if attemtpt to call update with invalid grave throws
     // the correct exception.
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = ValidationException.class)
     public void updateNullTeacher() {
         manager.updateTeacher(null);
     }

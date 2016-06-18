@@ -9,16 +9,14 @@ import cz.muni.fi.pv168.common.DBUtils;
 import static cz.muni.fi.pv168.common.DBUtils.executeQueryForMultipleTeachers;
 import static cz.muni.fi.pv168.common.DBUtils.executeQueryForSingleTeacher;
 import static cz.muni.fi.pv168.common.DBUtils.isMember;
+import cz.muni.fi.pv168.common.DataSourceException;
 import cz.muni.fi.pv168.common.IllegalEntityException;
 import cz.muni.fi.pv168.common.ServiceFailureException;
 import cz.muni.fi.pv168.common.ValidationException;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,9 +50,9 @@ public class TeacherManager {
         }
     }
     
-    private void validate(Teacher teacher) throws IllegalArgumentException, ValidationException {
+    private void validate(Teacher teacher) throws ValidationException {
         if (teacher == null) {
-            throw new IllegalArgumentException("teacher is null");
+            throw new ValidationException("teacher is null");
         }
         if (teacher.getFullName() == null) {
             throw new ValidationException("name is null");
@@ -68,8 +66,12 @@ public class TeacherManager {
             throw new ValidationException("price is negative number");
     }
     
-    public void createTeacher (Teacher teacher) throws ServiceFailureException {
-        checkDataSource();
+    public void createTeacher (Teacher teacher) throws ServiceFailureException, DataSourceException, IllegalEntityException, ValidationException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         validate(teacher);
         
         if (teacher.getId() != null) {
@@ -83,8 +85,7 @@ public class TeacherManager {
             conn = dataSource.getConnection();
             // Temporary turn autocommit mode off. It is turned back on in 
             // method DBUtils.closeQuietly(...) 
-            conn.setAutoCommit(false);
-            
+            conn.setAutoCommit(false);            
             st = conn.prepareStatement(
                     "INSERT INTO Teacher (fullName,skill,region,price) VALUES (?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -92,10 +93,8 @@ public class TeacherManager {
             st.setInt(2, teacher.getSkill());
             st.setString(3, teacher.getRegion().toString());
             st.setBigDecimal(4, teacher.getPrice().setScale(2));
-            
             int count = st.executeUpdate();
             DBUtils.checkUpdatesCount(count, teacher, true);  
-
             Long id = DBUtils.getId(st.getGeneratedKeys());
             teacher.setId(id);
             conn.commit();
@@ -109,9 +108,12 @@ public class TeacherManager {
         }
     }
     
-    public Teacher getTeacher(Long id) throws ServiceFailureException {
-        checkDataSource();
-        
+    public Teacher getTeacher(Long id) throws ServiceFailureException, DataSourceException, IllegalArgumentException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         if (id == null) {
             throw new IllegalArgumentException("id is null");
         }
@@ -133,8 +135,12 @@ public class TeacherManager {
         }
     }
 
-    public void updateTeacher(Teacher teacher) throws ServiceFailureException {
-        checkDataSource();
+    public void updateTeacher(Teacher teacher) throws ServiceFailureException, DataSourceException, IllegalEntityException, ValidationException{
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         validate(teacher);
         
         if (teacher.getId() == null) {
@@ -152,10 +158,8 @@ public class TeacherManager {
             st.setString(1, teacher.getFullName());
             st.setInt(2, teacher.getSkill());
             st.setString(3, teacher.getRegion().toString());
-            st.setBigDecimal(4, teacher.getPrice().setScale(2));
-            
-            st.setLong(5, teacher.getId());
-            
+            st.setBigDecimal(4, teacher.getPrice().setScale(2));           
+            st.setLong(5, teacher.getId());           
             int count = st.executeUpdate();
             DBUtils.checkUpdatesCount(count, teacher, false);
             conn.commit();
@@ -169,8 +173,12 @@ public class TeacherManager {
         }
     }
 
-    public void deleteTeacher(Teacher teacher) throws ServiceFailureException {
-        checkDataSource();
+    public void deleteTeacher(Teacher teacher) throws ServiceFailureException, DataSourceException, IllegalArgumentException, IllegalEntityException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         if (teacher == null) {
             throw new IllegalArgumentException("teacher is null");
         }        
@@ -202,8 +210,12 @@ public class TeacherManager {
         }
     }
     
-    public List<Teacher> findAllTeachers() throws ServiceFailureException {
-        checkDataSource();
+    public List<Teacher> findAllTeachers() throws ServiceFailureException, DataSourceException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -220,8 +232,12 @@ public class TeacherManager {
         }          
     }
     
-    public List<Teacher> findAllFreeTeachers() {
-        checkDataSource();
+    public List<Teacher> findAllFreeTeachers() throws ServiceFailureException, DataSourceException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -238,65 +254,4 @@ public class TeacherManager {
             DBUtils.closeQuietly(conn, st);
         } 
     }
-    
-    /*
-    public List<Teacher> findMatchForStudent (Student student) {
-        //validate();
-        checkDataSource();
-        
-        if (student == null) {
-            throw new IllegalArgumentException("student is null");
-        }
-        
-        Connection conn = null;
-        PreparedStatement st = null;
-        try {
-            conn = dataSource.getConnection();
-            st = conn.prepareStatement(
-                    "SELECT id,fullName,skill,region,price FROM Teacher WHERE skill >= ?, region = ?, price <= ?");
-            st.setInt(1, student.getSkill());
-            st.setString(2, student.getRegion().toString());
-            st.setBigDecimal(3, student.getPrice().setScale(2));
-            
-            return executeQueryForMultipleTeachers(st);
-        } catch (SQLException ex) {
-            String msg = "Error when getting match for student " + student.getId() + " from DB";
-            logger.log(Level.SEVERE, msg, ex);
-            throw new ServiceFailureException(msg, ex);
-        } finally {
-            DBUtils.closeQuietly(conn, st);
-        }
-    }
-    
-    private Long getKey(ResultSet keyRS, Teacher teacher) throws ServiceFailureException, SQLException {
-        if (keyRS.next()) {
-            if (keyRS.getMetaData().getColumnCount() != 1) {
-                throw new ServiceFailureException("Internal Error: Generated key"
-                        + "retriving failed when trying to insert teacher " + teacher
-                        + " - wrong key fields count: " + keyRS.getMetaData().getColumnCount());
-            }
-            Long result = keyRS.getLong(1);
-            if (keyRS.next()) {
-                throw new ServiceFailureException("Internal Error: Generated key"
-                        + "retriving failed when trying to insert teacher " + teacher
-                        + " - more keys found");
-            }
-            return result;
-        } else {
-            throw new ServiceFailureException("Internal Error: Generated key"
-                    + "retriving failed when trying to insert teacher " + teacher
-                    + " - no key found");
-        }
-    }
-
-    private Teacher resultSetToTeacher(ResultSet rs) throws SQLException {
-        Teacher teacher = new Teacher();
-        teacher.setId(rs.getLong("id"));
-        teacher.setFullName(rs.getString("fullName"));
-        teacher.setLevel(rs.getInt("level"));
-        teacher.setDetails(rs.getString("details"));
-        return teacher;
-    }
-    
-    */
 }

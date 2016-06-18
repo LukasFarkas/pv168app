@@ -6,7 +6,6 @@
 package cz.muni.fi.pv168.pv168project.app;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 
 /**

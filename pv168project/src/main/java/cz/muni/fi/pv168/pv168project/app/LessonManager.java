@@ -11,20 +11,14 @@ import static cz.muni.fi.pv168.common.DBUtils.executeQueryForMultipleStudents;
 import static cz.muni.fi.pv168.common.DBUtils.executeQueryForMultipleTeachers;
 import static cz.muni.fi.pv168.common.DBUtils.executeQueryForSingleLesson;
 import static cz.muni.fi.pv168.common.DBUtils.isMember;
-import static cz.muni.fi.pv168.common.DBUtils.rowToStudent;
-import static cz.muni.fi.pv168.common.DBUtils.toSqlTimestamp;
+import cz.muni.fi.pv168.common.DataSourceException;
 import cz.muni.fi.pv168.common.IllegalEntityException;
 import cz.muni.fi.pv168.common.ServiceFailureException;
 import cz.muni.fi.pv168.common.ValidationException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,9 +52,9 @@ public class LessonManager {
         this.dataSource = dataSource;
     }
     
-    private void validate(Lesson lesson) throws IllegalArgumentException, ValidationException {
+    private void validate(Lesson lesson) throws ValidationException {
         if (lesson == null) {
-            throw new IllegalArgumentException("lesson is null");
+            throw new ValidationException("lesson is null");
         }
         if (lesson.getSkill() < 0) {
             throw new ValidationException("skill value is not permitted");
@@ -79,17 +73,19 @@ public class LessonManager {
         }
     }
     
-    public void createLesson(Lesson lesson) throws IllegalEntityException, ServiceFailureException {
-        checkDataSource();
+    public void createLesson(Lesson lesson) throws IllegalEntityException, ServiceFailureException, DataSourceException, ValidationException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         validate(lesson);
         
         if (lesson.getId() != null) {
             throw new IllegalEntityException("lesson id is already set");
         }
-
         Connection conn = null;
-        PreparedStatement st = null;
-        
+        PreparedStatement st = null;        
         try {
             conn = dataSource.getConnection();
             // Temporary turn autocommit mode off. It is turned back on in 
@@ -99,8 +95,6 @@ public class LessonManager {
             st = conn.prepareStatement(
                     "INSERT INTO Lesson (skill,region,price,teacherid,studentid) VALUES (?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
-            
-            
             st.setInt(1, lesson.getSkill());
             st.setString(2, lesson.getRegion().toString());
             st.setBigDecimal(3, lesson.getPrice().setScale(2));
@@ -123,13 +117,15 @@ public class LessonManager {
         }
     }
     
-    public Lesson getLesson(Long id) throws IllegalArgumentException, ServiceFailureException {
-        checkDataSource();
-        
+    public Lesson getLesson(Long id) throws IllegalArgumentException, ServiceFailureException, DataSourceException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         if (id == null) {
             throw new IllegalArgumentException("id is null");
         }
-        
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -147,16 +143,18 @@ public class LessonManager {
         }
     }
 
-    public Lesson getLesson(Teacher teacher, Student student) throws IllegalArgumentException, ServiceFailureException{
-        checkDataSource();
-        
+    public Lesson getLesson(Teacher teacher, Student student) throws IllegalArgumentException, ServiceFailureException, DataSourceException{
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         if (teacher == null) {
             throw new IllegalArgumentException("teacher is null");
         }
         if (student == null) {
             throw new IllegalArgumentException("student is null");
-        }
-        
+        }       
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -175,8 +173,12 @@ public class LessonManager {
         }
     }
     
-    public List<Lesson> getLesson(Teacher teacher) throws IllegalArgumentException, ServiceFailureException{
-        checkDataSource();
+    public List<Lesson> getLesson(Teacher teacher) throws IllegalArgumentException, ServiceFailureException, DataSourceException{
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         
         if (teacher == null) {
             throw new IllegalArgumentException("teacher is null");
@@ -188,6 +190,7 @@ public class LessonManager {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
                     "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE teacherid = ?");
+            st.setLong(1, teacher.getId());
             return executeQueryForMultipleLessons(st);
         } catch (SQLException ex) {
             String msg = "Error when getting teacher's" + teacher.getId() + "lessons from DB";
@@ -198,8 +201,12 @@ public class LessonManager {
         }
     }
     
-    public List<Lesson> getLesson(Student student) throws IllegalArgumentException, ServiceFailureException{
-        checkDataSource();
+    public List<Lesson> getLesson(Student student) throws IllegalArgumentException, ServiceFailureException, DataSourceException{
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         
         if (student == null) {
             throw new IllegalArgumentException("student is null");
@@ -211,6 +218,7 @@ public class LessonManager {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
                     "SELECT id,skill,region,price,teacherid,studentid FROM Lesson WHERE studentid = ?");
+            st.setLong(1, student.getId());
             return executeQueryForMultipleLessons(st);
         } catch (SQLException ex) {
             String msg = "Error when getting student's" + student.getId() + "lessons from DB";
@@ -221,8 +229,12 @@ public class LessonManager {
         }
     }
     
-    public void updateLesson(Lesson lesson) throws IllegalEntityException, ServiceFailureException {
-        checkDataSource();
+    public void updateLesson(Lesson lesson) throws IllegalEntityException, ServiceFailureException, DataSourceException, ValidationException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         validate(lesson);
         
         if (lesson.getId() == null) {
@@ -237,14 +249,12 @@ public class LessonManager {
             conn.setAutoCommit(false);            
             st = conn.prepareStatement(
                     "UPDATE Lesson SET skill = ?, region = ?, price = ?, teacherid = ?, studentid = ? WHERE id = ?");
-            
             st.setInt(1, lesson.getSkill());
             st.setString(2, lesson.getRegion().toString());
             st.setBigDecimal(3, lesson.getPrice().setScale(2));
             st.setLong(4, lesson.getTeacherId());
             st.setLong(5, lesson.getStudentId());
             st.setLong(6, lesson.getId());
-            
             int count = st.executeUpdate();
             DBUtils.checkUpdatesCount(count, lesson, false);
             conn.commit();
@@ -258,8 +268,12 @@ public class LessonManager {
         }
     }
 
-    public void deleteLesson(Lesson lesson) throws ServiceFailureException {
-        checkDataSource();
+    public void deleteLesson(Lesson lesson) throws ServiceFailureException, IllegalArgumentException, IllegalEntityException, DataSourceException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         if (lesson == null) {
             throw new IllegalArgumentException("lesson is null");
         }        
@@ -275,9 +289,7 @@ public class LessonManager {
             conn.setAutoCommit(false);
             st = conn.prepareStatement(
                     "DELETE FROM Lesson WHERE id = ?");
-            
             st.setLong(1, lesson.getId());
-
             int count = st.executeUpdate();
             DBUtils.checkUpdatesCount(count, lesson, false);
             conn.commit();
@@ -291,8 +303,12 @@ public class LessonManager {
         }
     }
     
-    public List<Lesson> findAllLessons() throws ServiceFailureException {
-        checkDataSource();
+    public List<Lesson> findAllLessons() throws ServiceFailureException, DataSourceException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         Connection conn = null;
         PreparedStatement st = null;
         try {
@@ -315,8 +331,12 @@ public class LessonManager {
      *  one student can have unlimited number of pairings with different teachers (and v.v.)
      */
     
-    public List<Teacher> findMatchForStudent (Student student) throws IllegalArgumentException, ServiceFailureException {
-        checkDataSource();
+    public List<Teacher> findMatchForStudent (Student student) throws IllegalArgumentException, ServiceFailureException, DataSourceException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         if (student == null)
             throw new IllegalArgumentException("student is null");
         Connection conn = null;
@@ -324,10 +344,11 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,fullName,skill,region,price FROM Teacher WHERE skill >= ? AND region = ? AND price <= ?");
+                    "SELECT id,fullName,skill,region,price FROM Teacher WHERE skill >= ? AND region = ? AND price <= ? AND id NOT IN (SELECT teacherid FROM Lesson WHERE studentid = ?)");
             st.setInt(1,student.getSkill());
             st.setString(2,student.getRegion().toString());
             st.setBigDecimal(3,student.getPrice().setScale(2));
+            st.setLong(4, student.getId());
             return executeQueryForMultipleTeachers(st);
         } catch (SQLException ex) {
             String msg = "Error when getting matching teachers from DB";
@@ -338,8 +359,12 @@ public class LessonManager {
         } 
     }
     
-    public List<Student> findMatchForTeacher (Teacher teacher) throws IllegalArgumentException, ServiceFailureException {
-        checkDataSource();
+    public List<Student> findMatchForTeacher (Teacher teacher) throws IllegalArgumentException, ServiceFailureException, DataSourceException {
+        try {
+           checkDataSource();
+        } catch (IllegalStateException e) {
+            throw new DataSourceException ("There was a problem with datasource." ,e);
+        }
         if (teacher == null)
             throw new IllegalArgumentException(" teacher is null");
         Connection conn = null;
@@ -347,10 +372,11 @@ public class LessonManager {
         try {
             conn = dataSource.getConnection();
             st = conn.prepareStatement(
-                    "SELECT id,fullName,skill,region,price FROM Student WHERE skill <= ? AND region = ? AND price >= ?");
+                    "SELECT id,fullName,skill,region,price FROM Student WHERE skill <= ? AND region = ? AND price >= ? AND id NOT IN (SELECT studentid FROM Lesson WHERE teacherid = ?)");
             st.setInt(1,teacher.getSkill());
             st.setString(2,teacher.getRegion().toString());
             st.setBigDecimal(3,teacher.getPrice().setScale(2));
+            st.setLong(4, teacher.getId());
             return executeQueryForMultipleStudents(st);
         } catch (SQLException ex) {
             String msg = "Error when getting matching students from DB";
@@ -361,13 +387,13 @@ public class LessonManager {
         } 
     }
     
-    private void matchValidation (Teacher teacher, Student student) throws ValidationException {
+    public void matchValidation (Teacher teacher, Student student) throws ValidationException {
         if (teacher.getSkill() < student.getSkill())
             throw new ValidationException ("teacher too stupid");
         if (teacher.getPrice().compareTo(student.getPrice()) > 0)
             throw new ValidationException ("student too broke");
         if (teacher.getRegion() != student.getRegion())
-            throw new ValidationException ("teacher is not close enough");
+            throw new ValidationException ("teacher is not close enough (location-wise speaking)");
     }
     
     public void makeMatch (Teacher teacher, Student student) throws IllegalArgumentException {
@@ -387,41 +413,5 @@ public class LessonManager {
         lesson.setStudentId(student.getId());
         
         createLesson(lesson);
-    }
-    
-    /*
-    private Long getKey(ResultSet keyRS, Lesson lesson) throws ServiceFailureException, SQLException {
-        if (keyRS.next()) {
-            if (keyRS.getMetaData().getColumnCount() != 1) {
-                throw new ServiceFailureException("Internal Error: Generated key"
-                        + "retriving failed when trying to insert student " + lesson
-                        + " - wrong key fields count: " + keyRS.getMetaData().getColumnCount());
-            }
-            Long result = keyRS.getLong(1);
-            if (keyRS.next()) {
-                throw new ServiceFailureException("Internal Error: Generated key"
-                        + "retriving failed when trying to insert student " + lesson
-                        + " - more keys found");
-            }
-            return result;
-        } else {
-            throw new ServiceFailureException("Internal Error: Generated key"
-                    + "retriving failed when trying to insert student " + lesson
-                    + " - no key found");
-        }
-    }
-    
-    private Lesson resultSetToLesson(ResultSet rs) throws SQLException {
-        Lesson lesson = new Lesson();
-        lesson.setId(rs.getLong("id"));
-        lesson.setStart(toLocalDateTime(rs.getTimestamp("start")));
-        lesson.setDuration(rs.getInt("duration"));
-            // need to check if new object doesn't cause stack overflow 
-        lesson.setPrice(new BigDecimal(rs.getString("price")));
-        lesson.setNotes(rs.getString("notes"));
-        lesson.setTeacherId(rs.getLong("teacher"));
-        lesson.setStudentId(rs.getLong("student"));
-        return lesson;
-    }
-    */
+    } 
 }
